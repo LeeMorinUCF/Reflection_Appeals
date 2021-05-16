@@ -134,7 +134,7 @@ with only 100 observations.
 
 Perhaps, the most we should have in the covariance matrix is a 
 constant pairwise correlation across judges. 
-This is the next model. 
+This is the design of the next model. 
 
 I extended the set of parameters in the model
 to restrict the off-diagonal elements of the covariance matrix 
@@ -182,5 +182,5 @@ These were the results:
  
 Again, it appears to work, aside from the variation from the small sample size.
 
-
+The next step is to add covariates to the mean equation. 
 
