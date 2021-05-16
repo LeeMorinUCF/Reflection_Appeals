@@ -480,8 +480,16 @@ summary(estn_results)
 
 # These were the results:
 
+# > summary(estn_results)
+# mu_1             mu_2                mu_3            Sigma_21     
+# Min.   :0.6000   Min.   :-0.366955   Min.   :-1.4286   Min.   :0.2020  
+# 1st Qu.:0.9166   1st Qu.:-0.066088   1st Qu.:-1.1294   1st Qu.:0.4423  
+# Median :0.9997   Median : 0.004488   Median :-0.9964   Median :0.5087  
+# Mean   :1.0050   Mean   : 0.018097   Mean   :-1.0190   Mean   :0.5111  
+# 3rd Qu.:1.1051   3rd Qu.: 0.124450   3rd Qu.:-0.9040   3rd Qu.:0.5716  
+# Max.   :1.3972   Max.   : 0.341538   Max.   :-0.5968   Max.   :0.8187 
 
-
+# Again, it appears to work, aside from the variation from the small sample size. 
 
 ##################################################
 # End
