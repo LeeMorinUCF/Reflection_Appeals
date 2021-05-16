@@ -153,9 +153,17 @@ tri_probit_vec2param <- function(param) {
   # Append the lower diagonal of Sigma. 
   Sigma[lower.tri(Sigma, diag = FALSE)] <- param
   
+  # Append the upper diagonal of Sigma. 
+  Sigma[upper.tri(Sigma, diag = FALSE)] <- param
+  
   return(list(mu = mu, Sigma = Sigma))
 }
 
+
+# Numerical issue for likelihood function:
+# Covariance matrix must be positive definite.
+# param_list <- tri_probit_vec2param(param = c(0,0,0, 0.001,0,0))
+# chol(param_list$Sigma)
 
 
 tri_probit_loglike <- function(param, y) {
@@ -164,9 +172,16 @@ tri_probit_loglike <- function(param, y) {
   # Examples:
   # tri_probit_loglike(param = rep(0, 6), y = matrix(c(T, T, F, T, T, F), nrow = 2))
   
+  
+  # print("param = ")
+  # print(param)
+  
   # Get parameters. 
   n_cases <- nrow(y)
   param_list <- tri_probit_vec2param(param)
+  
+  # Verify that the covariance matrix is positive definite. 
+  # Not necessary (yet).
   
   # Calculate the probabilities of the observed outcomes.
   loglike <- 0
@@ -180,9 +195,6 @@ tri_probit_loglike <- function(param, y) {
     lower_bd[y[i, ]] <- 0
     # For non-events, the upper bound is zero, lower bound is infinity.
     upper_bd[!y[i, ]] <- 0
-    
-    print("param = ")
-    print(param)
     
     # Calculate the probability. 
     prob <- pmvnorm(lower = lower_bd, upper = upper_bd, 
@@ -217,7 +229,7 @@ tri_probit_estn <- function(y, param_0 = FALSE, est_hessian = FALSE) {
   # tri_probit_estn(tri_probit_gen(mu = c(1, 0, -1), Sigma = diag(c(1, 1, 1)), n_cases = 100))
   # tri_probit_estn(tri_probit_gen(mu = c(0, 0, 0), Sigma = diag(c(1, 1, 1)), n_cases = 100))
   
-  if (length(param_hat_0) == 6) {
+  if (length(param_0) == 6) {
     param_hat_0 <- param_0
   } else {
     param_hat_0 <- rep(0, 6)
@@ -227,7 +239,8 @@ tri_probit_estn <- function(y, param_0 = FALSE, est_hessian = FALSE) {
                             fn = tri_probit_loglike, 
                             y = y, 
                             method = "BFGS", 
-                            hessian = est_hessian)
+                            hessian = est_hessian, 
+                            control = list(fnscale= -1))
   
   if (tri_probit_optim$convergence == 1) {
     warning("In optim(), iteration reached maximum limit.")
