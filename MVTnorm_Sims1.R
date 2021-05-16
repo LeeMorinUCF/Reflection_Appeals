@@ -50,39 +50,24 @@ setwd(wd_path)
 # install.packages("mvtnorm")
 library(mvtnorm)
 
-# mvtnorm example:
+# mvtnorm examples:
+
 # sigma <- matrix(c(4,2,2,3), ncol=2)
 # x <- rmvnorm(n=500, mean=c(1,2), sigma=sigma)
 # colMeans(x)
 # var(x)
 
+# # Test the multivariate normal CDF.
+# pmvnorm(lower = 0, upper = qnorm(0.975), 
+#         mean = 0,
+#         sigma = 1)
+# # 0.475 
+# pmvnorm(lower = 0, upper = qnorm(0.995), 
+#         mean = c(0,0),
+#         corr = matrix(c(1,0,0,1), ncol = 2))
+# # 0.245025
 
 
-
-##################################################
-# Set Parameters for Simulation
-##################################################
-
-# Number of appeals court cases.
-n_cases <- 100
-
-# Average intents of three appeals court judges.
-mu <- c(1, 0, -1)
-
-# Covariance matrix of taste shifters. 
-Sigma <- matrix(c(1.0, 0.5, 0.3, 
-                  0.5, 1.0, 0.5,
-                  0.3, 0.5, 1.0), ncol = 3)
-
-# Test the multivariate normal CDF.
-pmvnorm(lower = 0, upper = qnorm(0.975), 
-        mean = 0,
-        sigma = 1)
-# 0.475 
-pmvnorm(lower = 0, upper = qnorm(0.995), 
-        mean = c(0,0),
-        corr = matrix(c(1,0,0,1), ncol = 2))
-# 0.245025
 
 
 ##################################################
@@ -256,19 +241,45 @@ tri_probit_estn <- function(y, param_0 = FALSE, est_hessian = FALSE) {
   
   # If Hessian matrix is returned, append it to the vector of outputs. 
   if (est_hessian) {
-    estim_list <- list(param_hat = param_hat, 
+    estn_list <- list(param_hat = param_hat, 
                        mu_hat = param_list$mu, 
                        Sigma_hat = param_list$Sigma, 
                        hessian = tri_probit_optim$hessian)
   } else {
-    estim_list <- list(param_hat = param_hat, 
+    estn_list <- list(param_hat = param_hat, 
                        mu_hat = param_list$mu, 
                        Sigma_hat = param_list$Sigma)
   }
   
-  return(param_list)
+  return(estn_list)
 }
 
+
+
+
+##################################################
+# Set Parameters for Simulation
+##################################################
+
+# Number of appeals court cases.
+n_cases <- 100
+
+# Average intents of three appeals court judges.
+mu_0 <- c(1, 0, -1)
+
+# Covariance matrix of taste shifters. 
+Sigma_0 <- matrix(c(1.0, 0.8, 0.2, 
+                    0.8, 1.0, 0.5,
+                    0.2, 0.5, 1.0), ncol = 3)
+
+# Collect into a vector of parameters.
+param_0 <- tri_probit_param2vec(mu = mu_0, Sigma = Sigma_0)
+
+num_reps <- 100
+
+estn_results <- data.frame(matrix(nrow = num_reps, ncol = 6))
+colnames(estn_results) <- c(sprintf("mu_%d", seq(3)), 
+                            "Sigma_21", "Sigma_31", "Sigma_32")
 
 
 
@@ -277,8 +288,21 @@ tri_probit_estn <- function(y, param_0 = FALSE, est_hessian = FALSE) {
 ##################################################
 
 
-
-
+# rep_num <- 1
+for (rep_num in 1:num_reps) {
+  
+  print(sprintf("Now completing iteration %d of %d. ", rep_num, num_reps))
+  
+  # Generate realization of trivariate probit. 
+  y_sim <- tri_probit_gen(mu = mu_0, Sigma = Sigma_0, n_cases = n_cases)
+  
+  # Estimate model.
+  estn_list <- tri_probit_estn(y = y_sim, param_0 = param_0)
+  
+  # Store estimation results. 
+  estn_results[rep_num, ] <- estn_list$param_hat
+  
+}
 
 
 
