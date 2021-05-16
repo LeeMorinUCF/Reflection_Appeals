@@ -9,7 +9,7 @@
 # College of Business
 # University of Central Florida
 #
-# May 15, 2021
+# May 16, 2021
 #
 ##################################################
 #
@@ -20,9 +20,7 @@
 #   Identification and Estimation in Judicial Panel Voting"
 #   by Cameron, Morin and Paarsch
 # 
-# This second version estimates a model without covariates
-#   and specifies the covariance matrix as either 
-#   the identity matrix or one with the same zon-zero pairwise covariances. 
+# This third version estimates a preliminary model with covariates. 
 #   
 #
 # Dependencies:
@@ -94,7 +92,82 @@ tri_probit_gen <- function(mu, Sigma, n_cases) {
   return(y)
 }
 
-# tri_probit_gen(mu = c(1, 0, -1), Sigma = diag(c(1, 2, 3)), n_cases = 5)
+
+TVP_att_gen <- function(alpha, beta, Sigma, x_judge, n_cycles) {
+  
+  # Generate realizations from a trivariate probit model, 
+  # using the attitudinal approach to modeling judicial decisions:
+  # each judge has a set of covariates in the matrix x_judge, 
+  # which has a row for each judge and a column for each covariate.
+  # Each combination of judges appears n_cycles times. 
+  # Examples:
+  # TVP_att_gen(alpha = c(1, 0, -1), beta = c(1,1), Sigma = diag(c(1, 1, 1)), x_judge = matrix(sample(c(0,1), 4*2, replace = TRUE), ncol = 2), n_cycles = 3)
+  
+  # Verify compatible dimensions.
+  num_covars <- ncol(x_judge)
+  if (num_covars != length(beta)) {
+    stop("Number of covariates do not match number of slope coefficients.")
+  }
+  
+  # Populate the dataset in blocks by cycling through the combinations of judges. 
+  num_judges <- nrow(x_judge)
+  
+  # Assemble a list of judges. 
+  panels <- expand.grid(j1 = seq(num_judges), 
+                            j2 = seq(num_judges), 
+                            j3 = seq(num_judges))
+  # Exclude any rows with duplicate judges. 
+  panels <- panels[panels[, 'j1'] != panels[, 'j2'] &
+                     panels[, 'j1'] != panels[, 'j3'] &
+                     panels[, 'j2'] != panels[, 'j3'] , ]
+  num_panels <- nrow(panels)
+  
+  # Determine the number of cases by replicating each panel n_cycles times.
+  n_cases <- n_cycles*num_panels
+  y <- matrix(nrow = n_cases, ncol = 3)
+  x <- matrix(nrow = n_cases, ncol = 3*num_covars)
+  
+  # For each combination of judges, calculate mean vector and latent intents. 
+  for (j in 1:num_panels) {
+    
+    # Draw a panel of judges. 
+    judge_index <- panels[j, ]
+    
+    # Draw the corresponding covariates. 
+    x_judge_1 <- x_judge[unlist(judge_index[1]), ]
+    x_judge_2 <- x_judge[unlist(judge_index[2]), ]
+    x_judge_3 <- x_judge[unlist(judge_index[3]), ]
+    
+    
+    # Calculate the mean intents for the panel.
+    mu <- alpha + c(sum(x_judge_1 * beta), 
+                    sum(x_judge_2 * beta), 
+                    sum(x_judge_3 * beta))
+    
+    # Calculate the latent intents of three appeals court judges.
+    nu <- rmvnorm(n = n_cycles, mean = mu, sigma = Sigma)
+    
+    # Determine the votes of the appeals panel.
+    y_j <- nu > 0
+    
+    # Insert the votes into the dataset. 
+    y[seq((j-1)*n_cycles + 1, j*n_cycles), ] <- y_j
+    
+    # Also record the sequence of covariates. 
+    x[seq((j-1)*n_cycles + 1, j*n_cycles), ] <- 
+      matrix(rep(c(x_judge_1, x_judge_2, x_judge_3), n_cycles), 
+             nrow = n_cycles, byrow = TRUE)
+    
+  }
+  
+  # Collect the matrices of outcomes and covariates.
+  TVP_att <- list(y = y, x = x)
+  
+  return(TVP_att)
+}
+
+
+
 
 
 ##################################################
@@ -408,91 +481,4 @@ for (rep_num in 1:num_reps) {
 }
 
 summary(estn_results)
-
-
-
-# I ran a simulation with these parameter inputs:
-
-
-# # Number of replications for simulation of estimation. 
-# num_reps <- 100
-# 
-# # Number of appeals court cases.
-# n_cases <- 100
-# 
-# # Average intents of three appeals court judges.
-# mu_0 <- c(1, 0, -1)
-# 
-# 
-# # Design of sigma depends on the chosen model. 
-# model_name <- 'mu_only'
-# param_0 <- mu_0
-# 
-# > Sigma_0
-# [,1] [,2] [,3]
-# [1,]    1    0    0
-# [2,]    0    1    0
-# [3,]    0    0    1
-
-
-# These were the results:
-
-# mu_1             mu_2                 mu_3        
-# Min.   :0.6433   Min.   :-2.275e-01   Min.   :-1.4758  
-# 1st Qu.:0.9154   1st Qu.:-7.527e-02   1st Qu.:-1.1264  
-# Median :0.9945   Median :-2.900e-07   Median :-0.9945  
-# Mean   :1.0242   Mean   :-1.436e-03   Mean   :-1.0142  
-# 3rd Qu.:1.1264   3rd Qu.: 7.527e-02   3rd Qu.:-0.9154  
-# Max.   :1.4758   Max.   : 3.055e-01   Max.   :-0.5244  
-
-
-# It works much better with an identity restriction on the 
-# covariance matrix but 100 observations does not buy us much accuracy. 
-
-# At least estimating the mean equation is numerically stable
-# with only 100 observations. 
-
-
-
-
-# Next, I ran another simulation with these parameter inputs:
-
-# # Number of replications for simulation of estimation. 
-# num_reps <- 100
-# 
-# # Number of appeals court cases.
-# n_cases <- 100
-# 
-# # Average intents of three appeals court judges.
-# mu_0 <- c(1, 0, -1)
-# 
-# 
-# 
-# model_name <- 'mu_const'
-# param_0 <- c(mu_0, 0.5)
-
-# > Sigma_0
-# [,1] [,2] [,3]
-# [1,]  1.0  0.5  0.5
-# [2,]  0.5  1.0  0.5
-# [3,]  0.5  0.5  1.0
-
-
-
-# These were the results:
-
-# > summary(estn_results)
-# mu_1             mu_2                mu_3            Sigma_21     
-# Min.   :0.6000   Min.   :-0.366955   Min.   :-1.4286   Min.   :0.2020  
-# 1st Qu.:0.9166   1st Qu.:-0.066088   1st Qu.:-1.1294   1st Qu.:0.4423  
-# Median :0.9997   Median : 0.004488   Median :-0.9964   Median :0.5087  
-# Mean   :1.0050   Mean   : 0.018097   Mean   :-1.0190   Mean   :0.5111  
-# 3rd Qu.:1.1051   3rd Qu.: 0.124450   3rd Qu.:-0.9040   3rd Qu.:0.5716  
-# Max.   :1.3972   Max.   : 0.341538   Max.   :-0.5968   Max.   :0.8187 
-
-# Again, it appears to work, aside from the variation from the small sample size. 
-
-##################################################
-# End
-##################################################
 
