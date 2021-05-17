@@ -444,6 +444,19 @@ I used the following parameter values:
 
 ```
 
+
+# Average intents of three appeals court judges.
+# mu_0 <- c(1, 0, -1)
+alpha_0 <- 0.25
+
+# Slope coefficients on covariates for own characteristics, common to all judges.
+beta_0 <- c(1, 2)
+
+# Slope coefficients on covariates for peer effects, common to all judges.
+gamma_0 <- c(-0.5, -1)
+
+# Dissent aversion parameter. 
+delta_0 <- 0.1
 ```
 
 
