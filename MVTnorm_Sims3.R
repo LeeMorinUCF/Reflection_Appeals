@@ -174,24 +174,30 @@ TVP_att_gen <- function(alpha, beta, Sigma, x_judge, n_cycles) {
 # Define Functions for Estimation
 ##################################################
 
-tri_probit_param2vec <- function(mu, Sigma, model_name) {
+tri_probit_param2vec <- function(mu = NULL, alpha = NULL, beta = NULL, 
+                                 Sigma, model_name) {
   
   # Translate trivariate probit parameters to a vector.
   # This also works for bigger systems. 
   # Note: It ignores other parameters outside the specified model. 
   # Examples: 
-  # tri_probit_param2vec(c(0,1,2), NULL, 'mu_only')
-  # tri_probit_param2vec(c(0,1,2), matrix(seq(3,11), ncol = 3), 'mu_const')
-  # tri_probit_param2vec(c(0,1,2), matrix(seq(3,11), ncol = 3), 'mu_cov')
+  # tri_probit_param2vec(mu = c(0,1,2), Sigma = NULL, model_name = 'mu_only')
+  # tri_probit_param2vec(mu = c(0,1,2), Sigma = matrix(seq(3,11), ncol = 3), model_name = 'mu_const')
+  # tri_probit_param2vec(mu = c(0,1,2), Sigma = matrix(seq(3,11), ncol = 3), model_name = 'mu_cov')
+  # tri_probit_param2vec(alpha = c(0,1,2), beta = c(3,4), Sigma = matrix(seq(5,13), ncol = 3), model_name = 'cov_const')
   
-  
-  # Start with vector of means.
-  param <- mu
+  # Start with mean equation.
+  if (model_name == 'cov_const') {
+    param <- c(alpha, beta)
+  } else {
+    # Vector of means with intercept only.
+    param <- mu
+  }
   
   # Append the parameters from the covariance matrix, if any.
   if (model_name == 'mu_only') {
     # No additional parameters, Sigma is the identity matrix. 
-  } else if (model_name == 'mu_const') {
+  } else if (model_name %in% c('mu_const', 'cov_const')) {
     # The lower triangle of Sigma is a constant.
     param <- c(param, Sigma[2, 1])
   } else if (model_name == 'mu_cov') {
@@ -206,7 +212,7 @@ tri_probit_param2vec <- function(mu, Sigma, model_name) {
 }
 
 
-tri_probit_num_params <- function(model_name) {
+tri_probit_num_params <- function(model_name, num_covars = 0) {
   
   # Determine the number of parameters for each model.  
   
@@ -226,12 +232,17 @@ tri_probit_num_params <- function(model_name) {
     # Three parameters in the lower triangle. 
     num_params <- 6
     
+  } else if (model_name == 'cov_const') {
+    # The lower triangle of Sigma is a constant, 
+    # plus a mean and slope coefficients.
+    num_params <- 4 + num_covars
   }
   
+  return(num_params)
 }
 
 
-tri_probit_vec2param <- function(param, model_name) {
+tri_probit_vec2param <- function(param, model_name, num_covars = 0) {
   
   # Translate trivariate probit parameters to a vector.
   # This must have the correct number of parameters.
@@ -241,16 +252,29 @@ tri_probit_vec2param <- function(param, model_name) {
   # tri_probit_vec2param(param = seq(6), 'mu_cov')
   # 
   
+  if (length(param) != tri_probit_num_params(model_name, num_covars)) {
+    stop("param not correct length.")
+  }
   
-  # Extract vector of mean intercept.
-  mu <- param[1:3]
+  
+  # Parameters for mean equation. 
+  if (model_name == 'cov_const') {
+    # Intercepts and slope coefficients. 
+    mu <- NULL
+    alpha <- param[1:3]
+    beta <- param[seq(4, (4 + num_covars))]
+  } else {
+    # Extract vector of mean intercept.
+    mu <- param[1:3]
+    alpha <- NULL
+    beta <- NULL
+  }
+  
+  
   if (model_name == 'mu_only') {
-    if (length(param) != 3) {
-      stop("param not correct length.")
-    }
     param <- NULL
   } else {
-    param <- param[4:length(param)]
+    param <- param[seq((4 + num_covars + 1), length(param))]
   }
   
   
@@ -259,17 +283,11 @@ tri_probit_vec2param <- function(param, model_name) {
   
   if (model_name == 'mu_only') {
     # No additional parameters, Sigma is the identity matrix. 
-  } else if (model_name == 'mu_const') {
+  } else if (model_name %in% c('mu_const', 'cov_const')) {
     # The lower triangle of Sigma is a constant.
-    if (length(param) != 1) {
-      stop("param not correct length.")
-    }
     Sigma[lower.tri(Sigma, diag = FALSE)] <- param
   } else if (model_name == 'mu_cov') {
     # The entire covariance matrix is specified.
-    if (length(param) != 3) {
-      stop("param not correct length.")
-    }
     # Append the lower triangle of Sigma. 
     Sigma[lower.tri(Sigma, diag = FALSE)] <- param
   }
@@ -278,7 +296,8 @@ tri_probit_vec2param <- function(param, model_name) {
   Sigma[upper.tri(Sigma, diag = FALSE)] <- 
     Sigma[lower.tri(Sigma, diag = FALSE)]
   
-  return(list(mu = mu, Sigma = Sigma))
+  
+  return(list(mu = mu, alpha = alpha, beta = beta, Sigma = Sigma))
 }
 
 
@@ -289,7 +308,7 @@ tri_probit_vec2param <- function(param, model_name) {
 # For now, prime the optimization with a warm start. 
 
 
-tri_probit_loglike <- function(param, y, model_name) {
+tri_probit_loglike <- function(param, y, x = NULL, model_name) {
   
   # Likelihood function for a trivariate probit model. 
   # Examples:
@@ -301,7 +320,8 @@ tri_probit_loglike <- function(param, y, model_name) {
   
   # Get parameters. 
   n_cases <- nrow(y)
-  param_list <- tri_probit_vec2param(param, model_name)
+  num_covars <- ncol(x)
+  param_list <- tri_probit_vec2param(param, model_name, num_covars)
   
   # Verify that the covariance matrix is positive definite. 
   # Not necessary (yet).
@@ -319,9 +339,18 @@ tri_probit_loglike <- function(param, y, model_name) {
     # For non-events, the upper bound is zero, lower bound is infinity.
     upper_bd[!y[i, ]] <- 0
     
+    
+    # Calculate the mean vector of latent intents. 
+    if (model_name %in% c('mu_only', 'mu_const', 'mu_cov')) {
+      mean_tvprobit <- param_list$mu
+    } else if (model_name == 'cov_const') {
+      mean_tvprobit <- 7
+    }
+    
+    
     # Calculate the probability. 
     prob <- pmvnorm(lower = lower_bd, upper = upper_bd, 
-                    mean = param_list$mu,
+                    mean = mean_tvprobit,
                     # corr = param_list$Sigma,
                     sigma = param_list$Sigma)
     
