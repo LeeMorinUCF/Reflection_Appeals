@@ -3,10 +3,12 @@
 Identification and Estimation in Judicial Panel Voting
 
 
-## Simulation Evidence
+# Simulation Evidence
 
 I conducted some simulations to determine whether we can
 identify the parameters of the econometric model. 
+
+## Preliminary Models without Covariates
 
 ### Intercept for means, full off-diagonal covariance matrix
 
@@ -184,3 +186,126 @@ Again, it appears to work, aside from the variation from the small sample size.
 
 The next step is to add covariates to the mean equation. 
 
+
+
+## Models with Covariates (no peer effects nor dissent aversion)
+
+### Common intercept for means, single-valued off-diagonal covariance matrix
+
+By introducing covariates, we introduce a mean latent intent that depends
+on the composition of the judiciary panel. 
+Each judiciary panel is comprised of a permutation of three judges 
+drawn from a pool of judges. 
+Each judge has a vector of binary covariates and these covariates 
+are stacked in a matrix, along with the triple of observed binary decisions. 
+
+
+In the first model with covariates, there is a common intercept
+and a common slope coefficient for the judge-specific covariates. 
+The judges do not take into account the characteristics of the
+other judges (no peer effects), 
+nor the latent intent of other judges (no dissent aversion). 
+These features are saved for later models. 
+
+I ran a simulation, in which a dataset is formed with 
+all permutations of judges, repeated several times. 
+The only source of randomness is the shock to the latent intent. 
+
+I set the following dimensions for the simulation
+and the matrix of judicial panels:
+
+```
+# Number of replications for simulation of estimation. 
+num_reps <- 100
+
+
+
+# Number of times each combination of judges appears on the panel. 
+n_cycles <- 3
+
+# Specify a dataset for the characteristics of judges.
+num_judges <- 5
+x_judge <- matrix(sample(c(0,1), num_judges*2, replace = TRUE), ncol = 2)
+
+# Populate the dataset in blocks by cycling through the combinations of judges. 
+panels <- alloc_judges(x_judge)
+num_panels <- nrow(panels)
+# 5 choose 3 is 60 distinct judiciary panels. 
+
+# Determine the number of cases by replicating each panel n_cycles times.
+n_cases <- n_cycles*num_panels
+# 180 cases, in total.
+
+
+```
+
+I used the following parameter values:
+
+```
+# Average intents of three appeals court judges.
+alpha_0 <- 0.25
+
+# Slope coefficients on covariates common to all judges.
+beta_0 <- c(1, 2)
+
+# Correlation coefficient for the taste-shifters of pairs of judges.
+# Off-diagonal element of Sigma
+sigma_21 <- 0.5
+
+# The parameter vector depends on the chosen model. 
+model_name <- 'cov_const'
+param_0 <- c(alpha_0, beta_0, sigma_21)
+
+```
+
+These were the estimation results:
+
+```
+> summary(estn_results)
+     alpha            beta_1           beta_2         Sigma_21      
+ Min.   :0.0106   Min.   :0.6609   Min.   :1.107   Min.   :0.09334  
+ 1st Qu.:0.1940   1st Qu.:0.8598   1st Qu.:1.990   1st Qu.:0.36962  
+ Median :0.2768   Median :0.9896   Median :2.071   Median :0.49185  
+ Mean   :0.2658   Mean   :0.9852   Mean   :2.061   Mean   :0.49026  
+ 3rd Qu.:0.3516   3rd Qu.:1.0861   3rd Qu.:2.184   3rd Qu.:0.61722  
+ Max.   :0.5353   Max.   :1.3387   Max.   :4.175   Max.   :0.80175  
+```
+
+Again, these parameters appear to be unbiased estimates. 
+
+
+## Models with Covariates and Peer Effects (no dissent aversion)
+
+# Work in Progress
+
+
+With peer effects, there is an additional parameter that is the 
+slope coefficient of the covariates of the other judges. 
+The mean latent intent for each judge depends on the common intercept, 
+the contibution of the judge's own covariates, 
+and the contribution of the covariates of the other two judges on the panel, 
+with the same coefficients for each of the two cross-judge contributions. 
+
+
+### Common intercept for means, single-valued off-diagonal covariance matrix
+
+
+
+I set the same dimensions for the simulation
+and the matrix of judicial panels as in the example above.
+
+
+
+I used the following parameter values:
+
+```
+
+```
+
+
+
+These were the estimation results:
+
+```
+
+```

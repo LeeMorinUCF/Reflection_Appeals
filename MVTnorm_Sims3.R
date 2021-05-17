@@ -535,20 +535,23 @@ alpha_0 <- 0.25
 # Slope coefficients on covariates common to all judges.
 beta_0 <- c(1, 2)
 
+# Correlation coefficient for the taste-shifters of pairs of judges.
+# Off-diagonal element of Sigma
+sigma_21 <- 0.5
 
 # Design of sigma depends on the chosen model. 
 # model_name <- 'mu_only'
 # param_0 <- mu_0
 
 # model_name <- 'mu_const'
-# param_0 <- c(mu_0, 0.5)
+# param_0 <- c(mu_0, sigma_21)
 # 
 # model_name <- 'mu_cov'
 # param_0 <- c(mu_0, 0.8, 0.2, 0.5)
 
 
 model_name <- 'cov_const'
-param_0 <- c(alpha_0, beta_0, 0.5)
+param_0 <- c(alpha_0, beta_0, sigma_21)
 
 
 param_list <- tri_probit_vec2param(param_0, model_name, 
@@ -602,10 +605,6 @@ for (rep_num in 1:num_reps) {
   
   print(sprintf("Now completing iteration %d of %d. ", rep_num, num_reps))
   
-  if (floor(rep_num/num_reps*10) == rep_num/num_reps*10) {
-    print(summary(estn_results))
-  }
-  
   # Generate realization of trivariate probit. 
   # y_sim <- tri_probit_gen(mu = mu_0, Sigma = Sigma_0, n_cases = n_cases)
   TVP_att_sim <- TVP_att_gen(alpha = alpha_0, beta = beta_0, Sigma = Sigma_0, 
@@ -617,6 +616,14 @@ for (rep_num in 1:num_reps) {
   
   # Store estimation results. 
   estn_results[rep_num, ] <- estn_list$param_hat
+  
+  
+  
+  # Print a progress report. 
+  if (floor(rep_num/num_reps*10) == rep_num/num_reps*10) {
+    print(summary(estn_results))
+  }
+  
   
 }
 
