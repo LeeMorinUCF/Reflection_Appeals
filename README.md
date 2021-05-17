@@ -319,5 +319,12 @@ gamma_0 <- c(-0.5, -1)
 These were the estimation results:
 
 ```
-
+> summary(estn_results)
+     alpha             beta_1           beta_2         gamma_1           gamma_2       
+ Min.   :-2.3383   Min.   :0.2237   Min.   :1.421   Min.   :-0.8929   Min.   :-1.2851  
+ 1st Qu.:-0.1296   1st Qu.:0.8026   1st Qu.:1.846   1st Qu.:-0.5807   1st Qu.:-1.0977  
+ Median : 0.1053   Median :1.0434   Median :2.008   Median :-0.4751   Median :-0.9874  
+ Mean   : 0.1657   Mean   :1.0523   Mean   :2.055   Mean   :-0.4837   Mean   :-0.9943  
+ 3rd Qu.: 0.5143   3rd Qu.:1.2624   3rd Qu.:2.183   3rd Qu.:-0.3851   3rd Qu.:-0.9038  
+ Max.   : 1.7262   Max.   :3.2067   Max.   :4.016   Max.   :-0.2041   Max.   :-0.6265 
 ```
