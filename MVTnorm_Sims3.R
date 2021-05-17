@@ -93,6 +93,35 @@ tri_probit_gen <- function(mu, Sigma, n_cases) {
 }
 
 
+alloc_judges <- function(x_judge) {
+  
+  # Create a list of judiciary panels for a series of cases
+  # using a list of judges' characteristics. 
+  # x_judge is a matrix of covariates for each judge, 
+  # with a row for each judge and a column for each covariate.
+  # Each combination of judges appears n_cycles times. 
+  # Examples:
+  # alloc_judges(x_judge = matrix(sample(c(0,1), 4*2, replace = TRUE), ncol = 2))
+  
+  # This version cycles through every permutation of judiciary panels. 
+  
+  num_judges <- nrow(x_judge)
+  
+  # Assemble a list of judges. 
+  panels <- expand.grid(j1 = seq(num_judges), 
+                        j2 = seq(num_judges), 
+                        j3 = seq(num_judges))
+  # Exclude any rows with duplicate judges. 
+  panels <- panels[panels[, 'j1'] != panels[, 'j2'] &
+                     panels[, 'j1'] != panels[, 'j3'] &
+                     panels[, 'j2'] != panels[, 'j3'] , ]
+  
+  
+  
+  return(panels)
+}
+
+
 TVP_att_gen <- function(alpha, beta, Sigma, x_judge, n_cycles) {
   
   # Generate realizations from a trivariate probit model, 
@@ -110,16 +139,7 @@ TVP_att_gen <- function(alpha, beta, Sigma, x_judge, n_cycles) {
   }
   
   # Populate the dataset in blocks by cycling through the combinations of judges. 
-  num_judges <- nrow(x_judge)
-  
-  # Assemble a list of judges. 
-  panels <- expand.grid(j1 = seq(num_judges), 
-                            j2 = seq(num_judges), 
-                            j3 = seq(num_judges))
-  # Exclude any rows with duplicate judges. 
-  panels <- panels[panels[, 'j1'] != panels[, 'j2'] &
-                     panels[, 'j1'] != panels[, 'j3'] &
-                     panels[, 'j2'] != panels[, 'j3'] , ]
+  panels <- alloc_judges(x_judge)
   num_panels <- nrow(panels)
   
   # Determine the number of cases by replicating each panel n_cycles times.
