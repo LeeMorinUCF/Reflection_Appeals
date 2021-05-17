@@ -675,7 +675,7 @@ for (rep_num in 1:num_reps) {
                                x_judge, n_cycles, peer_fx = TRUE)
   
   # Estimate model.
-  estn_list <- tri_probit_estn(y = TVP_att_sim$y, x = TVP_att_sim$x, 
+  estn_list <- tri_probit_estn(y = TVP_vote_sim$y, x = TVP_vote_sim$x, 
                                model_name = model_name, param_0 = param_0)
   
   # Store estimation results. 
