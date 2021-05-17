@@ -353,7 +353,7 @@ tri_probit_loglike <- function(param, y, x = NULL, model_name) {
   
   # Get parameters. 
   n_cases <- nrow(y)
-  num_covars <- ncol(x)
+  num_covars <- ncol(x)/3
   param_list <- tri_probit_vec2param(param, model_name, num_covars)
   
   # Verify that the covariance matrix is positive definite. 
@@ -375,9 +375,19 @@ tri_probit_loglike <- function(param, y, x = NULL, model_name) {
     
     # Calculate the mean vector of latent intents. 
     if (model_name %in% c('mu_only', 'mu_const', 'mu_cov')) {
+      
       mean_tvprobit <- param_list$mu
+      
     } else if (model_name == 'cov_const') {
-      mean_tvprobit <- 7
+      
+      # Calculate the mean intents for the panel.
+      x_judge_1 <- x[i, seq(num_covars)]
+      x_judge_2 <- x[i, seq(num_covars + 1, 2*num_covars)]
+      x_judge_3 <- x[i, seq(2*num_covars + 1, 3*num_covars)]
+      
+      mean_tvprobit <- param_list$alpha + c(sum(x_judge_1 * param_list$beta), 
+                                            sum(x_judge_2 * param_list$beta), 
+                                            sum(x_judge_3 * param_list$beta))
     }
     
     
@@ -405,7 +415,8 @@ tri_probit_loglike <- function(param, y, x = NULL, model_name) {
 
 
 
-tri_probit_estn <- function(y, model_name, param_0 = NULL, est_hessian = FALSE) {
+tri_probit_estn <- function(y, x = NULL, 
+                            model_name, param_0 = NULL, est_hessian = FALSE) {
   
   # Estimates the mean vector and correlation matrix 
   # for the trivariate probit model. 
@@ -414,9 +425,13 @@ tri_probit_estn <- function(y, model_name, param_0 = NULL, est_hessian = FALSE) 
   # tri_probit_estn(tri_probit_gen(mu = c(1, 0, -1), Sigma = diag(c(1, 1, 1)), n_cases = 100))
   # tri_probit_estn(tri_probit_gen(mu = c(0, 0, 0), Sigma = diag(c(1, 1, 1)), n_cases = 100))
   
-  # Need logic for model_name. 
-  # Could write function for number of parameters. 
-  num_params <- tri_probit_num_params(model_name)
+  # CHeck for correctly specified inputs. 
+  if (model_name == 'cov_const') {
+    num_covars <- ncol(x)/3
+  } else {
+    num_covars <- 0
+  }
+  num_params <- tri_probit_num_params(model_name, num_covars)
   if (!is.null(param_0)) {
     if (length(param_0) == num_params) {
       param_hat_0 <- param_0
@@ -429,13 +444,26 @@ tri_probit_estn <- function(y, model_name, param_0 = NULL, est_hessian = FALSE) 
   # param_hat_0 <- param_0
   # print(param_hat_0)
   
-  tri_probit_optim <- optim(par = param_hat_0, 
-                            fn = tri_probit_loglike, 
-                            y = y, 
-                            model_name = model_name, 
-                            method = "BFGS", 
-                            hessian = est_hessian, 
-                            control = list(fnscale= -1))
+  # Estimation depends on whether there are covariates. 
+  if (model_name == 'cov_const') {
+    tri_probit_optim <- optim(par = param_hat_0, 
+                              fn = tri_probit_loglike, 
+                              y = y, 
+                              x = x, 
+                              model_name = model_name, 
+                              method = "BFGS", 
+                              hessian = est_hessian, 
+                              control = list(fnscale= -1))
+  } else {
+    tri_probit_optim <- optim(par = param_hat_0, 
+                              fn = tri_probit_loglike, 
+                              y = y, 
+                              model_name = model_name, 
+                              method = "BFGS", 
+                              hessian = est_hessian, 
+                              control = list(fnscale= -1))
+  }
+  
   
   if (tri_probit_optim$convergence == 1) {
     warning("In optim(), iteration reached maximum limit.")
@@ -445,14 +473,23 @@ tri_probit_estn <- function(y, model_name, param_0 = NULL, est_hessian = FALSE) 
   }
   
   param_hat <- tri_probit_optim$par
-  param_list <- tri_probit_vec2param(param_hat, model_name)
+  param_list <- tri_probit_vec2param(param_hat, model_name, num_covars)
   
   
   
   # If Hessian matrix is returned, append it to the vector of outputs. 
   estn_list <- list(param_hat = param_hat, 
-                    mu_hat = param_list$mu, 
-                    Sigma_hat = param_list$Sigma)
+                    mu_hat = NULL, 
+                    alpha_hat = NULL, 
+                    beta_hat = NULL, 
+                    Sigma_hat = param_list$Sigma, 
+                    hessian = NULL)
+  if (model_name == 'cov_const') {
+    estn_list$alpha_hat <- param_list$alpha
+    estn_list$beta_hat <- param_list$beta
+  } else {
+    estn_list$mu_hat = param_list$mu
+  }
   if (est_hessian) {
     estn_list$hessian <- tri_probit_optim$hessian
   }
@@ -470,27 +507,56 @@ tri_probit_estn <- function(y, model_name, param_0 = NULL, est_hessian = FALSE) 
 # Number of replications for simulation of estimation. 
 num_reps <- 100
 
-# Number of appeals court cases.
-n_cases <- 100
+
+
+# Number of times each combination of judges appears on the panel. 
+n_cycles <- 3
+
+# Specify a dataset for the characteristics of judges.
+num_judges <- 5
+x_judge <- matrix(sample(c(0,1), num_judges*2, replace = TRUE), ncol = 2)
+
+# Populate the dataset in blocks by cycling through the combinations of judges. 
+panels <- alloc_judges(x_judge)
+num_panels <- nrow(panels)
+# 5 choose 3 is 60 distinct judiciary panels. 
+
+# Determine the number of cases by replicating each panel n_cycles times.
+n_cases <- n_cycles*num_panels
+# 180 cases, in total.
+
+
+
 
 # Average intents of three appeals court judges.
-mu_0 <- c(1, 0, -1)
+# mu_0 <- c(1, 0, -1)
+alpha_0 <- 0.25
+
+# Slope coefficients on covariates common to all judges.
+beta_0 <- c(1, 2)
 
 
 # Design of sigma depends on the chosen model. 
 # model_name <- 'mu_only'
 # param_0 <- mu_0
 
-model_name <- 'mu_const'
-param_0 <- c(mu_0, 0.5)
+# model_name <- 'mu_const'
+# param_0 <- c(mu_0, 0.5)
 # 
 # model_name <- 'mu_cov'
 # param_0 <- c(mu_0, 0.8, 0.2, 0.5)
 
 
-param_list <- tri_probit_vec2param(param_0, model_name)
+model_name <- 'cov_const'
+param_0 <- c(alpha_0, beta_0, 0.5)
+
+
+param_list <- tri_probit_vec2param(param_0, model_name, 
+                                   num_covars = length(beta_0))
 
 mu_0 <- param_list$mu
+alpha_0 <- param_list$alpha
+beta_0 <- param_list$beta
 Sigma_0 <- param_list$Sigma
 
 
@@ -517,6 +583,11 @@ if (model_name == 'mu_only') {
   estn_results <- data.frame(matrix(nrow = num_reps, ncol = 6))
   colnames(estn_results) <- c(sprintf("mu_%d", seq(3)), 
                               "Sigma_21", "Sigma_31", "Sigma_32")
+} else if (model_name == 'cov_const') {
+  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 2 + length(beta_0)))
+  colnames(estn_results) <- c("alpha", 
+                              sprintf("beta_%d", seq(length(beta_0))), 
+                              "Sigma_21")
 }
 
 
@@ -531,11 +602,18 @@ for (rep_num in 1:num_reps) {
   
   print(sprintf("Now completing iteration %d of %d. ", rep_num, num_reps))
   
+  if (floor(rep_num/num_reps*10) == rep_num/num_reps*10) {
+    print(summary(estn_results))
+  }
+  
   # Generate realization of trivariate probit. 
-  y_sim <- tri_probit_gen(mu = mu_0, Sigma = Sigma_0, n_cases = n_cases)
+  # y_sim <- tri_probit_gen(mu = mu_0, Sigma = Sigma_0, n_cases = n_cases)
+  TVP_att_sim <- TVP_att_gen(alpha = alpha_0, beta = beta_0, Sigma = Sigma_0, 
+                             x_judge, n_cycles)
   
   # Estimate model.
-  estn_list <- tri_probit_estn(y = y_sim, model_name = model_name, param_0 = param_0)
+  estn_list <- tri_probit_estn(y = TVP_att_sim$y, x = TVP_att_sim$x, 
+                               model_name = model_name, param_0 = param_0)
   
   # Store estimation results. 
   estn_results[rep_num, ] <- estn_list$param_hat
