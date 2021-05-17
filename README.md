@@ -276,7 +276,6 @@ Again, these parameters appear to be unbiased estimates.
 
 ## Models with Covariates and Peer Effects (no dissent aversion)
 
-# Work in Progress
 
 
 With peer effects, there is an additional parameter that is the 
@@ -328,3 +327,131 @@ These were the estimation results:
  3rd Qu.: 0.5143   3rd Qu.:1.2624   3rd Qu.:2.183   3rd Qu.:-0.3851   3rd Qu.:-0.9038  
  Max.   : 1.7262   Max.   :3.2067   Max.   :4.016   Max.   :-0.2041   Max.   :-0.6265 
 ```
+
+
+## Models with Covariates, Peer Effects and Dissent Aversion
+
+
+# Work in Progress
+
+Adding dissent aversion to the model changes the mean and covariance of the latent intent.
+According to the following examples, 
+it pushes a similarly-inclined panel further into the direction of agreement, 
+in either the positive or negative direction. 
+For judicial panels with a balance of intent, 
+it pulls them toward indifference. 
+
+
+```
+> dis_aversn_params(mu_in = c(1, 2, 3), delta = 0.25)
+$mu
+     [,1] [,2] [,3]
+[1,]  3.2    4  4.8
+
+$Sigma
+     [,1] [,2] [,3]
+[1,] 1.76 1.12 1.12
+[2,] 1.12 1.76 1.12
+[3,] 1.12 1.12 1.76
+
+$D_inv
+     [,1] [,2] [,3]
+[1,]  1.2  0.4  0.4
+[2,]  0.4  1.2  0.4
+[3,]  0.4  0.4  1.2
+
+> dis_aversn_params(mu_in = c(-1, 0, 1), delta = 0.25)
+$mu
+     [,1] [,2] [,3]
+[1,] -0.8    0  0.8
+
+$Sigma
+     [,1] [,2] [,3]
+[1,] 1.76 1.12 1.12
+[2,] 1.12 1.76 1.12
+[3,] 1.12 1.12 1.76
+
+$D_inv
+     [,1] [,2] [,3]
+[1,]  1.2  0.4  0.4
+[2,]  0.4  1.2  0.4
+[3,]  0.4  0.4  1.2
+
+> dis_aversn_params(mu_in = c(-1, -2, -3), delta = 0.25)
+$mu
+     [,1] [,2] [,3]
+[1,] -3.2   -4 -4.8
+
+$Sigma
+     [,1] [,2] [,3]
+[1,] 1.76 1.12 1.12
+[2,] 1.12 1.76 1.12
+[3,] 1.12 1.12 1.76
+
+$D_inv
+     [,1] [,2] [,3]
+[1,]  1.2  0.4  0.4
+[2,]  0.4  1.2  0.4
+[3,]  0.4  0.4  1.2
+
+> dis_aversn_params(mu_in = c(1, 2, 3), delta = 0.1)
+$mu
+         [,1] [,2]     [,3]
+[1,] 1.590909  2.5 3.409091
+
+$Sigma
+          [,1]      [,2]      [,3]
+[1,] 1.0717975 0.2453512 0.2453512
+[2,] 0.2453512 1.0717975 0.2453512
+[3,] 0.2453512 0.2453512 1.0717975
+
+$D_inv
+          [,1]      [,2]      [,3]
+[1,] 1.0227273 0.1136364 0.1136364
+[2,] 0.1136364 1.0227273 0.1136364
+[3,] 0.1136364 0.1136364 1.0227273
+
+> dis_aversn_params(mu_in = c(-1, 0, 1), delta = 0.1)
+$mu
+           [,1] [,2]      [,3]
+[1,] -0.9090909    0 0.9090909
+
+$Sigma
+          [,1]      [,2]      [,3]
+[1,] 1.0717975 0.2453512 0.2453512
+[2,] 0.2453512 1.0717975 0.2453512
+[3,] 0.2453512 0.2453512 1.0717975
+
+$D_inv
+          [,1]      [,2]      [,3]
+[1,] 1.0227273 0.1136364 0.1136364
+[2,] 0.1136364 1.0227273 0.1136364
+[3,] 0.1136364 0.1136364 1.0227273
+
+
+```
+
+
+### Common intercept for means, single-valued off-diagonal covariance matrix
+
+In this model, the constant value of the off-diagonal covariance value
+is implied by the degree of dissent aversion in the panel. 
+
+
+
+I used the following parameter values:
+
+
+```
+
+```
+
+
+These were the estimation results:
+
+
+```
+
+```
+
+
