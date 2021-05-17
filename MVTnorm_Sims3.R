@@ -129,8 +129,11 @@ TVP_att_gen <- function(alpha, beta, Sigma, x_judge, n_cycles) {
   # each judge has a set of covariates in the matrix x_judge, 
   # which has a row for each judge and a column for each covariate.
   # Each combination of judges appears n_cycles times. 
+  # Be careful: it works with a vector of judge-specific intercepts, 
+  # as well as a single intercept coefficient.
   # Examples:
   # TVP_att_gen(alpha = c(1, 0, -1), beta = c(1,1), Sigma = diag(c(1, 1, 1)), x_judge = matrix(sample(c(0,1), 4*2, replace = TRUE), ncol = 2), n_cycles = 3)
+  # TVP_att_gen(alpha = 0.5, beta = c(1,1), Sigma = diag(c(1, 1, 1)), x_judge = matrix(sample(c(0,1), 4*2, replace = TRUE), ncol = 2), n_cycles = 3)
   
   # Verify compatible dimensions.
   num_covars <- ncol(x_judge)
@@ -204,7 +207,7 @@ tri_probit_param2vec <- function(mu = NULL, alpha = NULL, beta = NULL,
   # tri_probit_param2vec(mu = c(0,1,2), Sigma = NULL, model_name = 'mu_only')
   # tri_probit_param2vec(mu = c(0,1,2), Sigma = matrix(seq(3,11), ncol = 3), model_name = 'mu_const')
   # tri_probit_param2vec(mu = c(0,1,2), Sigma = matrix(seq(3,11), ncol = 3), model_name = 'mu_cov')
-  # tri_probit_param2vec(alpha = c(0,1,2), beta = c(3,4), Sigma = matrix(seq(5,13), ncol = 3), model_name = 'cov_const')
+  # tri_probit_param2vec(alpha = 1, beta = c(2,3), Sigma = matrix(seq(4,12), ncol = 3), model_name = 'cov_const')
   
   # Start with mean equation.
   if (model_name == 'cov_const') {
@@ -255,7 +258,10 @@ tri_probit_num_params <- function(model_name, num_covars = 0) {
   } else if (model_name == 'cov_const') {
     # The lower triangle of Sigma is a constant, 
     # plus a mean and slope coefficients.
-    num_params <- 4 + num_covars
+    # Three separate judge-specific intercepts:
+    # num_params <- 4 + num_covars
+    # One panel-wide intercept:
+    num_params <- 2 + num_covars
   }
   
   return(num_params)
@@ -267,10 +273,12 @@ tri_probit_vec2param <- function(param, model_name, num_covars = 0) {
   # Translate trivariate probit parameters to a vector.
   # This must have the correct number of parameters.
   # Examples: 
-  # tri_probit_vec2param(param = seq(3), 'mu_only')
-  # tri_probit_vec2param(param = seq(4), 'mu_const')
-  # tri_probit_vec2param(param = seq(6), 'mu_cov')
-  # 
+  # tri_probit_vec2param(param = seq(3), model_name = 'mu_only')
+  # tri_probit_vec2param(param = seq(4), model_name = 'mu_const')
+  # tri_probit_vec2param(param = seq(6), model_name = 'mu_cov')
+  # tri_probit_vec2param(param = seq(3), model_name = 'cov_const', num_covars = 1)
+  # tri_probit_vec2param(param = seq(4), model_name = 'cov_const', num_covars = 2)
+  # tri_probit_vec2param(param = seq(5), model_name = 'cov_const', num_covars = 3)
   
   if (length(param) != tri_probit_num_params(model_name, num_covars)) {
     stop("param not correct length.")
@@ -279,10 +287,13 @@ tri_probit_vec2param <- function(param, model_name, num_covars = 0) {
   
   # Parameters for mean equation. 
   if (model_name == 'cov_const') {
+    if (num_covars == 0) {
+      stop("No covariates specified.")
+    }
     # Intercepts and slope coefficients. 
     mu <- NULL
-    alpha <- param[1:3]
-    beta <- param[seq(4, (4 + num_covars))]
+    alpha <- param[1]
+    beta <- param[seq(2, (1 + num_covars))]
   } else {
     # Extract vector of mean intercept.
     mu <- param[1:3]
@@ -292,9 +303,11 @@ tri_probit_vec2param <- function(param, model_name, num_covars = 0) {
   
   
   if (model_name == 'mu_only') {
+    # No more parameters. 
     param <- NULL
   } else {
-    param <- param[seq((4 + num_covars + 1), length(param))]
+    # Remaining parameters define Sigma. 
+    param <- param[seq((1 + num_covars + 1), length(param))]
   }
   
   
