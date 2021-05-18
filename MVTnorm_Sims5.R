@@ -742,35 +742,32 @@ Sigma_0 <- param_list$Sigma
 # param_0 <- tri_probit_param2vec(mu = mu_0, Sigma = Sigma_0, model_name)
 
 
+# Determine list of parameter names.
 if (model_name == 'mu_only') {
-  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 3))
-  colnames(estn_results) <- c(sprintf("mu_%d", seq(3)))
+  param_col_names <- c(sprintf("mu_%d", seq(3)))
 } else if (model_name == 'mu_const') {
-  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 4))
-  colnames(estn_results) <- c(sprintf("mu_%d", seq(3)), 
-                              "Sigma_21")
+  param_col_names <- c(sprintf("mu_%d", seq(3)), 
+                       "Sigma_21")
 } else if (model_name == 'mu_cov') {
-  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 6))
-  colnames(estn_results) <- c(sprintf("mu_%d", seq(3)), 
-                              "Sigma_21", "Sigma_31", "Sigma_32")
+  param_col_names <- c(sprintf("mu_%d", seq(3)), 
+                       "Sigma_21", "Sigma_31", "Sigma_32")
 } else if (model_name == 'cov_const') {
-  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 2 + length(beta_0)))
-  colnames(estn_results) <- c("alpha", 
-                              sprintf("beta_%d", seq(length(beta_0))), 
-                              "Sigma_21")
+  param_col_names <- c("alpha", 
+                       sprintf("beta_%d", seq(length(beta_0))), 
+                       "Sigma_21")
 } else if (model_name == 'peer_fx') {
-  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 1 + 2*length(beta_0)))
-  colnames(estn_results) <- c("alpha", 
-                              sprintf("beta_%d", seq(length(beta_0))), 
-                              sprintf("gamma_%d", seq(length(beta_0))))
+  param_col_names <- c("alpha", 
+                       sprintf("beta_%d", seq(length(beta_0))), 
+                       sprintf("gamma_%d", seq(length(beta_0))))
 } else if (model_name == 'dis_aversn') {
-  estn_results <- data.frame(matrix(nrow = num_reps, ncol = 1 + 2*length(beta_0) + 1))
-  colnames(estn_results) <- c("alpha", 
-                              sprintf("beta_%d", seq(length(beta_0))), 
-                              sprintf("gamma_%d", seq(length(beta_0))), 
-                              "delta")
+  param_col_names <- c("alpha", 
+                       sprintf("beta_%d", seq(length(beta_0))), 
+                       sprintf("gamma_%d", seq(length(beta_0))), 
+                       "delta")
 }
 
+estn_results <- data.frame(matrix(nrow = num_reps, ncol = length(param_col_names) + 2))
+colnames(estn_results) <- c(param_col_names, 'max_like', 'true_like')
 
 
 ##################################################
@@ -799,8 +796,19 @@ for (rep_num in 1:num_reps) {
                                model_name = model_name, param_0 = param_0)
   
   # Store estimation results. 
-  estn_results[rep_num, ] <- estn_list$param_hat
+  estn_results[rep_num, param_col_names] <- estn_list$param_hat
   
+  # Calculate optimal value of likelihood.
+  max_loglike <- tri_probit_loglike(param = estn_list$param_hat, 
+                                    y = TVP_vote_sim$y, x = TVP_vote_sim$x, 
+                                    model_name)
+  estn_results[rep_num, 'max_like'] <- max_loglike
+  
+  # Compare with value of likelihood at true parameter values.
+  true_loglike <- tri_probit_loglike(param = param_0, 
+                                    y = TVP_vote_sim$y, x = TVP_vote_sim$x, 
+                                    model_name)
+  estn_results[rep_num, 'true_like'] <- true_loglike
   
   
   # Print a progress report. 
@@ -812,4 +820,9 @@ for (rep_num in 1:num_reps) {
 }
 
 summary(estn_results)
+
+
+
+
+
 
