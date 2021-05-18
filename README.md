@@ -464,7 +464,21 @@ These were the estimation results:
 
 
 ```
-
+> summary(estn_results)
+     alpha              beta_1           beta_2         gamma_1           gamma_2       
+ Min.   :-0.70174   Min.   :0.5226   Min.   :1.532   Min.   :-6.6189   Min.   :-4.1750  
+ 1st Qu.:-0.34946   1st Qu.:1.4199   1st Qu.:1.786   1st Qu.:-1.1933   1st Qu.:-1.5617  
+ Median :-0.14867   Median :2.1394   Median :1.933   Median :-0.5742   Median :-0.8307  
+ Mean   :-0.04541   Mean   :2.3247   Mean   :1.963   Mean   :-0.5428   Mean   :-0.7532  
+ 3rd Qu.: 0.07904   3rd Qu.:3.0452   3rd Qu.:2.079   3rd Qu.: 0.3266   3rd Qu.:-0.1005  
+ Max.   : 2.56986   Max.   :4.7733   Max.   :2.836   Max.   : 4.3712   Max.   : 2.6407  
+     delta         
+ Min.   :-0.73620  
+ 1st Qu.:-0.31288  
+ Median :-0.24733  
+ Mean   :-0.26717  
+ 3rd Qu.:-0.18938  
+ Max.   :-0.06455  
 ```
 
 
