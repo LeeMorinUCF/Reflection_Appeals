@@ -232,6 +232,13 @@ dis_aversn_str2red <- function(str_params, delta) {
   # into the corresponding reduced-form parameters. 
   
   
+  # # Modify the latent intent process for dissent aversion. 
+  # dis_av_pars <- dis_aversn_params(mu, delta)
+  # 
+  # mu <- dis_av_pars$mu
+  # Sigma <- dis_av_pars$Sigma
+  
+  
   return(red_params)
 }
 
@@ -284,15 +291,16 @@ TVP_vote_gen <- function(alpha, beta, gamma, delta, Sigma,
     # Draw a panel of judges. 
     judge_index <- panels[j, ]
     
+    
     # Calculate the mean intents for this particular panel of judges. 
-    x_judge_mu_123 <- judges_mean_intent(alpha, beta, gamma, delta, model_name, 
+    x_judge_mu_123 <- judges_mean_intent(alpha, beta, gamma, model_name, 
                                        x_judge, panels = judge_index)
     
     
     # Obtain the corresponding covariates. 
     x_judge_123 <- x_judge_mu_123$x_judge_123
     
-    # Calculate the mean intents for the panel.
+    # Obtain the mean intents for the panel.
     mu <- x_judge_mu_123$mu
     
     
@@ -581,25 +589,53 @@ tri_probit_loglike <- function(param, y, x = NULL, model_name) {
       
     } else if (model_name %in% c('cov_const', 'peer_fx', 'dis_aversn')) {
       
-      # Calculate the mean intents for the panel.
-      x_judge_1 <- x[i, seq(num_covars)]
-      x_judge_2 <- x[i, seq(num_covars + 1, 2*num_covars)]
-      x_judge_3 <- x[i, seq(2*num_covars + 1, 3*num_covars)]
+      #----------------------------------------------------------------------
+      # From function to generate data: 
+      #----------------------------------------------------------------------
       
-      mean_tvprobit <- param_list$alpha + c(sum(x_judge_1 * param_list$beta), 
-                                            sum(x_judge_2 * param_list$beta), 
-                                            sum(x_judge_3 * param_list$beta))
+      # Calculate the mean intents for this particular panel of judges.
+      x_judge_mu_123 <- judges_mean_intent(alpha = param_list$alpha, 
+                                           beta = param_list$beta, 
+                                           gamma = param_list$gamma, 
+                                           model_name,
+                                           x_judge = matrix(x[i, ], nrow = 3, ncol = 2, byrow = TRUE))
+
+
+      # Obtain the corresponding covariates.
+      # x_judge_123 <- x_judge_mu_123$x_judge_123
+
+      # Obtain the mean intents for the panel.
+      mean_tvprobit <- x_judge_mu_123$mu
+      
     }
     
-    # Add peer effects, if required.
-    if (model_name == 'peer_fx') {
-      mean_tvprobit <- mean_tvprobit + c(sum(x_judge_2 * param_list$gamma + 
-                                               x_judge_3 * param_list$gamma), 
-                                         sum(x_judge_1 * param_list$gamma + 
-                                               x_judge_3 * param_list$gamma), 
-                                         sum(x_judge_1 * param_list$gamma + 
-                                               x_judge_2 * param_list$gamma))
-    }
+    
+    #----------------------------------------------------------------------
+    # Previous version coded separately:
+    #----------------------------------------------------------------------
+    
+    #   # Calculate the mean intents for the panel.
+    #   x_judge_1 <- x[i, seq(num_covars)]
+    #   x_judge_2 <- x[i, seq(num_covars + 1, 2*num_covars)]
+    #   x_judge_3 <- x[i, seq(2*num_covars + 1, 3*num_covars)]
+    #   
+    #   mean_tvprobit <- param_list$alpha + c(sum(x_judge_1 * param_list$beta), 
+    #                                         sum(x_judge_2 * param_list$beta), 
+    #                                         sum(x_judge_3 * param_list$beta))
+    # }
+    # 
+    # # Add peer effects, if required.
+    # if (model_name == 'peer_fx') {
+    #   mean_tvprobit <- mean_tvprobit + c(sum(x_judge_2 * param_list$gamma + 
+    #                                            x_judge_3 * param_list$gamma), 
+    #                                      sum(x_judge_1 * param_list$gamma + 
+    #                                            x_judge_3 * param_list$gamma), 
+    #                                      sum(x_judge_1 * param_list$gamma + 
+    #                                            x_judge_2 * param_list$gamma))
+    # }
+    
+    #----------------------------------------------------------------------
+    
     
     # Adjust mean for dissent aversion, if required. 
     if (model_name == 'dis_aversn') {
@@ -878,17 +914,26 @@ for (rep_num in 1:num_reps) {
   #                            x_judge, n_cycles)
   # TVP_vote_sim <- TVP_vote_gen(alpha = alpha_0, beta = beta_0, gamma = gamma_0, Sigma = Sigma_0, 
   #                              x_judge, n_cycles, peer_fx = TRUE)
+  # TVP_vote_sim <- TVP_vote_gen(alpha = alpha_0, beta = beta_0, gamma = gamma_0, 
+  #                              delta = delta_0, Sigma = Sigma_0, 
+  #                              x_judge, n_cycles, peer_fx = TRUE, dis_aversn = TRUE)
   TVP_vote_sim <- TVP_vote_gen(alpha = alpha_0, beta = beta_0, gamma = gamma_0, 
                                delta = delta_0, Sigma = Sigma_0, 
-                               x_judge, n_cycles, peer_fx = TRUE, dis_aversn = TRUE)
+                               x_judge, n_cycles, model_name)
   
   
   # Estimate model.
   estn_list <- tri_probit_estn(y = TVP_vote_sim$y, x = TVP_vote_sim$x, 
                                model_name = model_name, param_0 = param_0)
   
+  
+  
+  
   # Store estimation results. 
   estn_results[rep_num, param_col_names] <- estn_list$param_hat
+  
+  
+  
   
   # Calculate optimal value of likelihood.
   max_loglike <- tri_probit_loglike(param = estn_list$param_hat, 
