@@ -465,21 +465,33 @@ These were the estimation results:
 
 ```
 > summary(estn_results)
-     alpha              beta_1           beta_2         gamma_1           gamma_2       
- Min.   :-0.70174   Min.   :0.5226   Min.   :1.532   Min.   :-6.6189   Min.   :-4.1750  
- 1st Qu.:-0.34946   1st Qu.:1.4199   1st Qu.:1.786   1st Qu.:-1.1933   1st Qu.:-1.5617  
- Median :-0.14867   Median :2.1394   Median :1.933   Median :-0.5742   Median :-0.8307  
- Mean   :-0.04541   Mean   :2.3247   Mean   :1.963   Mean   :-0.5428   Mean   :-0.7532  
- 3rd Qu.: 0.07904   3rd Qu.:3.0452   3rd Qu.:2.079   3rd Qu.: 0.3266   3rd Qu.:-0.1005  
- Max.   : 2.56986   Max.   :4.7733   Max.   :2.836   Max.   : 4.3712   Max.   : 2.6407  
-     delta         
- Min.   :-0.73620  
- 1st Qu.:-0.31288  
- Median :-0.24733  
- Mean   :-0.26717  
- 3rd Qu.:-0.18938  
- Max.   :-0.06455  
+     alpha              beta_1           beta_2         gamma_1            gamma_2       
+ Min.   :-0.24589   Min.   :0.3436   Min.   :1.536   Min.   :-0.88316   Min.   :-1.5815  
+ 1st Qu.: 0.09368   1st Qu.:0.8597   1st Qu.:1.877   1st Qu.:-0.63246   1st Qu.:-1.1608  
+ Median : 0.23648   Median :1.0318   Median :2.037   Median :-0.50860   Median :-1.0027  
+ Mean   : 0.24700   Mean   :1.0692   Mean   :2.071   Mean   :-0.50175   Mean   :-1.0320  
+ 3rd Qu.: 0.37203   3rd Qu.:1.2236   3rd Qu.:2.249   3rd Qu.:-0.38777   3rd Qu.:-0.9029  
+ Max.   : 0.97762   Max.   :2.3202   Max.   :2.816   Max.   :-0.03476   Max.   :-0.5310  
+     delta             max_like        true_like     
+ Min.   :-0.06157   Min.   :-213.3   Min.   :-219.3  
+ 1st Qu.: 0.05601   1st Qu.:-187.1   1st Qu.:-189.1  
+ Median : 0.09797   Median :-177.1   Median :-179.8  
+ Mean   : 0.09106   Mean   :-177.5   Mean   :-180.7  
+ 3rd Qu.: 0.12248   3rd Qu.:-167.3   3rd Qu.:-171.9  
+ Max.   : 0.23362   Max.   :-153.3   Max.   :-157.8  
 ```
 
-Something's wrong with the delta. I need to investigate.
+It appears as though the model is identified
+and the maximum likelihood estimator is unbiased. 
+To speed up computation, for this round of simulations, 
+the optimization algorithm started from the true values of parameters. 
+As a test of robustness, the next round of simulations
+used the zero vector as the starting values. 
+
+The results were as follows:
+
+```
+> summary(estn_results)
+
+```
 
