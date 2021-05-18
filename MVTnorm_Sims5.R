@@ -20,8 +20,9 @@
 #   Identification and Estimation in Judicial Panel Voting"
 #   by Cameron, Morin and Paarsch
 # 
-# This fourth version estimates a model with covariates and peer effects, 
-# and a system of equations to account for dissent aversion. 
+# This fifth version also estimates a model with covariates and peer effects, 
+# and a system of equations to account for dissent aversion, 
+# except it makes a number of adjustments to test accuracy of the estimates. 
 #   
 #
 # Dependencies:
@@ -122,6 +123,72 @@ alloc_judges <- function(x_judge) {
   return(panels)
 }
 
+
+judges_mean_intent <- function(alpha, beta, gamma, model_name, x_judge, panels = matrix(c(1, 2, 3), ncol = 3)) {
+  
+  # Returns a dataset of mean latent intents, 
+  # given the judge's covariates and the list of judiciary panels. 
+  # 
+  # Examples:
+  # judges_mean_intent(alpha = 0.25, beta = c(1,2), gamma = c(-0.5,-1), model_name = 'peer_fx', x_judge = matrix(c(0,1,0,1,1,0), nrow = 3))
+  
+  # Get dimensions and initialize output. 
+  num_covars <- ncol(x_judge)
+  num_panels <- nrow(panels)
+  x_judge_mu <- matrix(nrow = num_panels, ncol = 3)
+  x_judge_123 <- matrix(nrow = num_panels, ncol = 3*num_covars)
+  
+  # For each combination of judges, calculate mean vector for latent intents. 
+  for (j in 1:num_panels) {
+    
+    # Draw a panel of judges. 
+    judge_index <- panels[j, ]
+    
+    # Draw the corresponding covariates. 
+    x_judge_1 <- x_judge[unlist(judge_index[1]), ]
+    x_judge_2 <- x_judge[unlist(judge_index[2]), ]
+    x_judge_3 <- x_judge[unlist(judge_index[3]), ]
+    
+    
+    # Calculate the mean intents for the panel.
+    mu <- alpha + c(sum(x_judge_1 * beta), 
+                    sum(x_judge_2 * beta), 
+                    sum(x_judge_3 * beta))
+    
+    # Add peer effects, if required.
+    # if (peer_fx == TRUE | dis_aversn == TRUE) {
+    if (model_name %in% c('peer_fx', 'dis_aversn')) {
+      mu <- mu + c(sum(x_judge_2 * gamma + x_judge_3 * gamma), 
+                   sum(x_judge_1 * gamma + x_judge_3 * gamma), 
+                   sum(x_judge_1 * gamma + x_judge_2 * gamma))
+    }
+    
+    # Append the mean intents for the panel.
+    x_judge_mu[j, ] <- mu
+    
+    # Append the covariates for this panel. 
+    x_judge_123[j, ] <- c(x_judge_1, x_judge_2, x_judge_3)
+    
+  }
+  
+  
+  # Collect output into a list.
+  x_judge_mu_123 <- list(mu = NA, x_judge_123 = NA)
+  
+  # Obtain the covariates for each panel. 
+  # x_judge_mu_123$x_judge_123 <- x_judge_123
+  x_judge_mu_123$x_judge_123 <- x_judge_123
+  
+  # Calculate the mean intents for the panel.
+  # x_judge_mu_123$mu <- mu
+  x_judge_mu_123$mu <- x_judge_mu
+  
+  
+  return(x_judge_mu_123)
+}
+
+
+
 dis_aversn_params <- function(mu_in, delta) {
   
   # Matrices to modify the system of equations for dissent aversion.
@@ -159,9 +226,31 @@ dis_aversn_params <- function(mu_in, delta) {
 }
 
 
+dis_aversn_str2red <- function(str_params, delta) {
+  
+  # Translates structural parameters in the dissent-aversion model
+  # into the corresponding reduced-form parameters. 
+  
+  
+  return(red_params)
+}
+
+
+dis_aversn_red2str <- function(red_params, delta) {
+  
+  # Translates reduced-form parameters in the dissent-aversion model
+  # into the corresponding structural parameters. 
+  
+  
+  return(str_params)
+}
+
+
 
 TVP_vote_gen <- function(alpha, beta, gamma, delta, Sigma, 
-                        x_judge, n_cycles, peer_fx = FALSE, dis_aversn = FALSE) {
+                        x_judge, n_cycles, 
+                        # peer_fx = FALSE, dis_aversn = FALSE, 
+                        model_name) {
   
   # Generate realizations from a trivariate probit model, 
   # using the attitudinal approach to modeling judicial decisions:
@@ -189,32 +278,30 @@ TVP_vote_gen <- function(alpha, beta, gamma, delta, Sigma,
   y <- matrix(nrow = n_cases, ncol = 3)
   x <- matrix(nrow = n_cases, ncol = 3*num_covars)
   
-  # For each combination of judges, calculate mean vector and latent intents. 
+  # For each combination of judges, calculate mean vector for latent intents. 
   for (j in 1:num_panels) {
     
     # Draw a panel of judges. 
     judge_index <- panels[j, ]
     
-    # Draw the corresponding covariates. 
-    x_judge_1 <- x_judge[unlist(judge_index[1]), ]
-    x_judge_2 <- x_judge[unlist(judge_index[2]), ]
-    x_judge_3 <- x_judge[unlist(judge_index[3]), ]
+    # Calculate the mean intents for this particular panel of judges. 
+    x_judge_mu_123 <- judges_mean_intent(alpha, beta, gamma, delta, model_name, 
+                                       x_judge, panels = judge_index)
     
+    
+    # Obtain the corresponding covariates. 
+    x_judge_123 <- x_judge_mu_123$x_judge_123
     
     # Calculate the mean intents for the panel.
-    mu <- alpha + c(sum(x_judge_1 * beta), 
-                    sum(x_judge_2 * beta), 
-                    sum(x_judge_3 * beta))
+    mu <- x_judge_mu_123$mu
     
-    # Add peer effects, if required.
-    if (peer_fx == TRUE | dis_aversn == TRUE) {
-      mu <- mu + c(sum(x_judge_2 * gamma + x_judge_3 * gamma), 
-                   sum(x_judge_1 * gamma + x_judge_3 * gamma), 
-                   sum(x_judge_1 * gamma + x_judge_2 * gamma))
-    }
+    
+    
+    
     
     # Multiply by the matrix for the system of equations for dissent aversion.  
-    if (dis_aversn == TRUE) {
+    # if (dis_aversn == TRUE) {
+    if (model_name == 'dis_aversn') {
       
       # Modify the latent intent process for dissent aversion. 
       dis_av_pars <- dis_aversn_params(mu, delta)
@@ -234,9 +321,14 @@ TVP_vote_gen <- function(alpha, beta, gamma, delta, Sigma,
     y[seq((j-1)*n_cycles + 1, j*n_cycles), ] <- y_j
     
     # Also record the sequence of covariates. 
+    # x[seq((j-1)*n_cycles + 1, j*n_cycles), ] <- 
+    #   matrix(rep(c(x_judge_1, x_judge_2, x_judge_3), n_cycles), 
+    #          nrow = n_cycles, byrow = TRUE)
     x[seq((j-1)*n_cycles + 1, j*n_cycles), ] <- 
-      matrix(rep(c(x_judge_1, x_judge_2, x_judge_3), n_cycles), 
+      matrix(rep(x_judge_123, n_cycles), 
              nrow = n_cycles, byrow = TRUE)
+    
+    
     
   }
   
