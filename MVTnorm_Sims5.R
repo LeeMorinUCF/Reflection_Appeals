@@ -924,7 +924,9 @@ for (rep_num in 1:num_reps) {
   
   # Estimate model.
   estn_list <- tri_probit_estn(y = TVP_vote_sim$y, x = TVP_vote_sim$x, 
-                               model_name = model_name, param_0 = param_0)
+                               model_name = model_name, 
+                               # param_0 = param_0, 
+                               param_0 = 0*param_0)
   
   
   
@@ -959,7 +961,8 @@ for (rep_num in 1:num_reps) {
 summary(estn_results)
 
 
-
+# Save these for comparison:
+estn_results_1 <- estn_results
 
 
 

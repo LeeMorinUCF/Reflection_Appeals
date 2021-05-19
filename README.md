@@ -492,6 +492,22 @@ The results were as follows:
 
 ```
 > summary(estn_results)
+     alpha             beta_1           beta_2         gamma_1             gamma_2       
+ Min.   :-0.2932   Min.   :0.4555   Min.   :1.455   Min.   :-1.151891   Min.   :-1.5465  
+ 1st Qu.: 0.1221   1st Qu.:0.8240   1st Qu.:1.867   1st Qu.:-0.589969   1st Qu.:-1.1761  
+ Median : 0.2930   Median :1.0150   Median :1.987   Median :-0.495165   Median :-1.0226  
+ Mean   : 0.2799   Mean   :1.1002   Mean   :2.009   Mean   :-0.479760   Mean   :-1.0319  
+ 3rd Qu.: 0.4188   3rd Qu.:1.2664   3rd Qu.:2.153   3rd Qu.:-0.354121   3rd Qu.:-0.8934  
+ Max.   : 0.7542   Max.   :3.1339   Max.   :2.673   Max.   : 0.003675   Max.   :-0.6514  
+     delta             max_like        true_like     
+ Min.   :-0.04055   Min.   :-208.7   Min.   :-211.7  
+ 1st Qu.: 0.05862   1st Qu.:-187.6   1st Qu.:-189.9  
+ Median : 0.08485   Median :-177.6   Median :-179.5  
+ Mean   : 0.08394   Mean   :-178.4   Mean   :-181.4  
+ 3rd Qu.: 0.11668   3rd Qu.:-169.2   3rd Qu.:-172.1  
+ Max.   : 0.19248   Max.   :-149.9   Max.   :-155.2  
 
 ```
+
+The optimization works just as well when the true values are unknown. 
 
