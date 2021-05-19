@@ -332,14 +332,13 @@ These were the estimation results:
 ## Models with Covariates, Peer Effects and Dissent Aversion
 
 
-# Work in Progress
-
 Adding dissent aversion to the model changes the mean and covariance of the latent intent.
 According to the following examples, 
 it pushes a similarly-inclined panel further into the direction of agreement, 
 in either the positive or negative direction. 
 For judicial panels with a balance of intent, 
-it pulls them toward indifference. 
+it pulls them toward indifference, 
+more so when the dissent aversion parameter is larger. 
 
 
 ```
