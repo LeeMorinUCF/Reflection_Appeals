@@ -59,7 +59,7 @@ os.getcwd()
 
 # Set the directory with data files.
 doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
-doc_path = drive_path + data_folder
+doc_path = drive_path + doc_folder
 
 
 # Set the directory with txt files after translation.
@@ -68,7 +68,7 @@ txt_path = drive_path + txt_folder
 
 
 ##################################################
-# Define function for translating files.
+# Define functions for translating files.
 ##################################################
 
 # Translate all doc files in a directory.
