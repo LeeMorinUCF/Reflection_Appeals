@@ -65,6 +65,11 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\
 data_path = drive_path + data_folder
 
 
+# Set the directory with txt files after translation.
+txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
+txt_path = drive_path + txt_folder
+
+
 ##################################################
 ## Opening a pdf File
 ##################################################
@@ -333,6 +338,33 @@ print('Exporting', out_file)
 doc.SaveAs(out_file, FileFormat=7)
 doc.Close()
 
+
+
+
+
+# Set paths for in_files (doc) and out_files (txt).
+data_path
+txt_path
+
+
+# Initialize object for Word application
+app = win32com.client.Dispatch('Word.Application')
+app.Visible = True
+
+
+# Loop through all doc files and convert to txt in another folder.
+for subdir, dirs, files in os.walk(data_path):
+    for file in files:
+        fullpath = os.path.join(*[subdir, file])
+        if file.endswith(".doc"):
+            out_name = file.replace("doc", r"txt")
+            in_file = os.path.abspath(data_path + "\\" + file)
+            out_file = os.path.abspath(txt_path + "\\" + out_name)
+            doc = app.Documents.Open(in_file)
+            content = doc.Content.Text
+            print('Exporting the txt version of ', out_file)
+            doc.SaveAs(out_file, FileFormat=7)
+            doc.Close()
 
 
 
