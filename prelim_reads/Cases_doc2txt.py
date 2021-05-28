@@ -123,7 +123,7 @@ party_2 = 'Kansas'
 
 case_file_tag = case_num + " - " + party_1 + " v " + party_2
 doc_file = doc_path + case_file_tag + ".doc"
-txt_file = case_file_tag + ".txt"
+txt_file = txt_path + case_file_tag + ".txt"
 
 
 # Initialize object for Word application
