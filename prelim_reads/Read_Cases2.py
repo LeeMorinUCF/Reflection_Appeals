@@ -18,7 +18,7 @@
 # Functions for Scraping Information from 
 # Documents from US Courts of Appeals
 # 
-# This script reads case information from a single file.
+# This script reads case information from several files.
 #
 ##################################################
 """
@@ -31,19 +31,8 @@
 
 import os # To set working directory
 
-# Modules for reading pdfrs (need to be installed):
-# import PyPDF2
-# import textract
-
-# Modules for reading from docx:
-# import zipfile
-# from lxml import etree
-
 # Modules for reading from doc (Word 97 2003):
-import win32com
-
-# Module for detecting type of character.
-# import chardet
+# import win32com
 
 # Module for handling files and directories.
 import glob
@@ -271,7 +260,8 @@ def get_holdings(file):
 # Record the case outcome. 
 def get_outcome(file):
     
-     # Assumes the holdings were just passed.
+    # Assumes the holdings were just passed.
+    line = file.readline()
     # Record the case outcome. 
     outcome = line.replace("\n","")
     
@@ -333,11 +323,98 @@ def get_jurist_list(file):
 
 
 
+def get_case_info(txt_file):
+    
+    # Extract the fields from the file.
+    with open(txt_file, 'r', encoding = 'utf-16') as file:
+        
+        # Record the case code. 
+        case_code = get_case_code(file)
+        
+        # Record the circuit number.
+        circ_num = get_circ_num(file)
+        
+        # Record the names of parties.
+        (pla_appnt, def_appee) = get_party_names(file)
+        
+        # Record the case number.
+        case_num = get_case_num(file)
+        
+        # Record the case date.
+        case_date = get_case_date(file)
+        
+        # Record the background, a paragraph describing the case. 
+        background = get_background(file)
+        
+        # Record the list of holdings.
+        holdings = get_holdings(file)
+        # Record the "Holdings" header statement.
+        holdings_hdr = holdings[0]
+        # Record the case outcome. 
+        outcome = holdings[-1]
+        
+        # Record the statement of "Procedural Posture(s)".
+        posture = get_posture(file)
+        
+        # Record the names of lawyers, judges and previous case.
+        jurist_list = get_jurist_list(file)
+        # The first line is the council for the plaintiff-appellant.
+        # pla_appnt_council = jurist_list[0]
+        # The next line is the council for the defendant-appellee.
+        # def_appee_council = jurist_list[1]
+        # The last line is the judicial panel.
+        judicial_panel = jurist_list[len(jurist_list) - 1]
+        
+        
+    # Collect the fields into a dictionary.
+    case_info = {
+        "case_code":
+        case_code,
+        
+        "circ_num":
+        circ_num,
+        
+        "pla_appnt":
+        pla_appnt,
+        
+        "def_appee":
+        def_appee,
+        
+        "case_num":
+        case_num,
+        
+        "case_date":
+        case_date,
+        
+        "background":
+        background,
+        
+        "holdings_hdr":
+        holdings_hdr,
+        
+        "outcome":
+        outcome,
+        
+        "posture":
+        posture,
+        
+        "judicial_panel":
+        judicial_panel
+        
+        }
+        
+    return(case_info)
+
+
 
 ##################################################
 # Select a File and Scrape Contents
 ##################################################
 
+
+# Assume all files are translated to txt. 
+# Later version will translate directly from 
+# original doc file. 
 
 # # Translate a single file.
 
@@ -364,101 +441,46 @@ def get_jurist_list(file):
 ##################################################
 
 
+case_code_list = []
+
+
 # Get list of all files in a given directory sorted by name
 txt_file_list = sorted( filter( os.path.isfile,
                         glob.glob(txt_path + '*') ) )
 
+# Some files are problematic. 
+txt_file_num_excl = [12, 15, 17]
 
-# Choose a file and read the case information. 
-# txt_file_num = 0
-# txt_file_num = 1
-# txt_file_num = 2
-# txt_file_num = 11
-txt_file_num = 12
+txt_file_num_list = range(len(txt_file_list))
 
-# Read the information from this case.
-txt_file = txt_file_list[txt_file_num]
+# txt_file_num_list = txt_file_num_list[txt_file_num_list not in txt_file_num_excl]
 
-print("Reading case information from file:")
-print(txt_file)
-print("")
-
-
-lines_read = 0
-with open(txt_file, 'r', encoding = 'utf-16') as file:
+for txt_file_num in txt_file_num_list:
     
-    # Record the case code. 
-    case_code = get_case_code(file)
-    
-    # Record the circuit number.
-    circ_num = get_circ_num(file)
-
-    # Record the names of parties.
-    (pla_appnt, def_appee) = get_party_names(file)
-    
-    # Record the case number.
-    case_num = get_case_num(file)
-    
-    # Record the case date.
-    case_date = get_case_date(file)
-    
-    # Record the background, a paragraph describing the case. 
-    background = get_background(file)
-    
-    # Record the list of holdings.
-    holdings = get_holdings(file)
-    # Record the "Holdings" header statement.
-    holdings_hdr = holdings[0]
-    # Record the case outcome. 
-    outcome = holdings[-1]
-    
-    # Record the statement of "Procedural Posture(s)".
-    posture = get_posture(file)
-    
-    # Record the names of lawyers, judges and previous case.
-    jurist_list = get_jurist_list(file)
-    # The first line is the council for the plaintiff-appellant.
-    pla_appnt_council = jurist_list[0]
-    # The next line is the council for the defendant-appellee.
-    pla_appnt_council = jurist_list[1]
-    # The last line is the judicial panel.
-    judicial_panel = jurist_list[len(jurist_list) - 1]
+    if txt_file_num not in txt_file_num_excl:
+        
+        # Read the information from this case.
+        txt_file = txt_file_list[txt_file_num]
+        
+        print("Reading case information from file number" + str(txt_file_num))
+        
+        # Get the dictionary of case info.
+        case_info = get_case_info(txt_file)
+        
+        # Collect specific fields for analysis. 
+        case_code_list.append(case_info["case_code"])
     
 
 
-# Print the results.
-print("case_code = ")
-print(case_code)
 
-print("circ_num = ")
-print(circ_num)
+# Now inspect the contents. 
+print(case_code_list)
 
-print("pla_appnt = ")
-print(pla_appnt)
 
-print("def_appee = ")
-print(def_appee)
 
-print("case_num = ")
-print(case_num)
 
-print("case_date = ")
-print(case_date)
 
-print("background = ")
-print(background)
 
-print("holdings_hdr = ")
-print(holdings_hdr)
-
-print("outcome = ")
-print(outcome)
-
-print("posture = ")
-print(posture)
-
-print("judicial_panel = ")
-print(judicial_panel)
 
 
 
@@ -466,18 +488,6 @@ print(judicial_panel)
 # Extra Code Snippets
 ##################################################
 
-
-
-# with open(txt_file, 'r', encoding = 'utf-16') as file:
-#     for line_num in range(20):
-#         line = file.readline()
-#         print(line)
-#         print(str(line))
-#         print(line.rstrip())
-#         # print(line.decode('utf-16'))
-#         print(line.split())
-#         print(str(line).rstrip().split())
-#         print(line.replace("\r\n","").split())
 
 
 
