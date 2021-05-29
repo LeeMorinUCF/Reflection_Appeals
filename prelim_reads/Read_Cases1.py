@@ -240,26 +240,31 @@ def get_background(file):
 
 # Determine whether line goes beyond list of holdings.
 def is_finished_holdings(line):
-    if line[0] == '[' or line[0].strip() == '':
-        return False
-    else:
-        return True
+    return(line[0] != '[' and line[0].strip() != '')
 
 # Record the "Holdings" header statement.
 def get_holdings(file):
     
+    # Skip a blank line and initialize list.
+    line = file.readline()
+    holdings = []
+    
     # The next line is the "Holdings" header statement.
-    line = file.readline() # Skip a blank line.
     line = file.readline()
     holdings_hdr = line.replace("\n","")
+    holdings.append(holdings_hdr)
     
-    # For now, skip the contents of the holdings. 
+    # Append the contents of the holdings. 
     finished_holdings = False
     while not finished_holdings:
         line = file.readline()
         finished_holdings = is_finished_holdings(line)
+        # Record last line unless it is blank:
+        # the last line is the outcome. 
+        if line[0].strip() != '':
+            holdings.append(line.replace("\n",""))
         
-    return(holdings_hdr)
+    return(holdings)
 
 # Record the case outcome. 
 def get_outcome(file):
@@ -281,7 +286,51 @@ def get_posture(file):
     posture = line.replace("\n","")
     
     return(posture)
+
+
+# Determine when file is read up to list of jurists. 
+def is_jurists(line):
+    
+    # Reads over legal information util a line
+    # that contains "Attorneys and Law Firms".
+    line_list = line.split()
+    return("Attorneys" in line_list or "Firms" in line_list)
+    
+
+# Determine when list of jurists is read up to judicial panel. 
+def is_panel(line):
+    
+    # Reads over legal information util a line
+    # that begins with "Before". 
+    line_list = line.split()
+    return(line_list[0].strip() == "Before" or line_list[0].strip() == "Before:")
+
+
+# Record the names of lawyers, judges and previous case.
+def get_jurist_list(file):
+    
+    found_jurists = False
+    while not found_jurists:
+        line = file.readline()
+        found_jurists = is_jurists(line)
+        # Don't record; skip to jurists. 
         
+    # Now record the jurists in a list.
+    jurist_list = []
+    # The last line with the judicial panel
+    # should begin with "Before". 
+    
+    found_panel = False
+    while not found_panel:
+        line = file.readline()
+        found_panel = is_panel(line)
+        # Regardless, add to list of jurists.
+        jurist_list.append(line)
+    
+    return(jurist_list)
+
+
+
 
 ##################################################
 # Select a File and Scrape Contents
@@ -320,7 +369,8 @@ txt_file_list = sorted( filter( os.path.isfile,
 
 # Choose a file and read the case information. 
 # txt_file_num = 0
-txt_file_num = 1
+# txt_file_num = 1
+txt_file_num = 2
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
@@ -351,14 +401,24 @@ with open(txt_file, 'r', encoding = 'utf-16') as file:
     # Record the background, a paragraph describing the case. 
     background = get_background(file)
     
+    # Record the list of holdings.
+    holdings = get_holdings(file)
     # Record the "Holdings" header statement.
-    holdings_hdr = get_holdings(file)
-    
+    holdings_hdr = holdings[0]
     # Record the case outcome. 
-    outcome = get_outcome(file)
+    outcome = holdings[-1]
     
     # Record the statement of "Procedural Posture(s)".
     posture = get_posture(file)
+    
+    # Record the names of lawyers, judges and previous case.
+    jurist_list = get_jurist_list(file)
+    # The first line is the council for the plaintiff-appellant.
+    pla_appnt_council = jurist_list[0]
+    # The next line is the council for the defendant-appellee.
+    pla_appnt_council = jurist_list[1]
+    # The last line is the judicial panel.
+    judicial_panel = jurist_list[len(jurist_list) - 1]
     
 
 
@@ -392,6 +452,9 @@ print(outcome)
 
 print("posture = ")
 print(posture)
+
+print("judicial_panel = ")
+print(judicial_panel)
 
 
 
