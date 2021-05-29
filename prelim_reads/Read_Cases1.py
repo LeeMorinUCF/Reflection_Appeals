@@ -34,14 +34,17 @@ import os # To set working directory
 # import textract
 
 # Modules for reading from docx:
-import zipfile
-from lxml import etree
+# import zipfile
+# from lxml import etree
 
 # Modules for reading from doc (Word 97 2003):
 import win32com
 
 # Module for detecting type of character.
-import chardet
+# import chardet
+
+# Module for handling files and directories.
+import glob
 
 
 ##################################################
@@ -119,6 +122,131 @@ def is_case_code(line):
             return True
         else:
             return False
+        
+# Function to find and get the case code.
+def get_case_code(file):
+
+    # First look for the case code.
+    found_case_code = False
+    # while not found_case_num and lines_read < 10:
+    while not found_case_code:
+        line = file.readline()
+        found_case_code = is_case_code(line)
+    
+    # Record the case code. 
+    case_code = line.replace("\n","")
+    
+    return(case_code)
+
+
+    # Record the circuit number.
+def get_circ_num(file):
+    
+    # Assumes the case code was just recorded. 
+    # The next line should be "United States Court of Appeals,"
+    # lines_read = lines_read + 1
+    line = file.readline()
+    # This line should be the circuit number.
+    line = file.readline()
+    circ_num = line.split()[0]
+    
+    return(circ_num)
+
+# Get names of parties.
+def get_party_names(file):
+    
+    # The next name should be the Plaintiff-Appellant.
+    line = file.readline()
+    pla_appnt_list = line.split()
+    pla_appnt = ' '.join(pla_appnt_list[0:len(pla_appnt_list) - 1])
+    pla_appnt = pla_appnt.replace(",","")
+    
+    # The next line is "v."
+    line = file.readline()
+    
+    # The next name should be the Defendant-Appellee.
+    line = file.readline()
+    def_appee_list = line.split()
+    def_appee = ' '.join(def_appee_list[0:len(def_appee_list) - 1])
+    def_appee = def_appee.replace(",","")
+    
+    return( (pla_appnt, def_appee) )
+
+
+# Record the case number.
+def get_case_num(file):
+    
+    # Assumes names of parties was just recorded. 
+    # The next line should be the case number.
+    line = file.readline()
+    case_num = line.replace("\n","")
+    
+    return(case_num)
+    
+# Record the case date.
+def get_case_date(file):
+    
+    # Assumes case number was just recorded. 
+    # The next line is a pipe (|).
+    line = file.readline()
+    
+    # The next line is the date in text format.
+    line = file.readline()
+    case_date = line.replace("\n","")
+    
+    return(case_date)
+    
+# Record the background, a paragraph describing the case. 
+def get_background(file):
+    
+    # Assumes the case date was just read. 
+    # The next line is the header "Synopsis".
+    line = file.readline()
+    
+    # The next line is the "Background" paragraph.
+    line = file.readline()
+    background = line.replace("\n","")
+    
+    return(background)
+
+
+
+# Record the "Holdings" header statement.
+def get_holdings(file):
+    
+    # The next line is the "Holdings" header statement.
+    line = file.readline() # Skip a blank line.
+    line = file.readline()
+    holdings_hdr = line.replace("\n","")
+    
+    # For now, skip the contents of the holdings. 
+    finished_holdings = False
+    while not finished_holdings:
+        line = file.readline()
+        finished_holdings = is_finished_holdings(line)
+        
+    return(holdings_hdr)
+
+# Record the case outcome. 
+def get_outcome(file):
+    
+     # Assumes the holdings were just passed.
+    # Record the case outcome. 
+    outcome = line.replace("\n","")
+    
+    return(outcome)
+
+
+
+# Record the statement of "Procedural Posture(s)".
+def get_posture(file):
+    
+    # The next line is the statement of "Procedural Posture(s)".
+    line = file.readline() # Skip a blank line.
+    line = file.readline()
+    posture = line.replace("\n","")
+    
+    return(posture)
 
 # Determine whether line goes beyond list of holdings.
 def is_finished_holdings(line):
@@ -160,21 +288,7 @@ doc2txt_file(app, doc_file, txt_file)
 
 
 
-# with open(txt_file, 'r', encoding = 'utf-16') as file:
-#     for line_num in range(20):
-#         line = file.readline()
-#         print(line)
-#         print(str(line))
-#         print(line.rstrip())
-#         # print(line.decode('utf-16'))
-#         print(line.split())
-#         print(str(line).rstrip().split())
-#         print(line.replace("\r\n","").split())
 
-
-
-
-import glob
 
 # Get list of all files in a given directory sorted by name
 txt_file_list = sorted( filter( os.path.isfile,
@@ -182,7 +296,7 @@ txt_file_list = sorted( filter( os.path.isfile,
 
 
 # Choose a file and read the case information. 
-txt_file_num = 1
+txt_file_num = 0
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
@@ -195,81 +309,33 @@ print("")
 lines_read = 0
 with open(txt_file, 'r', encoding = 'utf-16') as file:
     
-    # First look for the case number.
-    found_case_code = False
-    # while not found_case_num and lines_read < 10:
-    while not found_case_code:
-        # lines_read = lines_read + 1
-        line = file.readline()
-        # print(line)
-        
-        found_case_code = is_case_code(line)
-        
-        # line_bytes = line_bytes[0:(len(line_bytes) - 1)]
-        # line_bytes = line_bytes.rstrip()
-        # line_str = line_bytes.decode('utf-16')
-        # found_case_num = is_case_num(line_str)
+    # Record the case code. 
+    case_code = get_case_code(file)
     
-    # Record the case number. 
-    case_code = line.replace("\n","")
+    # Record the circuit number.
+    circ_num = get_circ_num(file)
+
+    # Record the names of parties.
+    (pla_appnt, def_appee) = get_party_names(file)
     
-    # The next line should be "United States Court of Appeals,"
-    # lines_read = lines_read + 1
-    line = file.readline()
-    # This line should be the circuit number.
-    line = file.readline()
-    circ_num = line.split()[0]
+    # Record the case number.
+    case_num = get_case_num(file)
     
-    # The next name should be the Plaintiff-Appellant.
-    line = file.readline()
-    pla_appnt_list = line.split()
-    pla_appnt = ' '.join(pla_appnt_list[0:len(pla_appnt_list) - 1])
-    pla_appnt = pla_appnt.replace(",","")
+    # Record the case date.
+    case_date = get_case_date(file)
     
-    # The next line is "v."
-    line = file.readline()
+    # Record the background, a paragraph describing the case. 
+    background = get_background(file)
     
-    # The next name should be the Defendant-Appellee.
-    line = file.readline()
-    def_appee_list = line.split()
-    def_appee = ' '.join(def_appee_list[0:len(def_appee_list) - 1])
-    def_appee = def_appee.replace(",","")
+    # Record the "Holdings" header statement.
+    holdings_hdr = get_holdings(file)
     
-    # The next line should be the case number.
-    line = file.readline()
-    case_num = line.replace("\n","")
-    
-    # The next line is a pipe (|).
-    line = file.readline()
-    
-    # The next line is the date in text format.
-    line = file.readline()
-    case_date = line.replace("\n","")
-    
-    # The next line is the header "Synopsis".
-    line = file.readline()
-    
-    # The next line is the "Background" paragraph.
-    line = file.readline()
-    background = line.replace("\n","")
-    
-    # The next line is the "Holdings" header statement.
-    line = file.readline() # Skip a blank line.
-    line = file.readline()
-    holdings_hdr = line.replace("\n","")
-    
-    finished_holdings = False
-    while not finished_holdings:
-        line = file.readline()
-        finished_holdings = is_finished_holdings(line)
-        
     # Record the case outcome. 
-    outcome = line.replace("\n","")
+    outcome = get_outcome(file)
     
-    # The next line is the statement of "Procedural Posture(s)".
-    line = file.readline() # Skip a blank line.
-    line = file.readline()
-    posture = line.replace("\n","")
+    # Record the statement of "Procedural Posture(s)".
+    posture = get_posture(file)
+    
 
 
 # Print the results.
@@ -304,6 +370,23 @@ print("posture = ")
 print(posture)
 
 
+
+##################################################
+# Extra Code Snippets
+##################################################
+
+
+
+# with open(txt_file, 'r', encoding = 'utf-16') as file:
+#     for line_num in range(20):
+#         line = file.readline()
+#         print(line)
+#         print(str(line))
+#         print(line.rstrip())
+#         # print(line.decode('utf-16'))
+#         print(line.split())
+#         print(str(line).rstrip().split())
+#         print(line.replace("\r\n","").split())
 
 
 
