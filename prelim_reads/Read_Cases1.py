@@ -116,12 +116,10 @@ def doc2txt_file(app, doc_file, txt_file):
 def is_case_code(line):
     # Case numbers have digits at the beginning and end of the line.
     line_list = line.split()
-    if len(line) > 1:
-        
-        if line_list[0].isdigit() and line_list[-1].isdigit():
-            return True
-        else:
-            return False
+    if len(line_list) > 1:
+        return(line_list[0].isdigit() and line_list[-1].isdigit())
+    else:
+        return False
         
 # Function to find and get the case code.
 def get_case_code(file):
@@ -138,14 +136,28 @@ def get_case_code(file):
     
     return(case_code)
 
+# Determine if the line contains the string
+# "United States Court of Appeals,"
+def is_uscoa(line):
+    line_list = line.split()
+    if len(line_list) > 1:
+        return(line_list[0].strip() == "United" and line_list[1].strip() == "States")
+    else:
+        return False
+    
+    
 
-    # Record the circuit number.
+# Record the circuit number.
 def get_circ_num(file):
     
     # Assumes the case code was just recorded. 
     # The next line should be "United States Court of Appeals,"
-    # lines_read = lines_read + 1
-    line = file.readline()
+    # Keep reading until then. 
+    found_uscoa = False
+    while not found_uscoa:
+        line = file.readline()
+        found_uscoa = is_uscoa(line)
+    
     # This line should be the circuit number.
     line = file.readline()
     circ_num = line.split()[0]
@@ -183,16 +195,31 @@ def get_case_num(file):
     
     return(case_num)
     
+
+
 # Record the case date.
 def get_case_date(file):
     
     # Assumes case number was just recorded. 
-    # The next line is a pipe (|).
-    line = file.readline()
+    # Sometimes there are multiple dates:
+    # Submitted, Submitted and Argued, Filed.
+    # Dates separated by a pipe (|).
+    # After all dates is a line with the word "Synopsis".
     
-    # The next line is the date in text format.
-    line = file.readline()
-    case_date = line.replace("\n","")
+    case_date = []
+    found_synopsis = False
+    while not found_synopsis:
+        line = file.readline()
+        line_list = line.split()
+        # Check if the next line is "Synopsis".
+        found_synopsis =  line_list[0].strip() == "Synopsis"
+        # Skip the next line if it is a pipe (|).
+        if not found_synopsis and line_list[0].strip() != "|":
+            # The next line should be a date in text format.
+            case_date.append(line.replace("\n",""))
+    
+    # Return one or all of the dates.
+    # case_date = do_something_to(case_date)
     
     return(case_date)
     
@@ -200,8 +227,8 @@ def get_case_date(file):
 def get_background(file):
     
     # Assumes the case date was just read. 
-    # The next line is the header "Synopsis".
-    line = file.readline()
+    # and that the previous line was the header "Synopsis".
+    # line = file.readline()
     
     # The next line is the "Background" paragraph.
     line = file.readline()
@@ -210,6 +237,13 @@ def get_background(file):
     return(background)
 
 
+
+# Determine whether line goes beyond list of holdings.
+def is_finished_holdings(line):
+    if line[0] == '[' or line[0].strip() == '':
+        return False
+    else:
+        return True
 
 # Record the "Holdings" header statement.
 def get_holdings(file):
@@ -247,13 +281,6 @@ def get_posture(file):
     posture = line.replace("\n","")
     
     return(posture)
-
-# Determine whether line goes beyond list of holdings.
-def is_finished_holdings(line):
-    if line[0] == '[' or line[0].strip() == '':
-        return False
-    else:
-        return True
         
 
 ##################################################
@@ -261,23 +288,23 @@ def is_finished_holdings(line):
 ##################################################
 
 
-# Translate a single file.
+# # Translate a single file.
 
-case_num = '01'
-party_1 = 'Helm'
-party_2 = 'Kansas'
+# case_num = '01'
+# party_1 = 'Helm'
+# party_2 = 'Kansas'
 
-case_file_tag = case_num + " - " + party_1 + " v " + party_2
-doc_file = doc_path + case_file_tag + ".doc"
-txt_file = txt_path + case_file_tag + ".txt"
-
-
-# Initialize object for Word application
-app = win32com.client.Dispatch('Word.Application')
-app.Visible = True
+# case_file_tag = case_num + " - " + party_1 + " v " + party_2
+# doc_file = doc_path + case_file_tag + ".doc"
+# txt_file = txt_path + case_file_tag + ".txt"
 
 
-doc2txt_file(app, doc_file, txt_file)
+# # Initialize object for Word application
+# app = win32com.client.Dispatch('Word.Application')
+# app.Visible = True
+
+
+# doc2txt_file(app, doc_file, txt_file)
 
 
 
@@ -286,17 +313,14 @@ doc2txt_file(app, doc_file, txt_file)
 ##################################################
 
 
-
-
-
-
 # Get list of all files in a given directory sorted by name
 txt_file_list = sorted( filter( os.path.isfile,
                         glob.glob(txt_path + '*') ) )
 
 
 # Choose a file and read the case information. 
-txt_file_num = 0
+# txt_file_num = 0
+txt_file_num = 1
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
