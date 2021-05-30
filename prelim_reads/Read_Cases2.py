@@ -158,14 +158,15 @@ def get_circ_num(file):
 # Get names of parties.
 def get_party_names(file):
     
-    # The next name should be the Plaintiff-Appellant.
+    # The next name(s) should be the Plaintiff-Appellant.
+    pla_appnt = []
     line = file.readline()
-    pla_appnt_list = line.split()
-    pla_appnt = ' '.join(pla_appnt_list[0:len(pla_appnt_list) - 1])
-    pla_appnt = pla_appnt.replace(",","")
-    
-    # The next line is "v."
-    line = file.readline()
+    # When the next line is "v.", list of Plaintiff-Appellants is complete.
+    found_v = line.strip()[0] == "v"
+    while not found_v:
+        pla_appnt.append(line.replace("\n",""))
+        line = file.readline()
+        found_v = line.strip()[0] == "v"
     
     # The next name should be the Defendant-Appellee.
     line = file.readline()
@@ -441,8 +442,10 @@ def get_case_info(txt_file):
 ##################################################
 
 
+file_num_list = []
 case_code_list = []
-
+circ_num_list = []
+case_num_list = []
 
 # Get list of all files in a given directory sorted by name
 txt_file_list = sorted( filter( os.path.isfile,
@@ -468,15 +471,22 @@ for txt_file_num in txt_file_num_list:
         case_info = get_case_info(txt_file)
         
         # Collect specific fields for analysis. 
+        file_num_list.append(txt_file_num)
         case_code_list.append(case_info["case_code"])
+        circ_num_list.append(case_info["circ_num"])
+        case_num_list.append(case_info["case_num"])
     
 
 
-
+print("")
 # Now inspect the contents. 
-print(case_code_list)
-
-
+for txt_file_num in range(len(case_code_list)):
+    # print("Case %d: Case code: %s" % (file_num_list[txt_file_num], 
+    #               case_code_list[txt_file_num]))
+    # print("Case %d: Circuit number: %s" % (file_num_list[txt_file_num], 
+    #               circ_num_list[txt_file_num]))
+    print("Case %d: Case number: %s" % (file_num_list[txt_file_num], 
+                  case_num_list[txt_file_num]))
 
 
 

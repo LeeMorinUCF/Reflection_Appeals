@@ -166,8 +166,10 @@ def get_circ_num(file):
     
     return(circ_num)
 
+
 # Get names of parties.
-def get_party_names(file):
+def get_party_names_depr(file):
+    # DEPRECATED: Assumes parties are listed in one line each. 
     
     # The next name should be the Plaintiff-Appellant.
     line = file.readline()
@@ -184,11 +186,48 @@ def get_party_names(file):
     def_appee = ' '.join(def_appee_list[0:len(def_appee_list) - 1])
     def_appee = def_appee.replace(",","")
     
-    return( (pla_appnt, def_appee) )
+
+
+# Get names of parties.
+def get_party_names(file):
+    
+    # The next name(s) should be the Plaintiff-Appellant.
+    pla_appnt = []
+    line = file.readline()
+    # When the next line is "v.", list of Plaintiff-Appellants is complete.
+    found_v = line.strip()[0] == "v"
+    while not found_v:
+        pla_appnt.append(line.replace("\n",""))
+        line = file.readline()
+        found_v = line.strip()[0] == "v"
+    
+    print("line = " + line)
+    
+    # The next name(s) should be the Defendant-Appellee.
+    def_appee = []
+    line = file.readline()
+    print("line = " + line)
+    
+    # When the next line is a case number, the list of Defendant-Appellees is complete.
+    found_case_num = is_case_num(line)
+    lines_read = 0
+    while not found_case_num and lines_read < 5:
+        def_appee.append(line.replace("\n",""))
+        line = file.readline()
+        lines_read = lines_read + 1
+        print("line = " + line)
+        found_case_num = is_case_num(line)
+        print("found_case_num = " + str(found_case_num))
+    
+    # The last line read should be the case_number. 
+    last_line = line
+    
+    return( (pla_appnt, def_appee, last_line) )
 
 
 # Record the case number.
-def get_case_num(file):
+def get_case_num_depr(file):
+    # DEPRECATED: Assumes a single line for Defendant-Appellee.
     
     # Assumes names of parties was just recorded. 
     # The next line should be the case number.
@@ -198,6 +237,30 @@ def get_case_num(file):
     return(case_num)
     
 
+# Determine whether this line contains a case number.
+def is_case_num(line):
+    # A case number either contains the word "Docket" or "No."
+    line_list = line.split()
+    return("No." in line_list or "Docket" in line_list)
+
+
+# Record the case number, either from the file of the last line.
+def get_case_num(file, last_line):
+    # Assumes names of parties was just recorded. 
+    
+    # Revised to accommodate multiple lines for Defendant-Appellee.
+    # Either the case number is already in the last line, or in the next. 
+    if is_case_num(last_line):
+        # The case number is already in the last line.
+        case_num = last_line.replace("\n","")
+    else:
+        # The case number is in the next line in the file.
+        line = file.readline()
+        case_num = line.replace("\n","")
+        
+    return(case_num)
+        
+    
 
 # Record the case date.
 def get_case_date(file):
@@ -270,8 +333,10 @@ def get_holdings(file):
 
 # Record the case outcome. 
 def get_outcome(file):
+    # Deprecated: Appended to end of holdings.
     
-     # Assumes the holdings were just passed.
+    # Assumes the holdings were just passed.
+    line = file.readline()
     # Record the case outcome. 
     outcome = line.replace("\n","")
     
@@ -373,8 +438,10 @@ txt_file_list = sorted( filter( os.path.isfile,
 # txt_file_num = 0
 # txt_file_num = 1
 # txt_file_num = 2
+# txt_file_num = 4
 # txt_file_num = 11
-txt_file_num = 12
+# txt_file_num = 12
+txt_file_num = 13
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
@@ -394,10 +461,12 @@ with open(txt_file, 'r', encoding = 'utf-16') as file:
     circ_num = get_circ_num(file)
 
     # Record the names of parties.
-    (pla_appnt, def_appee) = get_party_names(file)
+    # (pla_appnt, def_appee) = get_party_names(file)
+    (pla_appnt, def_appee, last_line) = get_party_names(file)
     
     # Record the case number.
-    case_num = get_case_num(file)
+    # case_num = get_case_num(file)
+    case_num = get_case_num(file, last_line)
     
     # Record the case date.
     case_date = get_case_date(file)
