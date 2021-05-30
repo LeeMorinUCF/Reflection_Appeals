@@ -23,6 +23,7 @@
 # This version pulls several fields and compares across cases.
 # The information from any anomalies is used to refine
 # the functions that extract fields.
+# This version stores the result in a data frame. 
 #
 ##################################################
 """
@@ -42,6 +43,9 @@ import os # To set working directory
 
 # Module for handling files and directories.
 import glob
+
+# Module for organizing case data into a data frame.
+import pandas as pd
 
 
 ##################################################
@@ -114,26 +118,35 @@ txt_path = drive_path + txt_folder
 ##################################################
 
 
-file_num_list = []
-case_code_list = []
-circ_num_list = []
-case_num_list = []
-case_date_list = []
-holdings_hdr_list = []
-outcome_list = []
-posture_list = []
-judicial_panel_list = []
+# file_num_list = []
+# case_code_list = []
+# circ_num_list = []
+# case_num_list = []
+# case_date_list = []
+# holdings_hdr_list = []
+# outcome_list = []
+# posture_list = []
+# judicial_panel_list = []
+
 
 # Get list of all files in a given directory sorted by name
 txt_file_list = sorted( filter( os.path.isfile,
                         glob.glob(txt_path + '*') ) )
 
-# Some files are problematic. 
+num_files = len(txt_file_list)
+txt_file_num_list = range(num_files)
+
+# Initialize data frame.
+appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 'case_num', 
+                                  'case_date_1', 'case_date_2', 'case_date_3', 
+                                  'holdings_hdr', 'outcome', 'posture', 'judicial_panel'], 
+                       index = txt_file_num_list)
+
+# Exclude some files that are problematic. 
 # txt_file_num_excl = [12, 15, 17]
 # txt_file_num_excl = [12, 15]
 txt_file_num_excl = []
-
-txt_file_num_list = range(len(txt_file_list))
+# Fix the anomalies and add them back. 
 
 # txt_file_num_list = txt_file_num_list[txt_file_num_list not in txt_file_num_excl]
 
@@ -144,57 +157,59 @@ for txt_file_num in txt_file_num_list:
         # Read the information from this case.
         txt_file = txt_file_list[txt_file_num]
         
-        print("Reading case information from file number" + str(txt_file_num))
+        # Isolate the file name and primt a message.
+        txt_file_name = os.path.split(txt_file)[1]
+        print("Reading case information from file " + "'" +  txt_file_name + "'")
         
         # Get the dictionary of case info.
         case_info = caser.get_case_info(txt_file)
         
+        
+        # Enter the fields into the data frame.
+        appeals['file_name'][txt_file_num] = txt_file_name
+        appeals['case_code'][txt_file_num] = case_info["case_code"]
+        appeals['circ_num'][txt_file_num] = case_info["circ_num"]
+        appeals['case_num'][txt_file_num] = case_info["case_num"]
+        
+        
+        appeals['holdings_hdr'][txt_file_num] = case_info["holdings_hdr"]
+        appeals['outcome'][txt_file_num] = case_info["outcome"]
+        appeals['posture'][txt_file_num] = case_info["posture"]
+        appeals['judicial_panel'][txt_file_num] = case_info["judicial_panel"]
+        
+        
+        
+        
         # Collect specific fields for analysis. 
-        file_num_list.append(txt_file_num)
-        case_code_list.append(case_info["case_code"])
-        circ_num_list.append(case_info["circ_num"])
+        # file_num_list.append(txt_file_num)
+        # case_code_list.append(case_info["case_code"])
+        # circ_num_list.append(case_info["circ_num"])
         
         # Skip parties, for now. 
         
-        case_num_list.append(case_info["case_num"])
-        case_date_list.append(case_info["case_date"])
+        # case_num_list.append(case_info["case_num"])
+        # case_date_list.append(case_info["case_date"])
         
         # Skip Synopsis/Background, for now.
         
-        holdings_hdr_list.append(case_info["holdings_hdr"])
+        # holdings_hdr_list.append(case_info["holdings_hdr"])
         
-        outcome_list.append(case_info["outcome"])
-        posture_list.append(case_info["posture"])
-        judicial_panel_list.append(case_info["judicial_panel"])
+        # outcome_list.append(case_info["outcome"])
+        # posture_list.append(case_info["posture"])
+        # judicial_panel_list.append(case_info["judicial_panel"])
     
 
-
-print("")
+# Print selected fields to screen. 
+field_sel = 'case_code'
+print("List of results for field " + "'" + field_sel + "'")
 # Now inspect the contents. 
-for txt_file_num in range(len(case_code_list)):
-    # print("Case %d: Case code: %s" % (file_num_list[txt_file_num], 
-    #               case_code_list[txt_file_num]))
-    # print("Case %d: Circuit number: %s" % (file_num_list[txt_file_num], 
-    #               circ_num_list[txt_file_num]))
-    # print("Case %d: Case number: %s" % (file_num_list[txt_file_num], 
-    #               case_num_list[txt_file_num]))
+for txt_file_num in txt_file_num_list:
+    
+    print("Case %d: %s: %s" % (txt_file_num_list[txt_file_num], 
+                               field_sel, 
+                               case_info[field_sel]))
     
     
-    # print("Case %d: Case date: %s" % (file_num_list[txt_file_num], 
-    #               case_date_list[txt_file_num]))
-    
-    print("Case %d: Holdings header: %s" % (file_num_list[txt_file_num], 
-                  holdings_hdr_list[txt_file_num]))
-    
-    
-
-    # print("Case %d: Outcome: %s" % (file_num_list[txt_file_num], 
-    #               outcome_list[txt_file_num]))
-    # print("Case %d: Posture: %s" % (file_num_list[txt_file_num], 
-    #               posture_list[txt_file_num]))
-    # print("Case %d: Judicial_panel: %s" % (file_num_list[txt_file_num], 
-    #               judicial_panel_list[txt_file_num]))
-
 
 
 
