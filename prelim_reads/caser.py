@@ -222,7 +222,7 @@ def get_case_date(file):
     case_date = []
     found_synopsis = False
     lines_read = 0
-    while not found_synopsis and lines_read < 5:
+    while not found_synopsis and lines_read < 7:
         line = file.readline()
         lines_read = lines_read + 1
         line_list = line.split()
@@ -295,14 +295,43 @@ def get_outcome(file):
     return(outcome)
 
 
-
-# Record the statement of "Procedural Posture(s)".
-def get_posture(file):
+# Determine if line begins with "Procedural Posture(s):".
+def is_posture(line):
     
-    # The next line is the statement of "Procedural Posture(s)".
-    line = file.readline() # Skip a blank line.
-    line = file.readline()
-    posture = line.replace("\n","")
+    # Reads over legal information util a line
+    # that begins with "Procedural Posture(s):". 
+    line_list = line.split()
+    if line_list == [] or len(line_list) == 1:
+        return(False)
+    else:
+        return(line_list[0].strip() == "Procedural" or 
+               line_list[1].strip()[0:7] == "Posture")
+
+
+
+# Record the statement of "Procedural Posture(s):".
+def get_posture(file):
+    # Assumes the outcome was just recorded after holdings. 
+    
+    # Not all cases have procedural posture.
+    # Most common configuration is a blak space
+    # followed by a line that starts with "Procedural Posture(s):".
+    
+    # Initialize with what might be a blank line.
+    line = file.readline() 
+    found_posture = is_posture(line)
+    lines_read = 0
+    while not found_posture and lines_read < 6:
+        line = file.readline()
+        lines_read = lines_read + 1
+        found_posture = is_posture(line)
+    
+    # The last should be the statement of "Procedural Posture(s)", 
+    # if it is present.
+    if found_posture:
+        posture = line.replace("\n","")
+    else:
+        posture = "NA"
     
     return(posture)
 
@@ -324,27 +353,51 @@ def is_panel(line):
     line_list = line.split()
     if line_list == []:
         return(False)
+    elif len(line_list) > 1:
+        # Sometimes there is a word before "Before".
+        return(line_list[0].strip()[0:6] == "Before" \
+               or line_list[1].strip()[0:6] == "Before")
     else:
-        return(line_list[0].strip() == "Before" or line_list[0].strip() == "Before:")
+        return(False)
 
 
 # Record the names of lawyers, judges and previous case.
 def get_jurist_list(file):
     
     found_jurists = False
+    found_panel = False
     lines_read = 0
-    while not found_jurists and lines_read < 500:
+    while not found_jurists and not found_panel and lines_read < 500:
         line = file.readline()
         lines_read = lines_read + 1
         found_jurists = is_jurists(line)
-        # Don't record; skip to jurists. 
-        
+        # Don't record the commentary in between; skip to jurists. 
+        # Unless there is no heading "Attorneys and Law Firms".
+        # In that case, stop at the judicial panel: 
+        # a line that starts with "Before".
+        found_panel = is_panel(line)
+    
+    
     # Now record the jurists in a list.
     jurist_list = []
+    
+    # If the panel is found before "Attorneys and Law Firms", 
+    # then pad the list with missing names. 
+    if found_panel:
+        # The council for the plaintiff-appellant is missing.
+        jurist_list.append("NA")
+        # The council for the defendant-appellee is missing.
+        jurist_list.append("NA")
+        # If the panel has already been found, 
+        # then only that one line remains.  
+        jurist_list.append(line)
+        
+    
+    # Otherwise, record the names of "Attorneys and Law Firms", 
+    # along with the jucual panel, if reported.
     # The last line with the judicial panel
     # should begin with "Before". 
     
-    found_panel = False
     lines_read = 0
     while not found_panel and lines_read < 5:
         line = file.readline()
@@ -466,7 +519,7 @@ def print_case_info(case_info):
     print(case_info["case_date"])
     
     print("background = ")
-    print(case_info["holdings_hdr"])
+    print(case_info["background"])
     
     print("holdings_hdr = ")
     print(case_info["holdings_hdr"])
