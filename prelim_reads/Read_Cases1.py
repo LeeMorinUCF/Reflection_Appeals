@@ -211,7 +211,7 @@ def get_party_names(file):
     # When the next line is a case number, the list of Defendant-Appellees is complete.
     found_case_num = is_case_num(line)
     lines_read = 0
-    while not found_case_num and lines_read < 5:
+    while not found_case_num and lines_read < 3:
         def_appee.append(line.replace("\n",""))
         line = file.readline()
         lines_read = lines_read + 1
@@ -451,7 +451,7 @@ print(txt_file)
 print("")
 
 
-lines_read = 0
+# lines_read = 0
 with open(txt_file, 'r', encoding = 'utf-16') as file:
     
     # Record the case code. 

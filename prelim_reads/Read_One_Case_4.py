@@ -10,7 +10,7 @@
 # College of Business 
 # University of Central Florida
 #
-# May 29, 2021
+# May 28, 2021
 # 
 ##################################################
 #
@@ -18,8 +18,7 @@
 # Functions for Scraping Information from 
 # Documents from US Courts of Appeals
 # 
-# This script reads case information from several files.
-# This version imports a module for reading cases.
+# This script reads case information from a single file.
 #
 ##################################################
 """
@@ -28,6 +27,7 @@
 ##################################################
 # Import Modules.
 ##################################################
+
 
 # from caser import * # To read cases.
 import caser # To read cases.
@@ -76,15 +76,10 @@ txt_path = drive_path + txt_folder
 
 
 
-
 ##################################################
 # Select a File and Scrape Contents
 ##################################################
 
-
-# Assume all files are translated to txt. 
-# Later version will translate directly from 
-# original doc file. 
 
 # # Translate a single file.
 
@@ -111,76 +106,10 @@ txt_path = drive_path + txt_folder
 ##################################################
 
 
-file_num_list = []
-case_code_list = []
-circ_num_list = []
-case_num_list = []
-outcome_list = []
-posture_list = []
-judicial_panel_list = []
-
 # Get list of all files in a given directory sorted by name
 txt_file_list = sorted( filter( os.path.isfile,
                         glob.glob(txt_path + '*') ) )
 
-# Some files are problematic. 
-# txt_file_num_excl = [12, 15, 17]
-txt_file_num_excl = [12, 15]
-
-txt_file_num_list = range(len(txt_file_list))
-
-# txt_file_num_list = txt_file_num_list[txt_file_num_list not in txt_file_num_excl]
-
-for txt_file_num in txt_file_num_list:
-    
-    if txt_file_num not in txt_file_num_excl:
-        
-        # Read the information from this case.
-        txt_file = txt_file_list[txt_file_num]
-        
-        print("Reading case information from file number" + str(txt_file_num))
-        
-        # Get the dictionary of case info.
-        case_info = caser.get_case_info(txt_file)
-        
-        # Collect specific fields for analysis. 
-        file_num_list.append(txt_file_num)
-        case_code_list.append(case_info["case_code"])
-        circ_num_list.append(case_info["circ_num"])
-        case_num_list.append(case_info["case_num"])
-        
-        outcome_list.append(case_info["outcome"])
-        posture_list.append(case_info["posture"])
-        judicial_panel_list.append(case_info["judicial_panel"])
-    
-
-
-print("")
-# Now inspect the contents. 
-for txt_file_num in range(len(case_code_list)):
-    print("Case %d: Case code: %s" % (file_num_list[txt_file_num], 
-                  case_code_list[txt_file_num]))
-    # print("Case %d: Circuit number: %s" % (file_num_list[txt_file_num], 
-    #               circ_num_list[txt_file_num]))
-    # print("Case %d: Case number: %s" % (file_num_list[txt_file_num], 
-    #               case_num_list[txt_file_num]))
-
-    # print("Case %d: Outcome: %s" % (file_num_list[txt_file_num], 
-    #               outcome_list[txt_file_num]))
-    # print("Case %d: Posture: %s" % (file_num_list[txt_file_num], 
-    #               posture_list[txt_file_num]))
-    # print("Case %d: Judicial_panel: %s" % (file_num_list[txt_file_num], 
-    #               judicial_panel_list[txt_file_num]))
-
-
-
-
-
-
-
-##################################################
-# Inspect individual cases
-##################################################
 
 # Choose a file and read the case information. 
 # txt_file_num = 0
@@ -199,11 +128,84 @@ print("Reading case information from file:")
 print(txt_file)
 print("")
 
-# Get the dictionary of case info.
-case_info = caser.get_case_info(txt_file)
+
+# lines_read = 0
+with open(txt_file, 'r', encoding = 'utf-16') as file:
+    
+    # Record the case code. 
+    case_code = caser.get_case_code(file)
+    
+    # Record the circuit number.
+    circ_num = caser.get_circ_num(file)
+
+    # Record the names of parties.
+    # (pla_appnt, def_appee) = get_party_names(file)
+    (pla_appnt, def_appee, last_line) = caser.get_party_names(file)
+    
+    # Record the case number.
+    # case_num = get_case_num(file)
+    case_num = caser.get_case_num(file, last_line)
+    
+    # Record the case date.
+    case_date = caser.get_case_date(file)
+    
+    # Record the background, a paragraph describing the case. 
+    background = caser.get_background(file)
+    
+    # Record the list of holdings.
+    holdings = caser.get_holdings(file)
+    # Record the "Holdings" header statement.
+    holdings_hdr = holdings[0]
+    # Record the case outcome. 
+    outcome = holdings[-1]
+    
+    # Record the statement of "Procedural Posture(s)".
+    posture = caser.get_posture(file)
+    
+    # Record the names of lawyers, judges and previous case.
+    jurist_list = caser.get_jurist_list(file)
+    # The first line is the council for the plaintiff-appellant.
+    pla_appnt_council = jurist_list[0]
+    # The next line is the council for the defendant-appellee.
+    pla_appnt_council = jurist_list[1]
+    # The last line is the judicial panel.
+    judicial_panel = jurist_list[len(jurist_list) - 1]
+    
 
 
-caser.print_case_info(case_info)
+# Print the results.
+print("case_code = ")
+print(case_code)
+
+print("circ_num = ")
+print(circ_num)
+
+print("pla_appnt = ")
+print(pla_appnt)
+
+print("def_appee = ")
+print(def_appee)
+
+print("case_num = ")
+print(case_num)
+
+print("case_date = ")
+print(case_date)
+
+print("background = ")
+print(background)
+
+print("holdings_hdr = ")
+print(holdings_hdr)
+
+print("outcome = ")
+print(outcome)
+
+print("posture = ")
+print(posture)
+
+print("judicial_panel = ")
+print(judicial_panel)
 
 
 
@@ -211,6 +213,18 @@ caser.print_case_info(case_info)
 # Extra Code Snippets
 ##################################################
 
+
+
+# with open(txt_file, 'r', encoding = 'utf-16') as file:
+#     for line_num in range(20):
+#         line = file.readline()
+#         print(line)
+#         print(str(line))
+#         print(line.rstrip())
+#         # print(line.decode('utf-16'))
+#         print(line.split())
+#         print(str(line).rstrip().split())
+#         print(line.replace("\r\n","").split())
 
 
 

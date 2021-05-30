@@ -125,7 +125,8 @@ txt_file_list = sorted( filter( os.path.isfile,
 
 # Some files are problematic. 
 # txt_file_num_excl = [12, 15, 17]
-txt_file_num_excl = [12, 15]
+# txt_file_num_excl = [12, 15]
+txt_file_num_excl = []
 
 txt_file_num_list = range(len(txt_file_list))
 
@@ -190,20 +191,20 @@ for txt_file_num in range(len(case_code_list)):
 # txt_file_num = 11
 # txt_file_num = 12
 # txt_file_num = 13
-txt_file_num = 15
+# txt_file_num = 15
 
-# Read the information from this case.
-txt_file = txt_file_list[txt_file_num]
+# # Read the information from this case.
+# txt_file = txt_file_list[txt_file_num]
 
-print("Reading case information from file:")
-print(txt_file)
-print("")
+# print("Reading case information from file:")
+# print(txt_file)
+# print("")
 
-# Get the dictionary of case info.
-case_info = caser.get_case_info(txt_file)
+# # Get the dictionary of case info.
+# case_info = caser.get_case_info(txt_file)
 
 
-caser.print_case_info(case_info)
+# caser.print_case_info(case_info)
 
 
 

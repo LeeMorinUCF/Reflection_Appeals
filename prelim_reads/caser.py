@@ -24,6 +24,12 @@
 ##################################################
 """
 
+##################################################
+# Import Modules.
+##################################################
+
+import os
+
 
 ##################################################
 # Define functions for translating files.
@@ -70,9 +76,10 @@ def get_case_code(file):
 
     # First look for the case code.
     found_case_code = False
-    # while not found_case_num and lines_read < 10:
-    while not found_case_code:
+    lines_read = 0
+    while not found_case_code and lines_read < 20:
         line = file.readline()
+        lines_read = lines_read + 1
         found_case_code = is_case_code(line)
     
     # Record the case code. 
@@ -98,8 +105,10 @@ def get_circ_num(file):
     # The next line should be "United States Court of Appeals,"
     # Keep reading until then. 
     found_uscoa = False
-    while not found_uscoa:
+    lines_read = 0
+    while not found_uscoa and lines_read < 3:
         line = file.readline()
+        lines_read = lines_read + 1
         found_uscoa = is_uscoa(line)
     
     # This line should be the circuit number.
@@ -138,9 +147,11 @@ def get_party_names(file):
     line = file.readline()
     # When the next line is "v.", list of Plaintiff-Appellants is complete.
     found_v = line.strip()[0] == "v"
-    while not found_v:
+    lines_read = 0
+    while not found_v and lines_read < 3:
         pla_appnt.append(line.replace("\n",""))
         line = file.readline()
+        lines_read = lines_read + 1
         found_v = line.strip()[0] == "v"
     
     # The next name(s) should be the Defendant-Appellee.
@@ -150,7 +161,7 @@ def get_party_names(file):
     # When the next line is a case number, the list of Defendant-Appellees is complete.
     found_case_num = is_case_num(line)
     lines_read = 0
-    while not found_case_num and lines_read < 5:
+    while not found_case_num and lines_read < 3:
         def_appee.append(line.replace("\n",""))
         line = file.readline()
         lines_read = lines_read + 1
@@ -210,8 +221,10 @@ def get_case_date(file):
     
     case_date = []
     found_synopsis = False
-    while not found_synopsis:
+    lines_read = 0
+    while not found_synopsis and lines_read < 3:
         line = file.readline()
+        lines_read = lines_read + 1
         line_list = line.split()
         # Check if the next line is "Synopsis".
         found_synopsis =  line_list[0].strip() == "Synopsis"
@@ -258,8 +271,10 @@ def get_holdings(file):
     
     # Append the contents of the holdings. 
     finished_holdings = False
-    while not finished_holdings:
+    lines_read = 0
+    while not finished_holdings and lines_read < 20:
         line = file.readline()
+        lines_read = lines_read + 1
         finished_holdings = is_finished_holdings(line)
         # Record last line unless it is blank:
         # the last line is the outcome. 
@@ -307,15 +322,20 @@ def is_panel(line):
     # Reads over legal information util a line
     # that begins with "Before". 
     line_list = line.split()
-    return(line_list[0].strip() == "Before" or line_list[0].strip() == "Before:")
+    if line_list == []:
+        return(False)
+    else:
+        return(line_list[0].strip() == "Before" or line_list[0].strip() == "Before:")
 
 
 # Record the names of lawyers, judges and previous case.
 def get_jurist_list(file):
     
     found_jurists = False
-    while not found_jurists:
+    lines_read = 0
+    while not found_jurists and lines_read < 500:
         line = file.readline()
+        lines_read = lines_read + 1
         found_jurists = is_jurists(line)
         # Don't record; skip to jurists. 
         
@@ -325,8 +345,11 @@ def get_jurist_list(file):
     # should begin with "Before". 
     
     found_panel = False
-    while not found_panel:
+    lines_read = 0
+    while not found_panel and lines_read < 5:
         line = file.readline()
+        lines_read = lines_read + 1
+        # print("line = " + line)
         found_panel = is_panel(line)
         # Regardless, add to list of jurists.
         jurist_list.append(line)
@@ -420,6 +443,43 @@ def get_case_info(txt_file):
         
     return(case_info)
 
+def print_case_info(case_info):
+    
+    
+    # Print the results.
+    print("case_code = ")
+    print(case_info["case_code"])
+    
+    print("circ_num = ")
+    print(case_info["circ_num"])
+    
+    print("pla_appnt = ")
+    print(case_info["pla_appnt"])
+    
+    print("def_appee = ")
+    print(case_info["def_appee"])
+    
+    print("case_num = ")
+    print(case_info["case_num"])
+    
+    print("case_date = ")
+    print(case_info["case_date"])
+    
+    print("background = ")
+    print(case_info["holdings_hdr"])
+    
+    print("holdings_hdr = ")
+    print(case_info["holdings_hdr"])
+    
+    print("outcome = ")
+    print(case_info["outcome"])
+    
+    print("posture = ")
+    print(case_info["posture"])
+    
+    print("judicial_panel = ")
+    print(case_info["judicial_panel"])
+    
 
 
 
