@@ -189,7 +189,7 @@ def get_case_num_depr(file):
 def is_case_num(line):
     # A case number either contains the word "Docket" or "No."
     line_list = line.split()
-    return("No." in line_list or "Docket" in line_list)
+    return("No." in line_list or "Nos." in line_list or "Docket" in line_list)
 
 
 # Record the case number, either from the file of the last line.
@@ -222,7 +222,7 @@ def get_case_date(file):
     case_date = []
     found_synopsis = False
     lines_read = 0
-    while not found_synopsis and lines_read < 3:
+    while not found_synopsis and lines_read < 5:
         line = file.readline()
         lines_read = lines_read + 1
         line_list = line.split()

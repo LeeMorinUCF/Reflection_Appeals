@@ -115,6 +115,8 @@ file_num_list = []
 case_code_list = []
 circ_num_list = []
 case_num_list = []
+case_date_list = []
+holdings_hdr_list = []
 outcome_list = []
 posture_list = []
 judicial_panel_list = []
@@ -148,7 +150,15 @@ for txt_file_num in txt_file_num_list:
         file_num_list.append(txt_file_num)
         case_code_list.append(case_info["case_code"])
         circ_num_list.append(case_info["circ_num"])
+        
+        # Skip parties, for now. 
+        
         case_num_list.append(case_info["case_num"])
+        case_date_list.append(case_info["case_date"])
+        
+        # Skip Synopsis/Background, for now.
+        
+        holdings_hdr_list.append(case_info["holdings_hdr"])
         
         outcome_list.append(case_info["outcome"])
         posture_list.append(case_info["posture"])
@@ -159,12 +169,21 @@ for txt_file_num in txt_file_num_list:
 print("")
 # Now inspect the contents. 
 for txt_file_num in range(len(case_code_list)):
-    print("Case %d: Case code: %s" % (file_num_list[txt_file_num], 
-                  case_code_list[txt_file_num]))
+    # print("Case %d: Case code: %s" % (file_num_list[txt_file_num], 
+    #               case_code_list[txt_file_num]))
     # print("Case %d: Circuit number: %s" % (file_num_list[txt_file_num], 
     #               circ_num_list[txt_file_num]))
     # print("Case %d: Case number: %s" % (file_num_list[txt_file_num], 
     #               case_num_list[txt_file_num]))
+    
+    
+    # print("Case %d: Case date: %s" % (file_num_list[txt_file_num], 
+    #               case_date_list[txt_file_num]))
+    
+    print("Case %d: Holdings header: %s" % (file_num_list[txt_file_num], 
+                  holdings_hdr_list[txt_file_num]))
+    
+    
 
     # print("Case %d: Outcome: %s" % (file_num_list[txt_file_num], 
     #               outcome_list[txt_file_num]))
