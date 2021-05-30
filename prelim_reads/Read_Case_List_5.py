@@ -137,8 +137,11 @@ num_files = len(txt_file_list)
 txt_file_num_list = range(num_files)
 
 # Initialize data frame.
-appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 'case_num', 
-                                  'case_date_1', 'case_date_2', 'case_date_3', 
+appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 
+                                  'pla_appnt_1', 'pla_appnt_2', 'pla_appnt_3', 
+                                  'def_appee_1', 'def_appee_2', 'def_appee_3', 'def_appee_4',
+                                  'case_num', 
+                                  'case_date_1', 'case_date_2', 'case_date_3', 'case_date_4', 
                                   'background', 
                                   'holdings_hdr', 'outcome', 'posture', 'judicial_panel'], 
                        index = txt_file_num_list)
@@ -172,12 +175,33 @@ for txt_file_num in txt_file_num_list:
         appeals['case_code'][txt_file_num] = case_info["case_code"]
         appeals['circ_num'][txt_file_num] = case_info["circ_num"]
         
-        # Skip parties, for now. 
+        # Record the names of parties.
+        # Plaintiff-Appellant:
+        for party_num in range(3):
+            party_var_name = "pla_appnt_" + str(party_num + 1)
+            if party_num < len(case_info["pla_appnt"]):
+                appeals[party_var_name][txt_file_num] = case_info["pla_appnt"][party_num]
+            else:
+                appeals[party_var_name][txt_file_num] = "NA"
+        # Defendant-Appellee:
+        for party_num in range(4):
+            party_var_name = "def_appee_" + str(party_num + 1)
+            if party_num < len(case_info["def_appee"]):
+                appeals[party_var_name][txt_file_num] = case_info["def_appee"][party_num]
+            else:
+                appeals[party_var_name][txt_file_num] = "NA"
+        
         
         appeals['case_num'][txt_file_num] = case_info["case_num"]
         
-        # Dates might occur in a list.
-        # appeals['case_date_1'][txt_file_num] = case_info["case_date"]
+        # Dates are collected in a list.
+        for date_num in range(4):
+            date_var_name = "case_date_" + str(date_num + 1)
+            if date_num < len(case_info["case_date"]):
+                appeals[date_var_name][txt_file_num] = case_info["case_date"][date_num]
+            else:
+                appeals[date_var_name][txt_file_num] = "NA"
+        
         
         appeals['background'][txt_file_num] = case_info["background"]
         
@@ -194,7 +218,24 @@ for txt_file_num in txt_file_num_list:
 appeals['file_name']
 appeals['case_code']
 appeals['circ_num']
+
+appeals['pla_appnt_1']
+appeals['pla_appnt_2']
+appeals['pla_appnt_3']
+
+appeals['def_appee_1']
+appeals['def_appee_2']
+appeals['def_appee_3']
+appeals['def_appee_4']
+
+
 appeals['case_num']
+
+appeals['case_date_1']
+appeals['case_date_2']
+appeals['case_date_3']
+appeals['case_date_4']
+
 
 appeals['background']
 
