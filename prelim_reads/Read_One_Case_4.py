@@ -137,7 +137,7 @@ with open(txt_file, 'r', encoding = 'utf-16') as file:
     
     # Record the circuit number.
     circ_num = caser.get_circ_num(file)
-
+    
     # Record the names of parties.
     # (pla_appnt, def_appee) = get_party_names(file)
     (pla_appnt, def_appee, last_line) = caser.get_party_names(file)
