@@ -3,6 +3,7 @@
 ##################################################
 #
 # Identification and Estimation in Judicial Panel Voting
+# The caser Module
 #
 # Lealand Morin, Ph.D.
 # Assistant Professor
@@ -18,58 +19,10 @@
 # Functions for Scraping Information from 
 # Documents from US Courts of Appeals
 # 
-# This script reads case information from several files.
-#
+# This script is a module of function definitions.
+# 
 ##################################################
 """
-
-
-##################################################
-# Import Modules.
-##################################################
-
-
-import os # To set working directory
-
-# Modules for reading from doc (Word 97 2003):
-# import win32com
-
-# Module for handling files and directories.
-import glob
-
-
-##################################################
-# Set Working Directory.
-##################################################
-
-
-
-# Find out the current directory.
-os.getcwd()
-# Change to a new directory.
-# git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
-# os.chdir(git_path + 'demo_26_PP_Ch_15_Test_Debug')
-drive_path = 'C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\'
-# git_path = 'GitHub\\ECP3004S21\\'
-git_path = 'Research\\Appeals_Reflection\\Reflection_Appeals\\'
-os.chdir(drive_path + git_path + 'prelim_reads')
-# Check that the change was successful.
-os.getcwd()
-
-
-##################################################
-# Set paths for handling files.
-##################################################
-
-# Set the directory with data files.
-doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
-doc_path = drive_path + data_folder
-
-
-# Set the directory with txt files after translation.
-txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
-txt_path = drive_path + txt_folder
-
 
 
 ##################################################
@@ -155,6 +108,28 @@ def get_circ_num(file):
     
     return(circ_num)
 
+
+# Get names of parties.
+def get_party_names_depr(file):
+    # DEPRECATED: Assumes parties are listed in one line each. 
+    
+    # The next name should be the Plaintiff-Appellant.
+    line = file.readline()
+    pla_appnt_list = line.split()
+    pla_appnt = ' '.join(pla_appnt_list[0:len(pla_appnt_list) - 1])
+    pla_appnt = pla_appnt.replace(",","")
+    
+    # The next line is "v."
+    line = file.readline()
+    
+    # The next name should be the Defendant-Appellee.
+    line = file.readline()
+    def_appee_list = line.split()
+    def_appee = ' '.join(def_appee_list[0:len(def_appee_list) - 1])
+    def_appee = def_appee.replace(",","")
+    
+
+
 # Get names of parties.
 def get_party_names(file):
     
@@ -168,17 +143,28 @@ def get_party_names(file):
         line = file.readline()
         found_v = line.strip()[0] == "v"
     
-    # The next name should be the Defendant-Appellee.
+    # The next name(s) should be the Defendant-Appellee.
+    def_appee = []
     line = file.readline()
-    def_appee_list = line.split()
-    def_appee = ' '.join(def_appee_list[0:len(def_appee_list) - 1])
-    def_appee = def_appee.replace(",","")
     
-    return( (pla_appnt, def_appee) )
+    # When the next line is a case number, the list of Defendant-Appellees is complete.
+    found_case_num = is_case_num(line)
+    lines_read = 0
+    while not found_case_num and lines_read < 5:
+        def_appee.append(line.replace("\n",""))
+        line = file.readline()
+        lines_read = lines_read + 1
+        found_case_num = is_case_num(line)
+    
+    # The last line read should be the case_number. 
+    last_line = line
+    
+    return( (pla_appnt, def_appee, last_line) )
 
 
 # Record the case number.
-def get_case_num(file):
+def get_case_num_depr(file):
+    # DEPRECATED: Assumes a single line for Defendant-Appellee.
     
     # Assumes names of parties was just recorded. 
     # The next line should be the case number.
@@ -188,6 +174,30 @@ def get_case_num(file):
     return(case_num)
     
 
+# Determine whether this line contains a case number.
+def is_case_num(line):
+    # A case number either contains the word "Docket" or "No."
+    line_list = line.split()
+    return("No." in line_list or "Docket" in line_list)
+
+
+# Record the case number, either from the file of the last line.
+def get_case_num(file, last_line):
+    # Assumes names of parties was just recorded. 
+    
+    # Revised to accommodate multiple lines for Defendant-Appellee.
+    # Either the case number is already in the last line, or in the next. 
+    if is_case_num(last_line):
+        # The case number is already in the last line.
+        case_num = last_line.replace("\n","")
+    else:
+        # The case number is in the next line in the file.
+        line = file.readline()
+        case_num = line.replace("\n","")
+        
+    return(case_num)
+        
+    
 
 # Record the case date.
 def get_case_date(file):
@@ -260,6 +270,7 @@ def get_holdings(file):
 
 # Record the case outcome. 
 def get_outcome(file):
+    # Deprecated: Appended to end of holdings.
     
     # Assumes the holdings were just passed.
     line = file.readline()
@@ -324,6 +335,7 @@ def get_jurist_list(file):
 
 
 
+
 def get_case_info(txt_file):
     
     # Extract the fields from the file.
@@ -336,10 +348,12 @@ def get_case_info(txt_file):
         circ_num = get_circ_num(file)
         
         # Record the names of parties.
-        (pla_appnt, def_appee) = get_party_names(file)
+        # (pla_appnt, def_appee) = get_party_names(file)
+        (pla_appnt, def_appee, last_line) = get_party_names(file)
         
         # Record the case number.
-        case_num = get_case_num(file)
+        # case_num = get_case_num(file)
+        case_num = get_case_num(file, last_line)
         
         # Record the case date.
         case_date = get_case_date(file)
@@ -408,100 +422,8 @@ def get_case_info(txt_file):
 
 
 
-##################################################
-# Select a File and Scrape Contents
-##################################################
-
-
-# Assume all files are translated to txt. 
-# Later version will translate directly from 
-# original doc file. 
-
-# # Translate a single file.
-
-# case_num = '01'
-# party_1 = 'Helm'
-# party_2 = 'Kansas'
-
-# case_file_tag = case_num + " - " + party_1 + " v " + party_2
-# doc_file = doc_path + case_file_tag + ".doc"
-# txt_file = txt_path + case_file_tag + ".txt"
-
-
-# # Initialize object for Word application
-# app = win32com.client.Dispatch('Word.Application')
-# app.Visible = True
-
-
-# doc2txt_file(app, doc_file, txt_file)
-
-
-
-##################################################
-# Read through file and parse data
-##################################################
-
-
-file_num_list = []
-case_code_list = []
-circ_num_list = []
-case_num_list = []
-
-# Get list of all files in a given directory sorted by name
-txt_file_list = sorted( filter( os.path.isfile,
-                        glob.glob(txt_path + '*') ) )
-
-# Some files are problematic. 
-txt_file_num_excl = [12, 15, 17]
-
-txt_file_num_list = range(len(txt_file_list))
-
-# txt_file_num_list = txt_file_num_list[txt_file_num_list not in txt_file_num_excl]
-
-for txt_file_num in txt_file_num_list:
-    
-    if txt_file_num not in txt_file_num_excl:
-        
-        # Read the information from this case.
-        txt_file = txt_file_list[txt_file_num]
-        
-        print("Reading case information from file number" + str(txt_file_num))
-        
-        # Get the dictionary of case info.
-        case_info = get_case_info(txt_file)
-        
-        # Collect specific fields for analysis. 
-        file_num_list.append(txt_file_num)
-        case_code_list.append(case_info["case_code"])
-        circ_num_list.append(case_info["circ_num"])
-        case_num_list.append(case_info["case_num"])
-    
-
-
-print("")
-# Now inspect the contents. 
-for txt_file_num in range(len(case_code_list)):
-    # print("Case %d: Case code: %s" % (file_num_list[txt_file_num], 
-    #               case_code_list[txt_file_num]))
-    # print("Case %d: Circuit number: %s" % (file_num_list[txt_file_num], 
-    #               circ_num_list[txt_file_num]))
-    print("Case %d: Case number: %s" % (file_num_list[txt_file_num], 
-                  case_num_list[txt_file_num]))
-
-
-
-
-
-
-
-##################################################
-# Extra Code Snippets
-##################################################
-
-
-
-
 
 ##################################################
 # End
 ##################################################
+
