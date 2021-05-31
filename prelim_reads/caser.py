@@ -30,6 +30,8 @@
 
 import os
 
+import pandas as pd
+
 
 ##################################################
 # Define functions for translating files.
@@ -70,7 +72,18 @@ def is_case_code(line):
         return(line_list[0].isdigit() and line_list[-1].isdigit())
     else:
         return False
+
+# Vector version for data frame columns:
+def is_case_code_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_case_code(df_col[row])
+        test_vec['is_valid'][row] = test_row
         
+    return(test_vec)
+
 # Function to find and get the case code.
 def get_case_code(file):
 
@@ -97,6 +110,24 @@ def is_uscoa(line):
         return False
     
     
+def is_circ_num(line):
+    line_list = line.split()
+    if len(line_list) > 1:
+        return(line_list[-1].strip().replace(".","") == "Circuit")
+    else:
+        return False
+
+# Vector version for data frame columns:
+def is_circ_num_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_circ_num(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
+
 
 # Record the circuit number.
 def get_circ_num(file):
@@ -104,16 +135,23 @@ def get_circ_num(file):
     # Assumes the case code was just recorded. 
     # The next line should be "United States Court of Appeals,"
     # Keep reading until then. 
-    found_uscoa = False
+    # found_uscoa = False
+    found_circ_num = False
     lines_read = 0
-    while not found_uscoa and lines_read < 3:
+    # while not found_uscoa and lines_read < 4:
+    while not found_circ_num and lines_read < 6:
         line = file.readline()
         lines_read = lines_read + 1
-        found_uscoa = is_uscoa(line)
+        # found_uscoa = is_uscoa(line)
+        found_circ_num = is_circ_num(line)
     
-    # This line should be the circuit number.
-    line = file.readline()
-    circ_num = line.split()[0]
+    # This line should be the circuit number,
+    # if stopped as uscoa.
+    # line = file.readline()
+    
+    # The present line should be the circuit number.
+    # circ_num = line.split()[0]
+    circ_num = line.replace("\n","")
     
     return(circ_num)
 
@@ -137,6 +175,40 @@ def get_party_names_depr(file):
     def_appee = ' '.join(def_appee_list[0:len(def_appee_list) - 1])
     def_appee = def_appee.replace(",","")
     
+# Determine if a valid Plaintiff-Appellant.
+def is_pla_appnt(line):
+    return('plaintiff' in line.lower() 
+           or 'appellant' in line.lower()
+           or 'petitioner' in line.lower())
+
+# Vector version for data frame columns:
+def is_pla_appnt_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_pla_appnt(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
+
+
+# Determine if a valid Defendant-Appellees.
+def is_def_appee(line):
+    return('defendant' in line.lower() 
+           or 'appellee' in line.lower())
+
+# Vector version for data frame columns:
+def is_def_appee_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_def_appee(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
+
 
 
 # Get names of parties.
@@ -412,50 +484,84 @@ def get_jurist_list(file):
 
 
 
-def get_case_info(txt_file):
+def get_case_info(txt_file, fields = 'all'):
+    
+    # This version records only selected fields.
+    # Note the restriction that only consecutive ordering 
+    # of fields is permitted.
+    # Earlier fileds must be included for later fields to work.
     
     # Extract the fields from the file.
     with open(txt_file, 'r', encoding = 'utf-16') as file:
         
         # Record the case code. 
-        case_code = get_case_code(file)
+        if 'all' in fields or 'case_code' in fields:
+            case_code = get_case_code(file)
+        else:
+            case_code = "NA"
         
         # Record the circuit number.
-        circ_num = get_circ_num(file)
+        if 'all' in fields or 'circ_num' in fields:
+            circ_num = get_circ_num(file)
+        else:
+            circ_num = "NA"
         
         # Record the names of parties.
         # (pla_appnt, def_appee) = get_party_names(file)
-        (pla_appnt, def_appee, last_line) = get_party_names(file)
+        if 'all' in fields or 'pla_appnt' in fields or 'def_appee' in fields:
+            (pla_appnt, def_appee, last_line) = get_party_names(file)
+        else:
+            pla_appnt = ["NA"]
+            def_appee = ["NA"]
         
         # Record the case number.
         # case_num = get_case_num(file)
-        case_num = get_case_num(file, last_line)
+        if 'all' in fields or 'case_num' in fields:
+            case_num = get_case_num(file, last_line)
+        else:
+            case_num = "NA"
         
         # Record the case date.
-        case_date = get_case_date(file)
+        if 'all' in fields or 'case_date' in fields:
+            case_date = get_case_date(file)
+        else:
+            case_date = ["NA"]
         
         # Record the background, a paragraph describing the case. 
-        background = get_background(file)
+        if 'all' in fields or 'background' in fields:
+            background = get_background(file)
+        else:
+            background = "NA"
         
         # Record the list of holdings.
-        holdings = get_holdings(file)
-        # Record the "Holdings" header statement.
-        holdings_hdr = holdings[0]
-        # Record the case outcome. 
-        outcome = holdings[-1]
-        
+        if 'all' in fields or 'outcome' in fields or 'holdings_hdr' in fields:
+            holdings = get_holdings(file)
+            # Record the "Holdings" header statement.
+            holdings_hdr = holdings[0]
+            # Record the case outcome. 
+            outcome = holdings[-1]
+        else:
+            holdings_hdr = "NA"
+            outcome = "NA"
+            
         # Record the statement of "Procedural Posture(s)".
-        posture = get_posture(file)
+        if 'all' in fields or 'posture' in fields:
+            posture = get_posture(file)
+        else:
+            posture = "NA"
         
         # Record the names of lawyers, judges and previous case.
-        jurist_list = get_jurist_list(file)
-        # The first line is the council for the plaintiff-appellant.
-        # pla_appnt_council = jurist_list[0]
-        # The next line is the council for the defendant-appellee.
-        # def_appee_council = jurist_list[1]
-        # The last line is the judicial panel.
-        judicial_panel = jurist_list[len(jurist_list) - 1]
-        
+        if 'all' in fields or 'judicial_panel' in fields:
+            jurist_list = get_jurist_list(file)
+            # The first line is the council for the plaintiff-appellant.
+            # pla_appnt_council = jurist_list[0]
+            # The next line is the council for the defendant-appellee.
+            # def_appee_council = jurist_list[1]
+            # The last line is the judicial panel.
+            judicial_panel = jurist_list[len(jurist_list) - 1]
+        else:
+            judicial_panel = "NA"
+            
         
     # Collect the fields into a dictionary.
     case_info = {
@@ -533,6 +639,100 @@ def print_case_info(case_info):
     print("judicial_panel = ")
     print(case_info["judicial_panel"])
     
+
+# Get data frame of case info from list of case files. 
+def get_case_df(txt_file_list, num_fields, print_msg):
+    
+    # Loop over text file list.
+    num_files = len(txt_file_list)
+    txt_file_num_list = range(num_files)
+    
+    # Record field listed in order. 
+    field_list = ['file_name', 'case_code', 'circ_num', 
+          'pla_appnt', 
+          'def_appee',
+          'case_num', 
+          'case_date', 
+          'background', 
+          'holdings_hdr', 'outcome', 'posture', 'judicial_panel']
+    
+    fields = []
+    for field_num in range(min(num_fields, len(field_list))):
+        fields.append(field_list[field_num])
+    
+    if print_msg:
+        print("List of fields:")
+        print(fields)
+    
+    
+    # Initialize data frame.
+    # Same fields in the data frame, regardless.
+    appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 
+                                      'pla_appnt_1', 'pla_appnt_2', 'pla_appnt_3', 
+                                      'def_appee_1', 'def_appee_2', 'def_appee_3', 'def_appee_4',
+                                      'case_num', 
+                                      'case_date_1', 'case_date_2', 'case_date_3', 'case_date_4', 
+                                      'background', 
+                                      'holdings_hdr', 'outcome', 'posture', 'judicial_panel'], 
+                           index = txt_file_num_list)
+    
+    for txt_file_num in txt_file_num_list:
+        
+        
+        # Read the information from this case.
+        txt_file = txt_file_list[txt_file_num]
+        
+        # Isolate the file name and primt a message.
+        if print_msg:
+            txt_file_name = os.path.split(txt_file)[1]
+            print("Reading case information from file " + "'" +  txt_file_name + "'")
+        
+        
+        # Get the dictionary of case info.
+        case_info = get_case_info(txt_file, fields)
+        
+        
+        # Enter the fields into the data frame.
+        appeals['file_name'][txt_file_num] = txt_file_name
+        appeals['case_code'][txt_file_num] = case_info["case_code"]
+        appeals['circ_num'][txt_file_num] = case_info["circ_num"]
+        
+        # Record the names of parties.
+        # Plaintiff-Appellant:
+        for party_num in range(3):
+            party_var_name = "pla_appnt_" + str(party_num + 1)
+            if party_num < len(case_info["pla_appnt"]):
+                appeals[party_var_name][txt_file_num] = case_info["pla_appnt"][party_num]
+            else:
+                appeals[party_var_name][txt_file_num] = "NA"
+        # Defendant-Appellee:
+        for party_num in range(4):
+            party_var_name = "def_appee_" + str(party_num + 1)
+            if party_num < len(case_info["def_appee"]):
+                appeals[party_var_name][txt_file_num] = case_info["def_appee"][party_num]
+            else:
+                appeals[party_var_name][txt_file_num] = "NA"
+        
+        
+        appeals['case_num'][txt_file_num] = case_info["case_num"]
+        
+        # Dates are collected in a list.
+        for date_num in range(4):
+            date_var_name = "case_date_" + str(date_num + 1)
+            if date_num < len(case_info["case_date"]):
+                appeals[date_var_name][txt_file_num] = case_info["case_date"][date_num]
+            else:
+                appeals[date_var_name][txt_file_num] = "NA"
+        
+        
+        appeals['background'][txt_file_num] = case_info["background"]
+        
+        appeals['holdings_hdr'][txt_file_num] = case_info["holdings_hdr"]
+        appeals['outcome'][txt_file_num] = case_info["outcome"]
+        appeals['posture'][txt_file_num] = case_info["posture"]
+        appeals['judicial_panel'][txt_file_num] = case_info["judicial_panel"]
+        
+    return(appeals)
 
 
 

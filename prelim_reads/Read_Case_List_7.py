@@ -10,7 +10,7 @@
 # College of Business 
 # University of Central Florida
 #
-# May 30, 2021
+# May 31, 2021
 # 
 ##################################################
 #
@@ -206,7 +206,7 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 ##################################################
 
 # Set path for files in a single year.
-case_year = 2019
+case_year = 2011
 
 txt_folder = data_folder + str(case_year) + '\\'
 txt_path = drive_path + txt_folder
@@ -227,7 +227,7 @@ txt_file_num_excl = []
 # txt_file_num_excl = [12, 15, 17]
 # txt_file_num_excl = [12, 15]
 # From rest of 2011:
-# txt_file_num_excl = [52, 116]
+txt_file_num_excl = [52, 116]
 # From 2012:
 # txt_file_num_excl = [10, 23, 104, 150, 152, 170]
 # From 2013:
@@ -251,8 +251,8 @@ txt_file_num_excl = []
 # txt_file_num_excl = [19, 25, 35, 39, 48, 51, 53, 59, 62, 63, 65, 70, 
 #                      78, 82, 83, 89, 91, 99, 108, 114, 116]
 # From 2019:
-txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81, 
-                     90, 91, 92, 94, 100, 106, 109, 122, 128]
+# txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81, 
+#                      90, 91, 92, 94, 100, 106, 109, 122, 128]
 
 # Fix the anomalies and add them back. 
 
@@ -260,135 +260,83 @@ txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81,
 # Calculate sub list after exclusions.
 # txt_file_num_list = list(range(num_files))
 # txt_file_num_list = [num for num in txt_file_num_list if num not in txt_file_num_excl]
-# For use outside of function. 
 
-# Initialize data frame.
-appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 
-                                  'pla_appnt_1', 'pla_appnt_2', 'pla_appnt_3', 
-                                  'def_appee_1', 'def_appee_2', 'def_appee_3', 'def_appee_4',
-                                  'case_num', 
-                                  'case_date_1', 'case_date_2', 'case_date_3', 'case_date_4', 
-                                  'background', 
-                                  'holdings_hdr', 'outcome', 'posture', 'judicial_panel'], 
-                       index = txt_file_num_list)
-
-
-
-# txt_file_num_list = txt_file_num_list[txt_file_num_list not in txt_file_num_excl]
-
+# Select subset to skip problematic files. 
+txt_file_list_sel = []
 for txt_file_num in txt_file_num_list:
     
     if txt_file_num not in txt_file_num_excl:
         
-        # Read the information from this case.
-        txt_file = txt_file_list[txt_file_num]
-        
-        # Isolate the file name and primt a message.
-        txt_file_name = os.path.split(txt_file)[1]
-        print("Reading case information from file " + "'" +  txt_file_name + "'")
-        
-        # Get the dictionary of case info.
-        case_info = caser.get_case_info(txt_file)
-        
-        
-        # Enter the fields into the data frame.
-        appeals['file_name'][txt_file_num] = txt_file_name
-        appeals['case_code'][txt_file_num] = case_info["case_code"]
-        appeals['circ_num'][txt_file_num] = case_info["circ_num"]
-        
-        # Record the names of parties.
-        # Plaintiff-Appellant:
-        for party_num in range(3):
-            party_var_name = "pla_appnt_" + str(party_num + 1)
-            if party_num < len(case_info["pla_appnt"]):
-                appeals[party_var_name][txt_file_num] = case_info["pla_appnt"][party_num]
-            else:
-                appeals[party_var_name][txt_file_num] = "NA"
-        # Defendant-Appellee:
-        for party_num in range(4):
-            party_var_name = "def_appee_" + str(party_num + 1)
-            if party_num < len(case_info["def_appee"]):
-                appeals[party_var_name][txt_file_num] = case_info["def_appee"][party_num]
-            else:
-                appeals[party_var_name][txt_file_num] = "NA"
-        
-        
-        appeals['case_num'][txt_file_num] = case_info["case_num"]
-        
-        # Dates are collected in a list.
-        for date_num in range(4):
-            date_var_name = "case_date_" + str(date_num + 1)
-            if date_num < len(case_info["case_date"]):
-                appeals[date_var_name][txt_file_num] = case_info["case_date"][date_num]
-            else:
-                appeals[date_var_name][txt_file_num] = "NA"
-        
-        
-        appeals['background'][txt_file_num] = case_info["background"]
-        
-        appeals['holdings_hdr'][txt_file_num] = case_info["holdings_hdr"]
-        appeals['outcome'][txt_file_num] = case_info["outcome"]
-        appeals['posture'][txt_file_num] = case_info["posture"]
-        appeals['judicial_panel'][txt_file_num] = case_info["judicial_panel"]
-        
+        txt_file_list_sel.append(txt_file_list[txt_file_num])
 
 
+# Get data frame of case info from list of case files. 
+# fields = ['file_name', 'case_code', 'circ_num', 
+#           'pla_appnt', 
+#           'def_appee',
+#           'case_num', 
+#           'case_date', 
+#           'background', 
+#           'holdings_hdr', 'outcome', 'posture', 'judicial_panel']
 
+# import caser
 
-
-
-
-
+# fields = 'all'
+num_fields = 12
+print_msg = True
+appeals = caser.get_case_df(txt_file_list_sel, num_fields, print_msg)
 
 
 
 # Print selected fields to screen. 
-appeals['file_name'][0:txt_file_num]
-appeals['case_code'][0:txt_file_num]
-appeals['circ_num'][0:txt_file_num]
-
-appeals['pla_appnt_1'][0:txt_file_num]
-appeals['pla_appnt_2'][0:txt_file_num]
-appeals['pla_appnt_3'][0:txt_file_num]
-
-appeals['def_appee_1'][0:txt_file_num]
-appeals['def_appee_2'][0:txt_file_num]
-appeals['def_appee_3'][0:txt_file_num]
-appeals['def_appee_4'][0:txt_file_num]
+appeals['file_name']
+appeals['case_code']
+is_valid = caser.is_case_code_vec(appeals['case_code'])['is_valid']
+sum(is_valid)
 
 
-appeals['case_num'][0:txt_file_num]
+appeals['circ_num']
+appeals['circ_num'].unique()
+is_valid = caser.is_circ_num_vec(appeals['circ_num'])['is_valid']
+sum(is_valid)
 
-appeals['case_date_1'][0:txt_file_num]
-appeals['case_date_2'][0:txt_file_num]
-appeals['case_date_3'][0:txt_file_num]
-appeals['case_date_4'][0:txt_file_num]
-
-
-appeals['background'][0:txt_file_num]
-
-appeals['holdings_hdr'][0:txt_file_num]
-appeals['outcome'][0:txt_file_num]
-
-appeals['posture'][0:txt_file_num]
-appeals['judicial_panel'][0:txt_file_num]
+appeals['pla_appnt_1']
+is_valid = caser.is_pla_appnt_vec(appeals['pla_appnt_1'])['is_valid']
+sum(is_valid)
+appeals['pla_appnt_1'][is_valid == False]
 
 
-# import caser
+appeals['pla_appnt_2']
+is_valid = caser.is_pla_appnt_vec(appeals['pla_appnt_2'])['is_valid']
+sum(is_valid)
+appeals['pla_appnt_2'][is_valid == False].unique()
+
+appeals['pla_appnt_3']
+is_valid = caser.is_pla_appnt_vec(appeals['pla_appnt_3'])['is_valid']
+sum(is_valid)
+appeals['pla_appnt_3'][is_valid == False].unique()
+
+appeals['def_appee_1']
+appeals['def_appee_2']
+appeals['def_appee_3']
+appeals['def_appee_4']
 
 
-# # Print selected fields to screen. 
-# field_sel = 'case_code'
-# field_sel = 'circ_num'
-# print("List of results for field " + "'" + field_sel + "'")
-# # Now inspect the contents. 
-# for txt_file_num in txt_file_num_list:
-    
-#     print("Case %d: %s: %s" % (txt_file_num_list[txt_file_num], 
-#                                field_sel, 
-#                                case_info[field_sel][txt_file_num]))
-    
-    
+appeals['case_num']
+
+appeals['case_date_1']
+appeals['case_date_2']
+appeals['case_date_3']
+appeals['case_date_4']
+
+
+appeals['background']
+
+appeals['holdings_hdr']
+appeals['outcome']
+
+appeals['posture']
+appeals['judicial_panel']
 
 
 
