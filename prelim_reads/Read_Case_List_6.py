@@ -70,41 +70,57 @@ os.chdir(drive_path + git_path + 'prelim_reads')
 os.getcwd()
 
 
+# Note:
+# To change names of files.
+# for file in 20*.doc; do   newfile=2"$(echo "$file" | cut -c3-)";   mv "$file" "$newfile"; done
+# 
+
+
 ##################################################
 # Set paths for handling files.
 ##################################################
 
-# Set the directory with data files.
-# doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
-# doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
-doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
-doc_path = drive_path + doc_folder
+data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_' 
+case_year = 2009
 
+for case_year in range(2000, 2009):
+    print("Translating files for cases in year " + str(case_year))
 
-# Set the directory with txt files after translation.
-# txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
-# Place them in the same folder.
-# txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
-txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
-txt_path = drive_path + txt_folder
-
-
-
-
-
-##################################################
-# Select a File and Scrape Contents
-##################################################
-
-# Translate them all at once.
-# It takes a few seconds each. 
-
-# Initialize object for Word application
-app = win32com.client.Dispatch('Word.Application')
-app.Visible = True
-
-# Translate all files in a folder.
-caser.doc2txt_dir(app, doc_path, txt_path)
+    # Set the directory with data files.
+    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
+    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
+    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
+    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
+    doc_folder = data_folder + str(case_year) + '\\'
+    doc_path = drive_path + doc_folder
+    
+    
+    # Set the directory with txt files after translation.
+    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
+    # Place them in the same folder.
+    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
+    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
+    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
+    txt_folder = data_folder + str(case_year) + '\\'
+    txt_path = drive_path + txt_folder
+    
+    
+    
+    
+    
+    ##################################################
+    # Select a File and Scrape Contents
+    ##################################################
+    
+    # Translate them all at once.
+    # It takes a few seconds each. 
+    
+    # Initialize object for Word application
+    app = win32com.client.Dispatch('Word.Application')
+    app.Visible = True
+    
+    # Translate all files in a folder.
+    caser.doc2txt_dir(app, doc_path, txt_path)
 
 
 
@@ -145,6 +161,25 @@ txt_file_list = sorted( filter( os.path.isfile,
 num_files = len(txt_file_list)
 txt_file_num_list = range(num_files)
 
+# Exclude some files that are problematic. 
+# First 20 (now fixed):
+# txt_file_num_excl = [12, 15, 17]
+# txt_file_num_excl = [12, 15]
+# From rest of 2011:
+# txt_file_num_excl = [52, 116]
+# From 2012:
+# txt_file_num_excl = [10, 23, 104, 150, 152, 170]
+# From 2013:
+# txt_file_num_excl = [26, 46, 50, 64, 82, 84, 89, 106, 
+#                      121, 122, 123, 124, 
+#                      132]
+# From 2014:
+# txt_file_num_excl = [5, 17, 34, 62, 65, 82, 86, 93, 96, 98, 106, 113, 123, 137]
+# From 2015:
+txt_file_num_excl = [15, 21, 55, 57, 71, 75, 86, 94, 109]
+# Fix the anomalies and add them back. 
+
+
 # Initialize data frame.
 appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 
                                   'pla_appnt_1', 'pla_appnt_2', 'pla_appnt_3', 
@@ -156,11 +191,6 @@ appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num',
                        index = txt_file_num_list)
 
 
-# Exclude some files that are problematic. 
-# txt_file_num_excl = [12, 15, 17]
-# txt_file_num_excl = [12, 15]
-txt_file_num_excl = [52, 116]
-# Fix the anomalies and add them back. 
 
 # txt_file_num_list = txt_file_num_list[txt_file_num_list not in txt_file_num_excl]
 
