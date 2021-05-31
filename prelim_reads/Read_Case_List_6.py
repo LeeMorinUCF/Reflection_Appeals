@@ -27,6 +27,16 @@
 # This version processes all 175 cases in 2011
 # referring to sexual harassment
 # and categorized under Labor and Employment. 
+# 
+# TODO: Test cases by year to find which fail.
+# TODO: Verify that fields are reading valid information 
+#   (i.e. no wrong fields). 
+# TODO: Create is_valid_field(line) functions to test at scale.
+# TODO: Modify invalid fileds and iterate.
+# 
+# TODO: Create function to extract judges' names from
+#   line with judicial panel. 
+# TODO: Create master list of judges. 
 #
 ##################################################
 """
@@ -72,57 +82,93 @@ os.getcwd()
 
 # Note:
 # To change names of files.
+# Append a prefix "2" for files 200+.
 # for file in 20*.doc; do   newfile=2"$(echo "$file" | cut -c3-)";   mv "$file" "$newfile"; done
 # 
 
 
 ##################################################
 # Set paths for handling files.
+# Translate a year of doc files to txt
 ##################################################
 
 data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_' 
-case_year = 2009
 
-for case_year in range(2000, 2009):
-    print("Translating files for cases in year " + str(case_year))
+# # Set path for files in a single year.
+# case_year = 2015
 
-    # Set the directory with data files.
-    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
-    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
-    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
-    # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
-    doc_folder = data_folder + str(case_year) + '\\'
-    doc_path = drive_path + doc_folder
-    
-    
-    # Set the directory with txt files after translation.
-    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
-    # Place them in the same folder.
-    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
-    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
-    # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
-    txt_folder = data_folder + str(case_year) + '\\'
-    txt_path = drive_path + txt_folder
-    
-    
-    
-    
-    
-    ##################################################
-    # Select a File and Scrape Contents
-    ##################################################
-    
-    # Translate them all at once.
-    # It takes a few seconds each. 
-    
-    # Initialize object for Word application
-    app = win32com.client.Dispatch('Word.Application')
-    app.Visible = True
-    
-    # Translate all files in a folder.
-    caser.doc2txt_dir(app, doc_path, txt_path)
+# doc_folder = data_folder + str(case_year) + '\\'
+# doc_path = drive_path + doc_folder
+
+# txt_folder = data_folder + str(case_year) + '\\'
+# txt_path = drive_path + txt_folder
 
 
+    
+    
+# ##################################################
+# # Translate these doc Files to txt for this year
+# ##################################################
+
+# # Translate them all at once.
+# # It takes a few seconds each. 
+
+# # Initialize object for Word application
+# app = win32com.client.Dispatch('Word.Application')
+# app.Visible = True
+
+# # Translate all files in a folder.
+# caser.doc2txt_dir(app, doc_path, txt_path)
+
+
+
+
+# Loop over files across several years.
+
+# for case_year in range(2000, 2009):
+#     print("Translating files for cases in year " + str(case_year))
+
+#     # Set the directory with data files.
+#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
+#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
+#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
+#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
+#     doc_folder = data_folder + str(case_year) + '\\'
+#     doc_path = drive_path + doc_folder
+    
+    
+#     # Set the directory with txt files after translation.
+#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
+#     # Place them in the same folder.
+#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
+#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
+#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
+#     txt_folder = data_folder + str(case_year) + '\\'
+#     txt_path = drive_path + txt_folder
+    
+    
+    
+    
+    
+#     ##################################################
+#     # Translate this doc File to txt
+#     ##################################################
+    
+#     # Translate them all at once.
+#     # It takes a few seconds each. 
+    
+#     # Initialize object for Word application
+#     app = win32com.client.Dispatch('Word.Application')
+#     app.Visible = True
+    
+#     # Translate all files in a folder.
+#     caser.doc2txt_dir(app, doc_path, txt_path)
+
+
+
+##################################################
+# Translate an Individual doc File to txt
+##################################################
 
 
 # Assume all files are translated to txt. 
@@ -150,8 +196,15 @@ for case_year in range(2000, 2009):
 
 
 ##################################################
-# Read through file and parse data
+# Read through text files and parse data
 ##################################################
+
+# Set path for files in a single year.
+case_year = 2019
+
+txt_folder = data_folder + str(case_year) + '\\'
+txt_path = drive_path + txt_folder
+
 
 
 # Get list of all files in a given directory sorted by name
@@ -162,6 +215,8 @@ num_files = len(txt_file_list)
 txt_file_num_list = range(num_files)
 
 # Exclude some files that are problematic. 
+txt_file_num_excl = []
+
 # First 20 (now fixed):
 # txt_file_num_excl = [12, 15, 17]
 # txt_file_num_excl = [12, 15]
@@ -176,8 +231,26 @@ txt_file_num_list = range(num_files)
 # From 2014:
 # txt_file_num_excl = [5, 17, 34, 62, 65, 82, 86, 93, 96, 98, 106, 113, 123, 137]
 # From 2015:
-txt_file_num_excl = [15, 21, 55, 57, 71, 75, 86, 94, 109]
+# txt_file_num_excl = [15, 21, 55, 57, 71, 75, 86, 94, 109]
+# From 2016:
+# txt_file_num_excl = [36, 37, 55, 61, 62, 67, 68, 69, 82, 
+#                      90, 91, 94, 97, 102, 103, 104, 
+#                      109, 111, 115, 116]
+# From 2017:
+# txt_file_num_excl = [7, 15, 16, 23, 29, 45, 58, 61, 63, 65, 74, 
+#                      87, 89, 95, 103, 105, 
+#                      118, 119, 120, 121, 125, 126, 129, 130, 131, 
+#                      134, 136, 147, 151]
+# From 2018:
+# txt_file_num_excl = [19, 25, 35, 39, 48, 51, 53, 59, 62, 63, 65, 70, 
+#                      78, 82, 83, 89, 91, 99, 108, 114, 116]
+# From 2019:
+txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81, 
+                     90, 91, 92, 94, 100, 106, 109, 122, 128]
+
 # Fix the anomalies and add them back. 
+
+
 
 
 # Initialize data frame.
@@ -249,6 +322,13 @@ for txt_file_num in txt_file_num_list:
         appeals['posture'][txt_file_num] = case_info["posture"]
         appeals['judicial_panel'][txt_file_num] = case_info["judicial_panel"]
         
+
+
+
+
+
+
+
 
 
 
