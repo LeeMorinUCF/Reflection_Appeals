@@ -304,25 +304,52 @@ appeals['pla_appnt_1']
 is_valid = caser.is_pla_appnt_vec(appeals['pla_appnt_1'])['is_valid']
 sum(is_valid)
 appeals['pla_appnt_1'][is_valid == False]
+# One apellee in error: 158 in 2011.
+
+# Look for confounded parties:
+is_valid = caser.is_def_appee_vec(appeals['pla_appnt_1'])['is_valid']
+sum(is_valid)
+appeals['pla_appnt_1'][is_valid == True]
 
 
 appeals['pla_appnt_2']
 is_valid = caser.is_pla_appnt_vec(appeals['pla_appnt_2'])['is_valid']
 sum(is_valid)
+appeals['pla_appnt_2'][is_valid]
 appeals['pla_appnt_2'][is_valid == False].unique()
+sum(appeals['pla_appnt_2'] == 'and')
+
 
 appeals['pla_appnt_3']
 is_valid = caser.is_pla_appnt_vec(appeals['pla_appnt_3'])['is_valid']
 sum(is_valid)
 appeals['pla_appnt_3'][is_valid == False].unique()
+appeals['pla_appnt_3'].unique()
 
 appeals['def_appee_1']
+is_valid = caser.is_def_appee_vec(appeals['def_appee_1'])['is_valid']
+sum(is_valid)
+appeals['def_appee_1'][is_valid == False].unique()
+
+# Look for confounded parties:
+is_valid = caser.is_pla_appnt_vec(appeals['def_appee_1'])['is_valid']
+sum(is_valid)
+appeals['def_appee_1'][is_valid == False]
+
 appeals['def_appee_2']
+is_valid = caser.is_def_appee_vec(appeals['def_appee_2'])['is_valid']
+sum(is_valid)
+
 appeals['def_appee_3']
 appeals['def_appee_4']
 
 
 appeals['case_num']
+is_valid = caser.is_case_num_vec(appeals['case_num'])['is_valid']
+sum(is_valid)
+appeals['case_num'][is_valid == False].unique()
+# Success! (for 2011, at least)
+
 
 appeals['case_date_1']
 appeals['case_date_2']
@@ -331,6 +358,10 @@ appeals['case_date_4']
 
 
 appeals['background']
+is_valid = caser.is_background_vec(appeals['background'])['is_valid']
+sum(is_valid)
+appeals['background'][is_valid == False].unique()
+
 
 appeals['holdings_hdr']
 appeals['outcome']

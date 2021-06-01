@@ -220,8 +220,10 @@ def get_party_names(file):
     # When the next line is "v.", list of Plaintiff-Appellants is complete.
     found_v = line.strip()[0] == "v"
     lines_read = 0
-    while not found_v and lines_read < 3:
-        pla_appnt.append(line.replace("\n",""))
+    while not found_v and lines_read < 20:
+        pla_appnt_line = line.replace("\n","")
+        if not pla_appnt_line.strip() == 'and':
+            pla_appnt.append(pla_appnt_line)
         line = file.readline()
         lines_read = lines_read + 1
         found_v = line.strip()[0] == "v"
@@ -233,8 +235,10 @@ def get_party_names(file):
     # When the next line is a case number, the list of Defendant-Appellees is complete.
     found_case_num = is_case_num(line)
     lines_read = 0
-    while not found_case_num and lines_read < 3:
-        def_appee.append(line.replace("\n",""))
+    while not found_case_num and lines_read < 20:
+        def_appee_line = line.replace("\n","")
+        if not def_appee_line.strip() == 'and':
+            def_appee.append(def_appee_line)
         line = file.readline()
         lines_read = lines_read + 1
         found_case_num = is_case_num(line)
@@ -262,6 +266,17 @@ def is_case_num(line):
     # A case number either contains the word "Docket" or "No."
     line_list = line.split()
     return("No." in line_list or "Nos." in line_list or "Docket" in line_list)
+
+# Vector version for data frame columns:
+def is_case_num_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_case_num(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
 
 
 # Record the case number, either from the file of the last line.
@@ -309,6 +324,27 @@ def get_case_date(file):
     # case_date = do_something_to(case_date)
     
     return(case_date)
+
+
+# Determine whether line contains a "Background" paragraph.
+def is_background(line):
+    line_list = line.split()
+    if len(line_list) > 0:
+        return(line_list[0].strip().replace(":","") == "Background")
+    else:
+        return False
+
+# Vector version for data frame columns:
+def is_background_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_background(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
+
     
 # Record the background, a paragraph describing the case. 
 def get_background(file):
