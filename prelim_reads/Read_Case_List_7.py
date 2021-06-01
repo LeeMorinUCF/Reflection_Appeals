@@ -40,6 +40,10 @@
 # TODO: Display incorrect fields. 
 # TODO: Modify functions collecting invalid feilds and iterate.
 # 
+# TODO: Make a function which_case_info(line) to 
+#   determine type of case info, in case the info 
+#   is skipped or stored in a different order. 
+# 
 # TODO: Create function to extract judges' names from
 #   line with judicial panel. 
 # TODO: Create master list of judges. 
@@ -361,6 +365,8 @@ appeals['background']
 is_valid = caser.is_background_vec(appeals['background'])['is_valid']
 sum(is_valid)
 appeals['background'][is_valid == False].unique()
+# Still some bugs to work out with the date. 
+appeals[['file_name', 'background']][is_valid == False]
 
 
 appeals['holdings_hdr']

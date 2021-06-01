@@ -294,8 +294,17 @@ def get_case_num(file, last_line):
         case_num = line.replace("\n","")
         
     return(case_num)
-        
+
+
+def is_synopsis(line):
     
+    line_list = line.split()
+    if len(line_list) > 0:
+        return(line_list[0].strip().replace(":","") == "Synopsis")
+    else:
+        return False
+
+
 
 # Record the case date.
 def get_case_date(file):
@@ -309,12 +318,12 @@ def get_case_date(file):
     case_date = []
     found_synopsis = False
     lines_read = 0
-    while not found_synopsis and lines_read < 7:
+    while not found_synopsis and lines_read < 9:
         line = file.readline()
         lines_read = lines_read + 1
         line_list = line.split()
         # Check if the next line is "Synopsis".
-        found_synopsis =  line_list[0].strip() == "Synopsis"
+        found_synopsis =  is_synopsis(line)
         # Skip the next line if it is a pipe (|).
         if not found_synopsis and line_list[0].strip() != "|":
             # The next line should be a date in text format.
@@ -353,9 +362,21 @@ def get_background(file):
     # and that the previous line was the header "Synopsis".
     # line = file.readline()
     
-    # The next line is the "Background" paragraph.
-    line = file.readline()
-    background = line.replace("\n","")
+    # The next line should be the "Background" paragraph.
+    # Read until the background paragraph is found.
+    found_background = False
+    lines_read = 0
+    while not found_background and lines_read < 3:
+        line = file.readline()
+        lines_read = lines_read + 1
+        # Check if the next line begins with "Background".
+        found_background =  is_background(line)
+    
+    # The next line should be the "Background" paragraph.
+    if found_background:
+        background = line.replace("\n","")
+    else:
+        background = "NA"
     
     return(background)
 
