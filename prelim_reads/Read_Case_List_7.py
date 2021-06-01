@@ -369,7 +369,15 @@ appeals['background'][is_valid == False].unique()
 appeals[['file_name', 'background']][is_valid == False]
 
 
+# import caser
+
+
 appeals['holdings_hdr']
+is_valid = caser.is_holdings_hdr_vec(appeals['holdings_hdr'])['is_valid']
+sum(is_valid)
+appeals['holdings_hdr'][is_valid == False].unique()
+
+
 appeals['outcome']
 
 appeals['posture']

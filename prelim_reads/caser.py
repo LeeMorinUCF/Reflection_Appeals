@@ -380,6 +380,47 @@ def get_background(file):
     
     return(background)
 
+def is_holdings_hdr_keyword(line_check):
+    
+    # Remove puctuation.
+    line_check = line_check.replace("[","")
+    line_check = line_check.replace("]","")
+    line_check = line_check.replace("*","")
+    line_check = line_check.lower()
+    return(line_check == "holding"
+           or line_check == "holdings"
+           or line_check == "order"
+           or line_check == "opinion"
+           or line_check == "memorandum"
+           or line_check == "unpublished"
+           or line_check == "per"
+           or line_check == "curiam")
+
+# Determine whether line contains the verb "held".
+def is_holdings_hdr(line):
+    line_list = line.split()
+    if len(line_list) > 0:
+        line_check = line_list[0].strip().replace(":","")
+        if is_holdings_hdr_keyword(line_check):
+            return(True)
+    # If the first word does not indicate a header, 
+    # check the second word.
+    if len(line_list) > 1:
+        line_check = line_list[1].strip().replace(":","")
+        return(is_holdings_hdr_keyword(line_check))
+    else:
+        return False
+
+# Vector version for data frame columns:
+def is_holdings_hdr_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_holdings_hdr(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
 
 
 # Determine whether line goes beyond list of holdings.
@@ -393,8 +434,17 @@ def get_holdings(file):
     line = file.readline()
     holdings = []
     
+    # Skip lines to the holdings header.
+    found_holdings_hdr = False
+    lines_read = 0
+    while not found_holdings_hdr and lines_read < 4:
+        line = file.readline()
+        lines_read = lines_read + 1
+        # Check if the next line contains the verb "held".
+        found_holdings_hdr =  is_holdings_hdr(line)
+    
+    
     # The next line is the "Holdings" header statement.
-    line = file.readline()
     holdings_hdr = line.replace("\n","")
     holdings.append(holdings_hdr)
     
