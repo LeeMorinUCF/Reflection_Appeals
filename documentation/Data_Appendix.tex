@@ -1,0 +1,423 @@
+\documentclass[11pt]{paper}
+\usepackage{fullpage}
+\usepackage{hyperref}
+
+\begin{document}
+
+
+\phantom{0}
+\vspace{1.0in}
+
+
+\begin{centering}
+
+{\huge 
+Data Availability Guidelines and Code Base  \\
+\bigskip
+for \\
+\bigskip
+{\it ``Diversity Effects or Dissent Aversion? \\
+Identification and Estimation in Judicial Panel Voting''} \\
+}
+
+\vspace{1.25in}
+
+
+{\large 
+Charles M. Cameron \\
+{\it Center for the Study of Democratic Politics, Princeton University} \\
+\medskip
+Lealand Morin \\
+{\it College of Business, University of Central Florida} \\
+\medskip
+Harry J. Paarsch \\
+{\it College of Business, University of Central Florida} \\
+}
+
+\vspace{1.25in}
+
+
+
+\today
+
+\end{centering}
+
+
+\pagebreak
+
+\section*{Reflection\_Appeals}
+
+This is the code base to accompany the manuscript 
+{\it Diversity Effects or Dissent Aversion? \\
+Identification and Estimation in Judicial Panel Voting} 
+by Cameron, Morin, and Paarsch in the [Journal Name], 2021. 
+
+Any updates will be available on the GitHub code repository 
+called  \texttt{Reflection\_Appeals}
+available at the following link: \\
+
+\texttt{https://github.com/LeeMorinUCF/Reflection\_Appeals} \\
+
+
+\section*{Data Availability}
+
+We extract data of three main types: 
+information about cases in the U.S. Courts of Appeals, 
+information about the corresponding trials, 
+and information about the judges involved in both courts. 
+
+Some of the information is drawn from the Westlaw database, which is a proprietary data source
+and requires a subscription to Westlaw, a subsidiary of Thomson-Reuters. 
+Some of the information is publicly available on the Website of the Department of Justice. 
+
+\subsection*{Westlaw Data}
+
+The primary data source is the Westlaw legal database. 
+
+
+
+
+\subsection*{Department of Justice}
+
+Some information is publicly available on the Website of the Department of Justice. 
+
+[To be completed.]
+
+
+
+
+
+\section*{Instructions}
+
+The workflow proceeds in three stages: 
+one set of instructions outlines the operations to draw the raw data from the 
+Westlaw database. 
+The data are then joined with other publicly-available datasets, 
+to produce the final datasets that are the inputs for the statistical analysis
+in the final stage. 
+
+
+\section*{Data Manipulation}
+
+
+
+\subsection{Text Mining}
+
+These procedures were performed 
+on the \texttt{ms.economics} computing cluster
+at the Collee of Business
+at the University of Central Florida
+to generate the primary datasets. 
+These scripts are stored in the \texttt{Code/Data\_Prep} folder. 
+
+\begin{enumerate}
+
+\item First run this script. 
+
+\item This script calls this function. 
+
+\item This other script calls this other function. 
+
+\item  And everything goes from there. 
+
+\end{enumerate}
+
+
+\section*{Datasets}
+
+
+The above operations will produce the following datasets in \texttt{csv} format. 
+
+
+\subsection*{Main datasets}
+
+\noindent\textbf{\texttt{appeals\_cases\_wl.csv}}
+
+This dataset contains observations of cases in the U.S. Courts of Appeals
+that were heard from 2000-2019.  
+The data were drawn from the Westlaw database. 
+This dataset contains the following variables:
+
+\begin{itemize}
+
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+
+\end{itemize}
+
+\noindent\textbf{\texttt{trial\_cases.csv}}
+
+This dataset contains observations of trials held
+U.S. Federal Courts for which the verdicts were appealed
+and the data were recorded in the \texttt{appeals\_cases.csv} dataset. 
+It contains the following variables:
+
+\begin{itemize}
+
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+
+\end{itemize}
+
+
+\subsection*{Auxiliary datasets}
+
+\noindent\textbf{\texttt{appeal\_cases\_doj.csv}}
+
+This dataset contains observations of cases in the U.S. Courts of Appeals
+that were heard from 2000-2019.  
+The data were drawn from the Website of the Department of Justice. 
+This dataset contains the following variables:
+
+\begin{itemize}
+
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+\item \texttt{var\_name} 
+
+\end{itemize}
+
+
+These data sources are used in the statistical analysis that follows. 
+
+
+
+\section*{Statistical Analysis}
+
+These procedures were performed on a microcomputer
+to generate the tables and figures in the paper.
+These scripts are stored in the \texttt{Code/Stats} folder. 
+
+\subsection*{All Files in One Script:}
+
+
+\begin{enumerate}
+
+\item Place all datasets in the \texttt{Data} folder, 
+including the main datasets, including  
+\texttt{appeals\_cases\_wl.csv}, \texttt{appeals\_cases\_doj.csv}, 
+and \texttt{trial\_cases.csv}. 
+ 
+\item Run \texttt{Reflection\_Appeals.sh} in a terminal window from the \texttt{Reflection\_Appeals} folder. 
+
+\end{enumerate}
+
+
+This shell script calls the main 
+\texttt{python} programs, in the \texttt{Code/Westlaw} folder, 
+which generate the \texttt{appeals\_cases\_wl.csv} dataset. 
+Then it calls the 
+\texttt{R} programs 
+\texttt{TVN\_Probit\_Estn.R} and \texttt{TVN\_Probit\_Post\_Estn.R}, 
+which are found in the \texttt{Code/Stats} folder, 
+which analyze the datasets stored in the \texttt{Data} folder. 
+These scripts create the tables and figures for the entire manuscript,
+by writing \texttt{tex} files to the \texttt{Tables} folder and
+ \texttt{eps} files to the \texttt{Figures} folder. 
+
+
+
+  
+
+\section*{Generating Tables and Figures Separately}
+
+\subsection*{Tables}
+
+\noindent\textbf{Table 1: Title} \\
+
+This table contains information from... \\
+
+
+The numbers are combined into the file \texttt{Table\_1.tex}. \\
+
+
+\subsection*{Figures}
+
+\noindent\textbf{Figure 1: Title} \\
+
+
+
+
+\section*{Computing Requirements}
+
+\subsection*{Data Manipulation}
+
+The \texttt{csv} files in the Data folder 
+were generated on the 
+\texttt{ms.economics} computing cluster
+at the Collee of Business
+at the University of Central Florida. 
+
+It is a cluster of
+[Nvidia Tesla K80 GPU Accelerators],
+each with [12 GB of GDDR5] on-board memory, 
+running
+[2496] processor cores, 
+with base core clock speed of [560 MHz]
+boost clocks from [562 MHz to 875 MHz], 
+and with a memory clock speed of [2.5 GHz] on
+[48 pieces of 256M × 16 GDDR5 SDRAM], 
+producing a memory bandwidth of [240GB/s per CPU]. 
+
+For the queries that generated the datasets, 
+[36] CPUs with [240 GB] of memory were sufficient
+to create the datasets within at most [24] hours each. 
+
+
+\subsection*{Statistical Analysis}
+
+Once the datasets have been saved in the \texttt{Data} folder, 
+the remaining analysis, including the generation of all the tables
+and figures in the paper can be performed on a single microcomputer, 
+such as a laptop computer.
+The particular model of computer 
+on which the statistical analysis was run
+is a 
+Dell Precision 3520,
+running a 64-bit Windows 10 operating system, 
+with a 4-core x64-based processor,
+model Intel(R) Core(TM) i7-7820HQ CPU, 
+running at 2.90GHz, 
+with 16 GB of RAM.
+
+
+\section*{Software}
+
+\subsection*{Data Manipulation}
+
+The data manipulation was conducted using 
+Python 3.8. 
+
+
+The following python modules were imported:
+
+\begin{itemize}
+
+\item \texttt{os}, version 9.9.9
+\item \texttt{glob}, version 9.9.9
+\item \texttt{win32com}, version 9.9.9
+\item \texttt{pandas}, version 9.9.9
+
+\end{itemize}
+
+
+\subsection*{Statistical Analysis}
+
+The statistical analysis was conducted in R, version 4.0.2,
+which was released on June 22, 2020, 
+on a 64-bit Windows platform x86\_64-w64-mingw32/x64. 
+
+The attached packages include the following:
+
+\begin{itemize}
+
+\item \texttt{data.table}, version 1.13.0 (using 4 threads), to handle the main data table for analysis 
+in the \texttt{\_prelim.R} and \texttt{\_estim.R} scripts. 
+
+\item \texttt{xtable}, version 1.8-4, to generate LaTeX tables for Tables 1, 2, and 3.
+
+\item \texttt{plot3D}, version 1.3, to produce a 3-D bar chart of transition frequency, which created the plots in Figure 3.
+
+\item \texttt{MASS}, version 7.3-51.6, was also used to estimate the smoothed surface of the transition density as an alternative to that in Figure 3 but was not included in the paper. 
+
+\end{itemize}
+
+Upon attachment of the above packages, 
+the following packages were loaded via a namespace, but not attached,
+with the following versions:
+
+\begin{itemize}
+
+\item \texttt{Rcpp} version 1.0.5
+\item \texttt{lattice} version 0.20-41
+\item \texttt{grid} version 4.0.2
+\item \texttt{DTMCPack} version 0.1-2
+\item \texttt{stats4} version 4.0.2
+\item \texttt{magrittr} version 1.5
+\item \texttt{RcppParallel} version 5.0.2
+\item \texttt{misc3d} version 0.8-4
+\item \texttt{markovchain} version 0.8.5-3
+\item \texttt{Matrix} version 1.2-18
+\item \texttt{tools} version 4.0.2
+\item \texttt{igraph} version 1.2.6
+\item \texttt{parallel} version 4.0.2
+\item \texttt{compiler} version 4.0.2
+\item \texttt{pkgconfig} version 2.0.3
+\item \texttt{matlab} version 1.0.2
+\item \texttt{nnet} version 7.3-14
+\item \texttt{expm} version 0.999-5  
+\item \texttt{zip} version 2.1.1
+\item \texttt{cellranger} version 1.1.0
+\item \texttt{pillar} version 1.6.0
+\item \texttt{forcats} version 0.5.1
+\item \texttt{lifecycle} version 1.0.0
+\item \texttt{tibble} version 3.1.0
+\item \texttt{gtable} version 0.3.0
+\item \texttt{rlang} version 0.4.10
+\item \texttt{curl} version 4.3
+\item \texttt{haven} version 2.3.1
+\item \texttt{rio} version 0.5.26
+\item \texttt{stringr} version 1.4.0
+\item \texttt{withr} version 2.4.2       
+\item \texttt{hms} version 1.0.0        
+\item \texttt{generics} version 0.1.0    
+\item \texttt{vctrs} version 0.3.7       
+\item \texttt{grid} version 4.0.5        
+\item \texttt{tidyselect} version 1.1.0  
+\item \texttt{glue} version 1.4.2       
+\item \texttt{R6} version 2.5.0          
+\item \texttt{rstatix} version 0.7.0     
+\item \texttt{fansi} version 0.4.2       
+\item \texttt{readxl} version 1.3.1      
+\item \texttt{foreign} version 0.8-81    
+\item \texttt{carData} version 3.0-4    
+\item \texttt{purrr} version 0.3.4       
+\item \texttt{tidyr} version 1.1.3       
+\item \texttt{car} version 3.0-10        
+\item \texttt{scales} version 1.1.1      
+\item \texttt{backports} version 1.2.1  
+\item \texttt{ellipsis} version 0.3.1    
+\item \texttt{abind} version 1.4-5       
+\item \texttt{colorspace} version 2.0-0  
+\item \texttt{ggsignif} version 0.6.1    
+\item \texttt{utf8} version 1.2.1        
+\item \texttt{stringi} version 1.5.3    
+\item \texttt{munsell} version 0.5.0     
+\item \texttt{broom} version 0.7.6       
+\item \texttt{crayon} version 1.4.1
+
+\end{itemize}
+
+
+\section*{Acknowledgements}
+
+
+We thank the customer service team at Westlaw 
+for their excellent assistance with the Westlaw database.
+
+
+
+\section*{References}
+
+\noindent{\it Westlaw}, Cases, 
+  Thomson-Reuters, accessed June 2021. \\
+
+\noindent{\it Westlaw}, Litigation Analytics, 
+  Thomson-Reuters, accessed June 2021. \\
+
+\noindent{\it Information about U.S. Courts of Appeals}, Table: 99-999-99-999, 
+    Department of Justice, accessed June 2021. \\
+
+
+
+
+
+\end{document}
