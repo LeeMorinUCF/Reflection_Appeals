@@ -474,7 +474,8 @@ def is_outcome(line):
            or "remand" in line_list
            or "grant" in line_list
            or "deny" in line_list
-           or "denied" in line_list)
+           or "denied" in line_list
+           or "dismiss" in line_list)
 
 # Vector version for data frame columns:
 def is_outcome_vec(df_col): 

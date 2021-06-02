@@ -210,7 +210,11 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 ##################################################
 
 # Set path for files in a single year.
-case_year = 2011
+# case_year = 2011
+# case_year = 2012
+# case_year = 2013
+# case_year = 2014
+case_year = 2015
 
 txt_folder = data_folder + str(case_year) + '\\'
 txt_path = drive_path + txt_folder
@@ -231,17 +235,17 @@ txt_file_num_excl = []
 # txt_file_num_excl = [12, 15, 17]
 # txt_file_num_excl = [12, 15]
 # From rest of 2011:
-txt_file_num_excl = [52, 116]
+# txt_file_num_excl = [52, 116]
 # From 2012:
 # txt_file_num_excl = [10, 23, 104, 150, 152, 170]
 # From 2013:
 # txt_file_num_excl = [26, 46, 50, 64, 82, 84, 89, 106, 
-#                      121, 122, 123, 124, 
-#                      132]
+#                       121, 122, 123, 124, 
+#                       132]
 # From 2014:
 # txt_file_num_excl = [5, 17, 34, 62, 65, 82, 86, 93, 96, 98, 106, 113, 123, 137]
 # From 2015:
-# txt_file_num_excl = [15, 21, 55, 57, 71, 75, 86, 94, 109]
+txt_file_num_excl = [15, 21, 55, 57, 71, 75, 86, 94, 109]
 # From 2016:
 # txt_file_num_excl = [36, 37, 55, 61, 62, 67, 68, 69, 82, 
 #                      90, 91, 94, 97, 102, 103, 104, 
@@ -292,11 +296,29 @@ appeals = caser.get_case_df(txt_file_list_sel, num_fields, print_msg)
 
 
 
+##################################################
+# Count the valid observations
+##################################################
+
+
+# valid_counts = caser.count_valid_obsns(appeals)
+
+# print(valid_counts)
+
+
+##################################################
+# Inspect the fields individually.
+##################################################
+
+print(num_files - len(txt_file_num_excl))
+
+
 # Print selected fields to screen. 
 appeals['file_name']
 appeals['case_code']
 is_valid = caser.is_case_code_vec(appeals['case_code'])['is_valid']
 sum(is_valid)
+appeals['case_code'][is_valid == False]
 
 
 appeals['circ_num']
