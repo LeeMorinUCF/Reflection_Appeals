@@ -69,7 +69,8 @@ def is_case_code(line):
     # Case numbers have digits at the beginning and end of the line.
     line_list = line.split()
     if len(line_list) > 1:
-        return(line_list[0].isdigit() and line_list[-1].isdigit())
+        return((line_list[0].isdigit() and line_list[-1].isdigit())
+               or (line_list[0].isdigit() and line_list[2].isdigit()))
     else:
         return False
 
@@ -218,19 +219,30 @@ def get_party_names(file):
     pla_appnt = []
     line = file.readline()
     # When the next line is "v.", list of Plaintiff-Appellants is complete.
-    found_v = line.strip()[0] == "v"
+    # found_v = line.strip()[0] == "v"
+    found_v = line.strip() == "v"
+    # found_in_re = "in re" in line.lower()
+    found_in_re = "in re" in line.lower()
+    found_case_num = is_case_num(line)
+    if found_in_re:
+        pla_appnt_line = line.replace("\n","")
+        pla_appnt.append(pla_appnt_line)
     lines_read = 0
-    while not found_v and lines_read < 20:
+    while not found_v and not found_in_re and not found_case_num and lines_read < 20:
         pla_appnt_line = line.replace("\n","")
         if not pla_appnt_line.strip() == 'and':
             pla_appnt.append(pla_appnt_line)
         line = file.readline()
         lines_read = lines_read + 1
-        found_v = line.strip()[0] == "v"
+        # found_v = line.strip()[0] == "v"
+        found_v = line.strip() == "v"
+        found_in_re = "in re" in line.lower()
+        found_case_num = is_case_num(line)
     
     # The next name(s) should be the Defendant-Appellee.
     def_appee = []
-    line = file.readline()
+    if not found_case_num:
+        line = file.readline()
     
     # When the next line is a case number, the list of Defendant-Appellees is complete.
     found_case_num = is_case_num(line)
@@ -265,7 +277,9 @@ def get_case_num_depr(file):
 def is_case_num(line):
     # A case number either contains the word "Docket" or "No."
     line_list = line.split()
-    return("No." in line_list or "Nos." in line_list or "Docket" in line_list)
+    is_docket_no_tag = "No." in line_list or "Nos." in line_list or "Docket" in line_list
+    is_docket_no = line.strip().replace("\n","").replace("-cv","").replace("-","").isdigit() and "-" in line
+    return(is_docket_no_tag or is_docket_no)
 
 # Vector version for data frame columns:
 def is_case_num_vec(df_col): 
@@ -318,16 +332,23 @@ def get_case_date(file):
     case_date = []
     found_synopsis = False
     found_jurists = False
+    found_panel = False
     lines_read = 0
-    while not found_synopsis and not found_jurists and lines_read < 9:
+    while not found_synopsis and not found_jurists and not found_panel and lines_read < 9:
         line = file.readline()
         lines_read = lines_read + 1
-        line_list = line.split()
+        # line_list = line.split()
         # Check if the next line is "Synopsis".
         found_synopsis = is_synopsis(line)
+        # Check if the next line is "Attorneys and Law Firms"
         found_jurists = is_jurists(line)
-        # Skip the next line if it is a pipe (|).
-        if not found_synopsis and not found_jurists and line_list[0].strip() != "|":
+        # Check if the next line starts with "Before".
+        found_panel = is_panel(line)
+        # Skip the next line if it is a pipe (|) or otherwise blank.
+        # line_blank = is_blank(line)
+        line_blank = line.strip() == "|" or line.strip() == ""
+        # if not found_synopsis and not found_jurists and not found_panel and line_list[0].strip() != "|":
+        if not found_synopsis and not found_jurists and not found_panel and not line_blank:
             # The next line should be a date in text format.
             case_date.append(line.replace("\n",""))
     
@@ -916,6 +937,31 @@ def get_case_df(txt_file_list, num_fields, print_msg):
     return(appeals)
 
 
+
+# Count the valid observations
+def count_valid_obsns(appeals):
+    
+    valid_counts = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 
+                                      # 'pla_appnt_1', 'pla_appnt_2', 'pla_appnt_3', 
+                                      # 'def_appee_1', 'def_appee_2', 'def_appee_3', 'def_appee_4',
+                                      'case_num', 
+                                      # 'case_date_1', 'case_date_2', 'case_date_3', 'case_date_4', 
+                                      'background', 
+                                      'holdings_hdr', 'outcome', 'posture', 'judicial_panel'], 
+                           index = appeals.index)
+    
+    valid_counts['file_name'] = appeals['file_name']
+    valid_counts['case_code'] = is_case_code_vec(appeals['case_code'])
+    valid_counts['circ_num'] = is_circ_num_vec(appeals['circ_num'])
+    valid_counts['case_num'] = is_case_num_vec(appeals['case_num'])
+    valid_counts['background'] = is_background_vec(appeals['background'])
+    valid_counts['holdings_hdr'] = is_holdings_hdr_vec(appeals['holdings_hdr'])
+    valid_counts['outcome'] = is_outcome_vec(appeals['outcome'])
+    valid_counts['posture'] = is_posture_vec(appeals['posture'])
+    valid_counts['judicial_panel'] = is_panel_vec(appeals['judicial_panel'])
+
+    
+    return(valid_counts)
 
 ##################################################
 # End

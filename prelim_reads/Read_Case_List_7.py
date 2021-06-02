@@ -264,8 +264,8 @@ txt_file_num_excl = []
 # txt_file_num_excl = [19, 25, 35, 39, 48, 51, 53, 59, 62, 63, 65, 70, 
 #                       78, 82, 83, 89, 91, 99, 102, 108, 109, 114, 116]
 # From 2019:
-txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81, 
-                      90, 91, 92, 94, 100, 106, 108, 109, 122, 128]
+# txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81, 
+#                       90, 91, 92, 94, 100, 106, 108, 109, 122, 128]
 
 # Fix the anomalies and add them back. 
 
@@ -292,7 +292,7 @@ for txt_file_num in txt_file_num_list:
 #           'background', 
 #           'holdings_hdr', 'outcome', 'posture', 'judicial_panel']
 
-# import caser
+import caser
 
 # fields = 'all'
 num_fields = 12
@@ -306,9 +306,16 @@ appeals = caser.get_case_df(txt_file_list_sel, num_fields, print_msg)
 ##################################################
 
 
-# valid_counts = caser.count_valid_obsns(appeals)
+valid_counts = caser.count_valid_obsns(appeals)
 
-# print(valid_counts)
+# valid_counts.describe()
+
+valid_counts[['case_code', 'circ_num', 'case_num']].describe()
+
+
+valid_counts[['background', 'holdings_hdr', 'outcome', 
+              'posture', 'judicial_panel']].describe()
+
 
 
 ##################################################
@@ -379,7 +386,8 @@ appeals['case_num']
 is_valid = caser.is_case_num_vec(appeals['case_num'])['is_valid']
 sum(is_valid)
 appeals['case_num'][is_valid == False].unique()
-# Success! (for 2011, at least)
+
+appeals[['file_name', 'case_num']][is_valid == False]
 
 
 appeals['case_date_1']
@@ -435,8 +443,14 @@ appeals[['file_name', 'judicial_panel']][is_valid == False]
 # Inspect individual cases
 ##################################################
 
+import caser
+
 # Choose a file and read the case information. 
-# txt_file_num = 0
+# txt_file_num = 10 # In 2012, (Table) in case code.
+txt_file_num = 152 # In 2012, In re complaint.
+txt_file_num = 137 # In 2014, blank lines after date.  
+txt_file_num = 7 # In 2017
+txt_file_num = 0 # In 2019
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
@@ -452,6 +466,27 @@ case_info = caser.get_case_info(txt_file)
 caser.print_case_info(case_info)
 
 
+
+
+import caser
+
+
+# Run functions one at a time.
+with open(txt_file, 'r', encoding = 'utf-16') as file:
+    
+    case_code = caser.get_case_code(file)
+    print(case_code)
+    circ_num = caser.get_circ_num(file)
+    print(circ_num)
+    (pla_appnt, def_appee, last_line) = caser.get_party_names(file)
+    print(pla_appnt)
+    print(def_appee)
+    print(last_line)
+    case_num = caser.get_case_num(file, last_line)
+    print(case_num)
+    (case_date, line) = caser.get_case_date(file)
+    print(case_date)
+    print(line)
 
 ##################################################
 # Extra Code Snippets
