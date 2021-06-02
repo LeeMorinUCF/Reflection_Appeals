@@ -365,11 +365,9 @@ appeals['background']
 is_valid = caser.is_background_vec(appeals['background'])['is_valid']
 sum(is_valid)
 appeals['background'][is_valid == False].unique()
-# Still some bugs to work out with the date. 
+# Some are legitimately missing the background.
 appeals[['file_name', 'background']][is_valid == False]
 
-
-# import caser
 
 
 appeals['holdings_hdr']
@@ -379,10 +377,28 @@ appeals['holdings_hdr'][is_valid == False].unique()
 
 
 appeals['outcome']
+appeals['outcome'].unique()
+is_valid = caser.is_outcome_vec(appeals['outcome'])['is_valid']
+sum(is_valid)
+appeals['outcome'][is_valid == False].unique()
+
+
+# import caser
+
 
 appeals['posture']
-appeals['judicial_panel']
+is_valid = caser.is_posture_vec(appeals['posture'])['is_valid']
+sum(is_valid)
+appeals['posture'][is_valid == False].unique()
 
+
+
+appeals['judicial_panel']
+is_valid = caser.is_panel_vec(appeals['judicial_panel'])['is_valid']
+sum(is_valid)
+appeals['judicial_panel'][is_valid == False].unique()
+
+appeals[['file_name', 'judicial_panel']][is_valid == False]
 
 
 

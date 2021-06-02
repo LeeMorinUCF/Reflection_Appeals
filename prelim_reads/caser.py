@@ -317,22 +317,26 @@ def get_case_date(file):
     
     case_date = []
     found_synopsis = False
+    found_jurists = False
     lines_read = 0
-    while not found_synopsis and lines_read < 9:
+    while not found_synopsis and not found_jurists and lines_read < 9:
         line = file.readline()
         lines_read = lines_read + 1
         line_list = line.split()
         # Check if the next line is "Synopsis".
-        found_synopsis =  is_synopsis(line)
+        found_synopsis = is_synopsis(line)
+        found_jurists = is_jurists(line)
         # Skip the next line if it is a pipe (|).
-        if not found_synopsis and line_list[0].strip() != "|":
+        if not found_synopsis and not found_jurists and line_list[0].strip() != "|":
             # The next line should be a date in text format.
             case_date.append(line.replace("\n",""))
     
     # Return one or all of the dates.
     # case_date = do_something_to(case_date)
     
-    return(case_date)
+    # Pass the line for directng subsequent fields.
+    
+    return((case_date, line))
 
 
 # Determine whether line contains a "Background" paragraph.
@@ -437,7 +441,7 @@ def get_holdings(file):
     # Skip lines to the holdings header.
     found_holdings_hdr = False
     lines_read = 0
-    while not found_holdings_hdr and lines_read < 4:
+    while not found_holdings_hdr and lines_read < 6:
         line = file.readline()
         lines_read = lines_read + 1
         # Check if the next line contains the verb "held".
@@ -461,6 +465,27 @@ def get_holdings(file):
             holdings.append(line.replace("\n",""))
         
     return(holdings)
+
+def is_outcome(line):
+    line_list = line.lower()
+    return("affirm" in line_list
+           or "reverse" in line_list
+           or "vacate" in line_list
+           or "remand" in line_list
+           or "grant" in line_list
+           or "deny" in line_list
+           or "denied" in line_list)
+
+# Vector version for data frame columns:
+def is_outcome_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_outcome(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
 
 # Record the case outcome. 
 def get_outcome(file):
@@ -486,6 +511,16 @@ def is_posture(line):
         return(line_list[0].strip() == "Procedural" or 
                line_list[1].strip()[0:7] == "Posture")
 
+# Vector version for data frame columns:
+def is_posture_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_posture(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
 
 
 # Record the statement of "Procedural Posture(s):".
@@ -500,7 +535,7 @@ def get_posture(file):
     line = file.readline() 
     found_posture = is_posture(line)
     lines_read = 0
-    while not found_posture and lines_read < 6:
+    while not found_posture and lines_read < 7:
         line = file.readline()
         lines_read = lines_read + 1
         found_posture = is_posture(line)
@@ -520,31 +555,51 @@ def is_jurists(line):
     
     # Reads over legal information util a line
     # that contains "Attorneys and Law Firms".
-    line_list = line.split()
-    return("Attorneys" in line_list or "Firms" in line_list)
+    # line_list = line.split()
+    # return("Attorneys" in line_list or "Firms" in line_list)
+    return(line.strip() == "Attorneys and Law Firms" )
     
 
 # Determine when list of jurists is read up to judicial panel. 
 def is_panel(line):
     
-    # Reads over legal information util a line
-    # that begins with "Before". 
+    # Find the line with the judicial panel
+    # should begin with "Before"
+    # but could also start with "PRESENT:"
+    # and include phrases like "Circuit Judge". 
+
+    
     line_list = line.split()
     if line_list == []:
         return(False)
     elif len(line_list) > 1:
         # Sometimes there is a word before "Before".
-        return(line_list[0].strip()[0:6] == "Before" \
-               or line_list[1].strip()[0:6] == "Before")
+        return(line_list[0].lower().strip()[0:6] == "before"
+               or line_list[1].lower().strip()[0:6] == "before"
+               or line_list[0].lower().strip()[0:7] == "present"
+               or line_list[1].lower().strip()[0:7] == "present")
     else:
         return(False)
 
+# Vector version for data frame columns:
+def is_panel_vec(df_col): 
+    
+    test_vec = pd.DataFrame(columns = ['is_valid'], 
+                           index = range(len(df_col)))
+    for row in range(len(df_col)):
+        test_row = is_panel(df_col[row])
+        test_vec['is_valid'][row] = test_row
+        
+    return(test_vec)
+
 
 # Record the names of lawyers, judges and previous case.
-def get_jurist_list(file):
+def get_jurist_list(file, line):
     
-    found_jurists = False
-    found_panel = False
+    # found_jurists = False
+    # found_panel = False
+    found_jurists = is_jurists(line)
+    found_panel = is_panel(line)
     lines_read = 0
     while not found_jurists and not found_panel and lines_read < 500:
         line = file.readline()
@@ -575,10 +630,12 @@ def get_jurist_list(file):
     # Otherwise, record the names of "Attorneys and Law Firms", 
     # along with the jucual panel, if reported.
     # The last line with the judicial panel
-    # should begin with "Before". 
+    # should begin with "Before"
+    # but could also start with "PRESENT:"
+    # and include phrases like "Circuit Judge". 
     
     lines_read = 0
-    while not found_panel and lines_read < 5:
+    while not found_panel and lines_read < 10:
         line = file.readline()
         lines_read = lines_read + 1
         # print("line = " + line)
@@ -630,36 +687,52 @@ def get_case_info(txt_file, fields = 'all'):
         
         # Record the case date.
         if 'all' in fields or 'case_date' in fields:
-            case_date = get_case_date(file)
+            # case_date = get_case_date(file)
+            (case_date, line) = get_case_date(file)
         else:
             case_date = ["NA"]
         
-        # Record the background, a paragraph describing the case. 
-        if 'all' in fields or 'background' in fields:
-            background = get_background(file)
+        # Some cases jump to "Attornies and Law Firms"
+        # immediately after date.
+        # These typically have "per curiam" decisions. 
+        found_jurists = is_jurists(line)
+        if not found_jurists:
+            # This is a usual case with synopsis, background,
+            # posture and holdings. 
+            
+            
+            # Record the background, a paragraph describing the case. 
+            if 'all' in fields or 'background' in fields:
+                background = get_background(file)
+            else:
+                background = "NA"
+            
+            # Record the list of holdings.
+            if 'all' in fields or 'outcome' in fields or 'holdings_hdr' in fields:
+                holdings = get_holdings(file)
+                # Record the "Holdings" header statement.
+                holdings_hdr = holdings[0]
+                # Record the case outcome. 
+                outcome = holdings[-1]
+            else:
+                holdings_hdr = "NA"
+                outcome = "NA"
+                
+            # Record the statement of "Procedural Posture(s)".
+            if 'all' in fields or 'posture' in fields:
+                posture = get_posture(file)
+            else:
+                posture = "NA"
         else:
+            # Per curiam fields excludes these fields. 
             background = "NA"
-        
-        # Record the list of holdings.
-        if 'all' in fields or 'outcome' in fields or 'holdings_hdr' in fields:
-            holdings = get_holdings(file)
-            # Record the "Holdings" header statement.
-            holdings_hdr = holdings[0]
-            # Record the case outcome. 
-            outcome = holdings[-1]
-        else:
             holdings_hdr = "NA"
             outcome = "NA"
-            
-        # Record the statement of "Procedural Posture(s)".
-        if 'all' in fields or 'posture' in fields:
-            posture = get_posture(file)
-        else:
             posture = "NA"
         
         # Record the names of lawyers, judges and previous case.
         if 'all' in fields or 'judicial_panel' in fields:
-            jurist_list = get_jurist_list(file)
+            jurist_list = get_jurist_list(file, line)
             # The first line is the council for the plaintiff-appellant.
             # pla_appnt_council = jurist_list[0]
             # The next line is the council for the defendant-appellee.
