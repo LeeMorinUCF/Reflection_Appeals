@@ -210,6 +210,17 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 ##################################################
 
 # Set path for files in a single year.
+# case_year = 2000
+# case_year = 2001
+# case_year = 2002
+# case_year = 2003 # Background not labeled. 
+# case_year = 2004
+# case_year = 2005
+# case_year = 2006
+# case_year = 2007
+# case_year = 2008
+# case_year = 2009
+# case_year = 2010
 # case_year = 2011
 # case_year = 2012
 # case_year = 2013
@@ -218,7 +229,7 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 # case_year = 2016
 # case_year = 2017
 # case_year = 2018
-case_year = 2019
+# case_year = 2019
 
 txt_folder = data_folder + str(case_year) + '\\'
 txt_path = drive_path + txt_folder
@@ -451,6 +462,8 @@ txt_file_num = 152 # In 2012, In re complaint.
 txt_file_num = 137 # In 2014, blank lines after date.  
 txt_file_num = 7 # In 2017
 txt_file_num = 0 # In 2019
+txt_file_num = 114 # 32 # 22 # In 2002
+txt_file_num = 0 # In 2003
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]

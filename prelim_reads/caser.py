@@ -381,33 +381,42 @@ def is_background_vec(df_col):
 
     
 # Record the background, a paragraph describing the case. 
-def get_background(file):
+def get_background(file, line):
     
     # Assumes the case date was just read. 
     # and that the previous line was the header "Synopsis".
-    # line = file.readline()
+    # Read the next line in all cases. 
+    found_synopsis = is_synopsis(line)
+    if found_synopsis:
+        line = file.readline()
+        background = line.replace("\n","")
     
     # The next line should be the "Background" paragraph.
     # Read until the background paragraph is found.
-    found_background = False
+    # found_background = False
+    # Check if this line is labeled background. 
+    # If not, check the next line. 
+    found_background = is_background(line)
     lines_read = 0
-    while not found_background and lines_read < 3:
+    while not found_background and lines_read < 1:
         line = file.readline()
         lines_read = lines_read + 1
         # Check if the next line begins with "Background".
         found_background =  is_background(line)
     
     # The next line should be the "Background" paragraph.
-    if found_background:
-        background = line.replace("\n","")
-    else:
-        background = "NA"
+    if not found_synopsis:
+        # Don't want to overwrite if it was recorded after "Synopsis".
+        if found_background:
+            background = line.replace("\n","")
+        else:
+            background = "NA"
     
     return(background)
 
 def is_holdings_hdr_keyword(line_check):
     
-    # Remove puctuation.
+    # Remove punctuation.
     line_check = line_check.replace("[","")
     line_check = line_check.replace("]","")
     line_check = line_check.replace("*","")
@@ -725,7 +734,7 @@ def get_case_info(txt_file, fields = 'all'):
             
             # Record the background, a paragraph describing the case. 
             if 'all' in fields or 'background' in fields:
-                background = get_background(file)
+                background = get_background(file, line)
             else:
                 background = "NA"
             
