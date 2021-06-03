@@ -206,19 +206,21 @@ including the main datasets, including
 \texttt{appeals\_cases\_wl.csv}, \texttt{appeals\_cases\_doj.csv}, 
 and \texttt{trial\_cases.csv}. 
  
-\item Run \texttt{Reflection\_Appeals.sh} in a terminal window from the \texttt{Reflection\_Appeals} folder. 
+\item Run \texttt{Appeals\_Voting.sh} in a terminal window from the \texttt{Appeals\_Voting} folder. 
 
 \end{enumerate}
 
 
 This shell script calls the main 
-\texttt{python} programs, in the \texttt{Code/Westlaw} folder, 
+\texttt{python} program \texttt{Get\_Westlaw\_Cases.py}, 
+in the \texttt{Code/Westlaw} folder, 
 which generate the \texttt{appeals\_cases\_wl.csv} dataset. 
 Then it calls the 
 \texttt{R} programs 
-\texttt{TVN\_Probit\_Estn.R} and \texttt{TVN\_Probit\_Post\_Estn.R}, 
-which are found in the \texttt{Code/Stats} folder, 
-which analyze the datasets stored in the \texttt{Data} folder. 
+\texttt{Appeals\_Voting\_Estn.R}, \texttt{Appeals\_Voting\_Post\_Estn.R}, 
+and the function library \texttt{TVN\_Probit\_Lib.R}, 
+which are found in the \texttt{Code/Stats} folder. 
+These scripts analyze the datasets stored in the \texttt{Data} folder. 
 These scripts create the tables and figures for the entire manuscript,
 by writing \texttt{tex} files to the \texttt{Tables} folder and
  \texttt{eps} files to the \texttt{Figures} folder. 
@@ -235,6 +237,8 @@ by writing \texttt{tex} files to the \texttt{Tables} folder and
 
 This table contains information from... \\
 
+Run the script \texttt{Appeals\_Voting\_Estn.R} up to line X. 
+Lines Y to Z generate the file \texttt{Table\_1\_output.tex}. \\
 
 The numbers are combined into the file \texttt{Table\_1.tex}. \\
 
@@ -243,7 +247,10 @@ The numbers are combined into the file \texttt{Table\_1.tex}. \\
 
 \noindent\textbf{Figure 1: Title} \\
 
+This figure shows...
 
+Run the script \texttt{Appeals\_Voting\_Estn.R} up to line X. 
+Lines Y to Z generate the file \texttt{Figure\_1.tex}. \\
 
 
 \section*{Computing Requirements}
@@ -256,8 +263,9 @@ were generated on the
 at the Collee of Business
 at the University of Central Florida. 
 
+\emph{To be updated:}
 It is a cluster of
-[Nvidia Tesla K80 GPU Accelerators],
+[48 Nvidia Tesla K99 GPU Accelerators],
 each with [12 GB of GDDR5] on-board memory, 
 running
 [2496] processor cores, 
@@ -294,17 +302,23 @@ with 16 GB of RAM.
 \subsection*{Data Manipulation}
 
 The data manipulation was conducted using 
-Python 3.8. 
+Python 3.8, 
+on either a 64-bit version of Windows 10
+or a Linux platform running
+Red Hat Enterprise Linux 7. 
 
 
 The following python modules were imported:
 
 \begin{itemize}
 
-\item \texttt{os}, version 9.9.9
-\item \texttt{glob}, version 9.9.9
-\item \texttt{win32com}, version 9.9.9
-\item \texttt{pandas}, version 9.9.9
+\item \texttt{os}, version 9.9.9, for interacting with the operating system when handling files. 
+\item \texttt{glob}, version 9.9.9, to organize lists of directories and file names. 
+	It was used to facilitate iteration over the set of case files drawn from the Westlaw database. 
+\item \texttt{win32com}, version 9.9.9, to perform operations with Microsoft Windows applications, 
+	which was used to translate the Westlaw case files from \texttt{doc} format into \texttt{txt} format. 
+\item \texttt{pandas}, version 1.1.3, to store and manipulate the dataset 
+	of information surrounding cases in the U.S.~Courts of Appeals. 
 
 \end{itemize}
 
@@ -319,14 +333,18 @@ The attached packages include the following:
 
 \begin{itemize}
 
+\item \texttt{mvtnorm}, version 1.1-1, to calculate the probability mass under rectangular regions 
+	under the multivariate normal density. This was used to calculate the probabilities of
+	voting combinations in the evaluation of the likelihood function. 
+
 \item \texttt{data.table}, version 1.13.0 (using 4 threads), to handle the main data table for analysis 
 in the \texttt{\_prelim.R} and \texttt{\_estim.R} scripts. 
 
 \item \texttt{xtable}, version 1.8-4, to generate LaTeX tables for Tables 1, 2, and 3.
 
-\item \texttt{plot3D}, version 1.3, to produce a 3-D bar chart of transition frequency, which created the plots in Figure 3.
+\item \texttt{plot3D}, version 1.3, to produce a 3-D bar chart of voting frequency, which created the plots in Figure 3.
 
-\item \texttt{MASS}, version 7.3-51.6, was also used to estimate the smoothed surface of the transition density as an alternative to that in Figure 3 but was not included in the paper. 
+% \item \texttt{MASS}, version 7.3-51.6, was also used to estimate the smoothed surface of the transition density as an alternative to that in Figure 3 but was not included in the paper. 
 
 \end{itemize}
 
@@ -336,63 +354,10 @@ with the following versions:
 
 \begin{itemize}
 
-\item \texttt{Rcpp} version 1.0.5
-\item \texttt{lattice} version 0.20-41
-\item \texttt{grid} version 4.0.2
-\item \texttt{DTMCPack} version 0.1-2
-\item \texttt{stats4} version 4.0.2
-\item \texttt{magrittr} version 1.5
-\item \texttt{RcppParallel} version 5.0.2
-\item \texttt{misc3d} version 0.8-4
-\item \texttt{markovchain} version 0.8.5-3
-\item \texttt{Matrix} version 1.2-18
-\item \texttt{tools} version 4.0.2
-\item \texttt{igraph} version 1.2.6
-\item \texttt{parallel} version 4.0.2
-\item \texttt{compiler} version 4.0.2
-\item \texttt{pkgconfig} version 2.0.3
-\item \texttt{matlab} version 1.0.2
-\item \texttt{nnet} version 7.3-14
-\item \texttt{expm} version 0.999-5  
-\item \texttt{zip} version 2.1.1
-\item \texttt{cellranger} version 1.1.0
-\item \texttt{pillar} version 1.6.0
-\item \texttt{forcats} version 0.5.1
-\item \texttt{lifecycle} version 1.0.0
-\item \texttt{tibble} version 3.1.0
-\item \texttt{gtable} version 0.3.0
-\item \texttt{rlang} version 0.4.10
-\item \texttt{curl} version 4.3
-\item \texttt{haven} version 2.3.1
-\item \texttt{rio} version 0.5.26
-\item \texttt{stringr} version 1.4.0
-\item \texttt{withr} version 2.4.2       
-\item \texttt{hms} version 1.0.0        
-\item \texttt{generics} version 0.1.0    
-\item \texttt{vctrs} version 0.3.7       
-\item \texttt{grid} version 4.0.5        
-\item \texttt{tidyselect} version 1.1.0  
-\item \texttt{glue} version 1.4.2       
-\item \texttt{R6} version 2.5.0          
-\item \texttt{rstatix} version 0.7.0     
-\item \texttt{fansi} version 0.4.2       
-\item \texttt{readxl} version 1.3.1      
-\item \texttt{foreign} version 0.8-81    
-\item \texttt{carData} version 3.0-4    
-\item \texttt{purrr} version 0.3.4       
-\item \texttt{tidyr} version 1.1.3       
-\item \texttt{car} version 3.0-10        
-\item \texttt{scales} version 1.1.1      
-\item \texttt{backports} version 1.2.1  
-\item \texttt{ellipsis} version 0.3.1    
-\item \texttt{abind} version 1.4-5       
-\item \texttt{colorspace} version 2.0-0  
-\item \texttt{ggsignif} version 0.6.1    
-\item \texttt{utf8} version 1.2.1        
-\item \texttt{stringi} version 1.5.3    
-\item \texttt{munsell} version 0.5.0     
-\item \texttt{broom} version 0.7.6       
-\item \texttt{crayon} version 1.4.1
+\item \texttt{package} version 9.9.9
+\item \texttt{package} version 9.9.9
+\item \texttt{package} version 9.9.9
+\item \texttt{package} version 9.9.9
 
 \end{itemize}
 
@@ -402,18 +367,18 @@ with the following versions:
 
 We thank the customer service team at Westlaw 
 for their excellent assistance with the Westlaw database.
-
-
+We are grateful to Clint Cummins for his advice relating to the multivariate probit model.
+We also thank Han Hong just for being such a nice guy. 
 
 \section*{References}
 
-\noindent{\it Westlaw}, Cases, 
+\noindent{\it Westlaw [Name of Database with Cases]}, 
   Thomson-Reuters, accessed June 2021. \\
 
-\noindent{\it Westlaw}, Litigation Analytics, 
+\noindent{\it Westlaw Litigation Analytics}, 
   Thomson-Reuters, accessed June 2021. \\
 
-\noindent{\it Information about U.S. Courts of Appeals}, Table: 99-999-99-999, 
+\noindent{\it [Name of Dataset from U.S. Courts of Appeals]}, Table: 99-999-99-999, 
     Department of Justice, accessed June 2021. \\
 
 
