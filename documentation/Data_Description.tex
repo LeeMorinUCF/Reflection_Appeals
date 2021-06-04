@@ -1,6 +1,18 @@
 \documentclass[11pt]{paper}
 \usepackage{fullpage}
 \usepackage{hyperref}
+\usepackage{amssymb,amsmath}
+\usepackage{pifont}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{txfonts}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{rotating}
+\usepackage{datetime}
+
+
+\input Notation.tex
 
 \begin{document}
 
@@ -47,50 +59,47 @@ Harry J. Paarsch \\
 
 \section*{Appendix A: Simulation Evidence}
 
-We conducted a series of simulations
-to investigate the properties of the econometric model 
-that we described in the body of the paper. 
-In each simulation, we generated data from the econometric model 
-and estimated the parameters in that model
-by maximizing the likelihood function. 
-The goal of this simulation exercise was twofold:
-to validate the functions in the \texttt{TVN\_Probit\_Lib.R} library, 
-and verify that the parameters in the model are identified. 
-The parameters in the model include the 
-slope coefficients for the judge-specific covariates, $\beta$, 
-the diversity effects on the same covariates from other judges, $\gamma$, 
-and the dissent aversion parameter, $\delta$. 
-The functions in the \texttt{TVN\_Probit\_Lib.R}
-calculate and optimize the likelihood function
-to estimate these parameters. 
+We conducted a series of simulations to investigate the properties of the 
+econometric model that we described in the body of the paper. 
+In each simulation, we generated data from the econometric model and estimated 
+the parameters in that model by maximizing the logarithm of the likelihood 
+function. 
+The goal of this simulation exercise was twofold: (1)~to validate the 
+functions in the \texttt{TVN\_Probit\_Lib.R} library; (2)~to verify that 
+the parameters in the model are identified numerically in the samples that
+we encounter in practice.
+The parameters in the model include the slope coefficients for the 
+judge-specific covariates $\bbeta$, the diversity effects on the same 
+covariates from other judges, $\bgamma$, and the dissent aversion parameter
+$\delta$. 
+The functions in the \texttt{TVN\_Probit\_Lib.R} calculate and optimize the 
+logarithm of the likelihood function to estimate these parameters. 
 
-
-The covariates included a constant and two other randomly-drawn 
-binary variables, from a Bernoulli distribution with equal probabilities, 
-for each of five judges. 
-The judges were matched in all permutations of the five judges, 
-comprising a set of 60 distinct judicial panels. 
-Each judicial panel met three times, making a total sample of 180 cases. 
-The three pairs of judge-specific covariates were allocated to each case from
+The covariates included a constant and two other randomly-drawn binary 
+variables, from a Bernoulli distribution with equal probabilities, for each 
+of five judges. 
+The judges were matched in all permutations of the five judges, comprising a 
+set of sixty distinct judicial panels. 
+Each judicial panel met three times, making a total sample of $180$ cases. 
+Three pairs of judge-specific covariates were allocated to each case from
 the matrix of covariates, to match the judges on the judicial panel. 
 The true values of the parameters were set to
-$\beta = (0.25, 1, 2)^{\prime}$, for the intercept 
-and the slope coefficients on the judge-specific covariates. 
+$\bbeta = [0.25, 1, 2]^\top$, for the intercept and the slope coefficients 
+on the judge-specific covariates. 
 The slope coefficients for the peer effects, on the cross-judge covariates, 
-were set to $\gamma = (-0.5, -0.1)$. 
+were set to $\bgamma = [-0.5, -0.1]^\top$. 
 The dissent aversion parameter was set to $\delta = 0.1$. 
 
 We drew 100 realizations of the dataset with the sample of 180 cases.
-The innovations $\varepsilon_i, i = 1, 2, 3$, for the latent intent equations
-were generated from a trivariate standard normal distribution, 
-which has no correlation between the three variables. 
-The first simulation was conducted by 
-initializing the optimization at the true values, 
-to reduce the computation time required. 
-Table \ref{tab:sim_warm} shows summary statistics 
-for the realizations of the estimates. 
-It appears as though the model is identified, 
-and the maximum likelihood estimator is unbiased. 
+The innovations $\varepsilon_i, i=1,2,3$, for the latent intent equations
+were generated from a trivariate standard normal distribution, which has no 
+correlation between the three variables. 
+The first simulation was conducted by initializing the optimization at the 
+true values, to reduce the computation time required. 
+In Table \ref{tab:sim_warm}, we present summary statistics for the realizations
+of the estimates. 
+It appears as though the model is numerically identified, even in such small
+samples, and the maximum-likelihood estimator is consistent.
 % 
 \begin{table}[ht]
 \centering
@@ -98,32 +107,30 @@ and the maximum likelihood estimator is unbiased.
   \hline
 	Parameter 	& $\beta_0$	& $\beta_1$	& $\beta_2$	& $\gamma_1$	& $\gamma_2$	& $\delta$ \\ 
   \hline
-	True Value 	&  0.25000 	&   1.0000 	&   2.000 		&  -0.50000 		&   -1.0000 		&   0.10000  \\
+	True Value 	&  0.25000 	&   1.0000 	&   2.000 		& $-0.50000$		&  $-1.0000$		&   0.10000  \\
   \hline
- 	Minimum		&  -0.24589   	&   0.3436   	&   1.536   	&   -0.88316   	&   -1.5815   		&   -0.06157 \\
- 	1st Quartile	&  0.09368   	&   0.8597   	&   1.877   	&   -0.63246   	&   -1.1608   		&    0.05601 \\
- 	Median 		&  0.23648   	&   1.0318   	&   2.037   	&   -0.50860   	&   -1.0027   		&    0.09797 \\
- 	Mean   		&  0.24700   	&   1.0692   	&   2.071   	&   -0.50175   	&   -1.0320   		&    0.09106 \\
- 	3rd Quartile	&  0.37203   	&   1.2236   	&   2.249   	&   -0.38777   	&   -0.9029   		&    0.12248 \\
- 	Maximum   	&  0.97762   	&   2.3202   	&   2.816   	&   -0.03476   	&   -0.5310   		&    0.23362 \\
+ 	Minimum		& $-0.24589$  	&   0.3436   	&   1.536   	&  $-0.88316$  	&  $-1.5815$  		&   $0.06157$\\
+ 	1st Quartile	&  0.09368   	&   0.8597   	&   1.877   	&  $-0.63246$  	&  $-1.1608$  		&    0.05601 \\
+ 	Median 		&  0.23648   	&   1.0318   	&   2.037   	&  $-0.50860$  	&  $-1.0027$  		&    0.09797 \\
+ 	Mean   		&  0.24700   	&   1.0692   	&   2.071   	&  $-0.50175$  	&  $-1.0320$  		&    0.09106 \\
+ 	3rd Quartile	&  0.37203   	&   1.2236   	&   2.249   	&  $-0.38777$  	&  $-0.9029$  		&    0.12248 \\
+ 	Maximum   	&  0.97762   	&   2.3202   	&   2.816   	&  $-0.03476$  	&  $-0.5310$  		&    0.23362 \\
    \hline
 \end{tabular}
 \caption{Simulation of Estimates (starting at the true values)} 
 \label{tab:sim_warm}
 \end{table}
 
-
-In the above round of simulations, 
-the optimization algorithm started from the true values of parameters.
-This is not realistic, however, 
-since the true values are typically unknown in practice.  
-We considered the possibility that the performance could be affected by
-local maxima or an otherwise poorly-behaved likelihood function. 
-To investigate this possibility, we primed the optimization algorithm 
-with the zero vector as the starting values
-in the next round of simulations.
-Table \ref{tab:sim_cold} shows summary statistics for the realizations of the
-second set of estimates. 
+In the above round of simulations, the optimization algorithm started from 
+the true values of parameters.  
+This is not realistic, however, because the true values are typically unknown 
+in practice.  
+We considered the possibility that the performance could be affected by local 
+maxima or an otherwise poorly-behaved likelihood function. 
+To investigate this possibility, we primed the optimization algorithm with the 
+zero vector as the starting values in the next round of simulations.
+In Table \ref{tab:sim_cold}, we present summary statistics for the 
+realizations of the second set of estimates. 
 % 
 \begin{table}[ht]
 \centering
@@ -131,14 +138,14 @@ second set of estimates.
   \hline
 	Parameter 	& $\beta_0$	& $\beta_1$	& $\beta_2$	& $\gamma_1$	& $\gamma_2$	& $\delta$ \\ 
   \hline
-	True Value 	&  0.2500 		&   1.0000 	&   2.000 		&  -0.500000		&   -1.0000 		&   0.10000  \\
+	True Value 	&  0.2500 		&   1.0000 	&   2.000 		& $-0.500000$		&  $-1.0000$		&   0.10000  \\
   \hline
- 	Minimum		&  -0.2932 	&   0.4555 	&   1.455 		&   -1.151891 		&   -1.5465  		&  -0.04055  \\
- 	1st Quartile	&   0.1221 	&   0.8240 	&   1.867 		&   -0.589969 		&   -1.1761  		&   0.05862  \\
- 	Median 		&   0.2930 	&   1.0150 	&   1.987 		&   -0.495165 		&   -1.0226  		&   0.08485  \\
- 	Mean   		&   0.2799 	&   1.1002 	&   2.009 		&   -0.479760 		&   -1.0319  		&   0.08394  \\
- 	3rd Quartile	&   0.4188 	&   1.2664 	&   2.153 		&   :-0.354121 	&   -0.8934  		&   0.11668  \\
- 	Maximum   	&   0.7542 	&   3.1339 	&   2.673 		&    0.003675 		&   -0.6514  		&   0.19248  \\
+ 	Minimum		& $-0.2932$	&   0.4555 	&   1.455 		&  $-1.151891$		&  $-1.5465$ 		& $-0.04055$ \\
+ 	1st Quartile	&   0.1221 	&   0.8240 	&   1.867 		&  $-0.589969$		&  $-1.1761$ 		&   0.05862  \\
+ 	Median 		&   0.2930 	&   1.0150 	&   1.987 		&  $-0.495165$		&  $-1.0226$ 		&   0.08485  \\
+ 	Mean   		&   0.2799 	&   1.1002 	&   2.009 		&  $-0.479760$		&  $-1.0319$ 		&   0.08394  \\
+ 	3rd Quartile	&   0.4188 	&   1.2664 	&   2.153 		&   $-0.354121$	&  $-0.8934$ 		&   0.11668  \\
+ 	Maximum   	&   0.7542 	&   3.1339 	&   2.673 		&    0.003675 		&  $-0.6514$ 		&   0.19248  \\
    \hline
 \end{tabular}
 \caption{Simulation of Estimates (starting at the zero vector)} 
@@ -155,62 +162,53 @@ and the parameters in the model are identified.
 \section*{Appendix B: Data Description}
 
 
-\subsection*{The Westlaw Database}
+\subsection*{Westlaw Database}
 
 \subsubsection*{Structure of Documents}
 
-The primary raw source of data is the Westlaw database, 
-which includes a collection of documents that describe cases
-heard in the U.S.~Courts of Appeals. 
-As a preliminary test of our ability to organize the data, 
-we collected information for all cases 
-that contain the term ``sexual harassment''
-that Westlaw has classified 
-under the ``Labor and Employment'' category. 
-We selected a sample of cases heard during
-the twenty-year period spanning the years 2000 through 2019.  
-The court documents are available in several formats: 
-Microsoft Word 97/2003 \texttt{doc} format, 
-rich text \texttt{rtf} format,
-and \texttt{pdf} format. 
-We downloaded the files in \texttt{doc} format
-and translated them to \texttt{txt} format, 
-using the Python module \texttt{win32com}. 
+The primary raw source of data is the Westlaw database, which includes a 
+collection of documents that describe cases heard in the United States Courts 
+of Appeals. 
+As a preliminary test of our ability to organize the data, we collected 
+information for all cases that contain the term ``sexual harassment'' that 
+Westlaw has classified under the ``Labor and Employment'' category. 
+We selected a sample of cases heard during the twenty-year period spanning 
+the years 2000 through 2019.  
+The court documents are available in several formats: Microsoft Word 97/2003 
+\texttt{doc} format, rich text \texttt{rtf} format, and \texttt{pdf} format. 
+We downloaded the files in \texttt{doc} format and translated them to 
+\texttt{txt} format, using the Python module \texttt{win32com}. 
 
-Our data-collection strategy is built upon
-the systematic structure of these \texttt{txt} files. 
-There are a few variants of documentation for different case types, 
-and some changes in format over the years, 
-but the information is mainly organized with information listed 
-in the same order and written with stable patterns in the text. 
+Our data-collection strategy is built on the systematic structure of these 
+\texttt{txt} files. 
+There are a few variants of documentation for different case types, and some 
+changes in format over the years, but the information is mainly organized with 
+information listed in the same order and written with stable patterns in the 
+text. 
 
-We wrote a Python module called \texttt{legalbeagle}, 
-which tracks down information from the text in court documents, 
-and fetches these to be stored in a data frame, 
-with one row for each case. 
-The data in each line of text are categorized into one of several fields 
-using functions of the form \texttt{is\_[field name](line)}, 
-which identify whether the line of text matches 
-the characteristics of one of the fields of interest. 
-These functions are used either within a function 
-of the form \texttt{get\_[field name](file, last\_line)} 
-or to trigger a call to such a function. 
-These functions, in turn, either read from the file 
-or continue from the last line read by the previous function
-to parse a field from the court document. 
+We wrote a Python module called \texttt{legalbeagle}, which tracks down 
+information from the text in court documents, and fetches these to be stored 
+in a data frame, with one row for each case. 
+The data in each line of text are categorized into one of several fields using 
+functions of the form \texttt{is\_[field name](line)}, which identify whether 
+the line of text matches the characteristics of one of the fields of interest. 
+These functions are used either within a function of the form 
+\texttt{get\_[field name](file, last\_line)} or to trigger a call to such 
+a function. 
+These functions, in turn, either read from the file or continue from the 
+last line read by the previous function to parse a field from the court 
+document. 
 
-Some of the fields are described over a number of lines 
-that varies across court cases, 
-so the function reads until another field type is recognized, 
+Some of the fields are described over a number of lines that varies across 
+court cases, so the function reads until another field type is recognized, 
 signaling the conclusion of the data collection for the previous field. 
-For this reason, other types of fields are collected 
-to ensure the reliability of the collection of the 
-contents of subsequent fields, even if some of these fields 
-are not directly used in our statistical analysis. 
+For this reason, other types of fields are collected to ensure the reliability 
+of the collection of the contents of subsequent fields, even if some of these 
+fields are not directly used in our statistical analysis. 
 
 An example will clarify the data collection process. 
-The most common layout of a file, 
-once converted into \texttt{txt} format, begins as follows:
+The most common layout of a file, once converted into \texttt{txt} format, 
+begins as follows:
 
 \begin{verbatim}
 KeyCite Yellow Flag - Negative Treatment
@@ -266,71 +264,65 @@ or tangible discrimination but also discriminatory intimidation, ridicule,...
 
 \end{verbatim}
 
-The first lines are blank, corresponding to the upper margin 
-in the original Word document in \texttt{doc} format. 
-Although not interesting in itself, 
-this first non-field illustrates a source of irregularity in the data:
-consecutive fields are occasionally separated 
+The first lines are blank, corresponding to the upper margin in the original 
+Word document in \texttt{doc} format.  
+Although not interesting in itself, this first non-field illustrates a source 
+of irregularity in the data: consecutive fields are occasionally separated 
 by an unknown number of blank spaces. 
-Furthermore, some fields span multiple lines 
-and some span a variable number of lines. 
+Furthermore, some fields span multiple lines and some span a variable number 
+of lines. 
 
-For example, the next line begins with \texttt{KeyCite Yellow Flag} 
-and is an addition from Westlaw, 
-which indicates, over two lines, that this case was referenced in a later case. 
+For example, the next line begins with \texttt{KeyCite Yellow Flag} and is an 
+addition from Westlaw, which indicates, over two lines, that this case was 
+referenced in a later case. 
 The next line \texttt{656 F.3d 1277} is an identifier that---%
 perhaps, incorrectly---we call a \texttt{case\_code}. 
-It is a sequence of three strings separated by spaces; 
-the first and last are sequences of digits 
-and the middle string is an alphanumeric code. 
+It is a sequence of three strings separated by spaces; the first and last are 
+sequences of digits and the middle string is an alphanumeric code. 
 The next line is \texttt{United States Court of Appeals,} (comma optional) 
 which is followed by the circuit number, such as \texttt{Tenth Circuit}. 
-In most files, these fields are listed in a fixed sequence 
-within the first five nonempty lines. 
+In most files, these fields are listed in a fixed sequence within the first 
+five non-empty lines. 
 
 The next several lines list the parties involved in the case. 
-In the simplest form, as in the example above, 
-the plaintiff-appellant is named, complete with this labeling, 
-followed by a line containing only \texttt{v.}
-On the next line, 
-the name of the defendant-appellee is listed and labeled similarly. 
+In the simplest form, as in the example above, the plaintiff-appellant is 
+named, complete with this labelling, followed by a line containing only 
+\texttt{v.}
+On the next line, the name of the defendant-appellee is listed and labelled 
+similarly. 
 Some court records list multiple parties before or after the \texttt{v.}, and 
-some court records list multiple parties separated by multiple \texttt{v.}'s. 
+some court records list multiple parties separated by multiple \texttt{v.}s. 
 In some cases with multiple parties, the multiple parties are listed on
-multiple lines but in many other cases 
-the parties are listed within a single line. 
-Although this may be useful information for each case later on, 
-we collected the list of names of parties 
-but did not separate nor classify them, 
-as we do not yet have a need for this data.
+multiple lines but in many other cases the parties are listed within a 
+single line. 
+Although this may be useful information for each case later on, we collected 
+the list of names of parties but did not separate nor classify them, as we 
+do not yet have a need for this data.
 
-Following the list of parties---in all files---is the case number, 
-perhaps called the ``docket number,''
-which is a unique identifier that can be used as a key 
-to join with data from other databases. 
-The case number is commonly written as above, 
-in the form \texttt{No. YY-1234}. 
+Following the list of parties---in all files---is the case number, perhaps 
+called the ``docket number,'' which is a unique identifier that can be used 
+as a key to join with data from other databases. 
+The case number is commonly written as above, in the form \texttt{No. YY-1234}. 
 There exists some variety with which this information is listed. 
 For some files, the case number is written as either \texttt{Docket No. YY-1234}
 or \texttt{No. YYYY-1234}, or, without the label \texttt{No.}, 
 as simply \texttt{YY-1234} or even \texttt{YYYY-1234}. 
-In some files, the case number has the suffix \texttt{-cv} appended, 
-as in \texttt{No. YY-1234-cv}. 
-In other files, multiple case numbers are listed, 
-as in \texttt{Nos. YY-1234, YY-4567}, 
-and a few files have many case numbers listed. 
-Later versions of the \texttt{legalbeagle} module will include 
-functions for parsing the case number in the form \texttt{YY-1234}
-to join with information contained in other databases, 
-such as those available on the Webpage of the Department of Justice.
+In some files, the case number has the suffix \texttt{-cv} appended, as in 
+\texttt{No. YY-1234-cv}. 
+In other files, multiple case numbers are listed, as in 
+\texttt{Nos. YY-1234, YY-4567}, and a few files have many case numbers listed. 
+Later versions of the \texttt{legalbeagle} module will include functions for 
+parsing the case number in the form \texttt{YY-1234} to join with information 
+contained in other databases, such as those available on the webpage of the 
+Department of Justice.
 
-The text after the case number is often separated by 
-a single line with a pipe symbol, \texttt{|}. 
+The text after the case number is often separated by a single line with a pipe 
+symbol, \texttt{|}. 
 The next field is a date. 
 In the simplest form, as above, only a single date is listed. 
-If the sequence of events in the case took place over multiple days, 
-these events and dates will also be listed on the following lines, 
-often separated by blank lines or another \texttt{|}. 
+If the sequence of events in the case took place over multiple days, these 
+events and dates will also be listed on the following lines, often separated 
+by blank lines or another \texttt{|}. 
 For example, one case lists the following:
 % 
 \begin{verbatim}
@@ -341,37 +333,32 @@ Decided and Filed: June 28, 2011.
 |
 \end{verbatim}
 % 
-Since we have no immediate need for this information, 
-the dates are collected and stored only to continue 
-the flow of the program through the file. 
+Since we have no immediate need for this information, the dates are collected 
+and stored only to continue the flow of the program through the file. 
 
 The next line describes the case in sentences. 
 The first line of this description contains only the word \texttt{Synopsis}. 
-On the next nonempty line, 
-the case is described in sentences following the header \texttt{Background:}, 
-although, in the files from cases heard before 2004, 
-the text of the background is written without the 
-header \texttt{Background:}. 
-Still, it is easy to collect this information 
-because it usually appears in one line of text, 
-even though it often spans multiple lines with word-wrapping.
-We have no plans to parse any information from this field 
-because it would be more difficult, 
-due to the unstructured nature of the field, 
-however, we might find a need for this information later. 
-Note that the \texttt{Synopsis} and/or \texttt{Background:} lines 
-do not appear in every case:
-some cases are judged \emph{per curiam} and the case file is abbreviated. 
-For this reason, and perhaps several others, 
-the background information is not verified as being recorded 
-for a material fraction of the cases. 
+On the next non-empty line, the case is described in sentences following the 
+header \texttt{Background:}, although, in the files from cases heard before 
+2004, the text of the background is written without the header 
+\texttt{Background:}. 
+Still, it is easy to collect this information because it usually appears in 
+one line of text, even though it often spans multiple lines with word-wrapping.
+We have no plans to parse any information from this field because it would be 
+more difficult, due to the unstructured nature of the field, however, we might 
+find a need for this information later. 
+Note that the \texttt{Synopsis} and/or \texttt{Background:} lines do not 
+appear in every case: some cases are judged \emph{per curiam\/} and the case 
+file is abbreviated. 
+For this reason, and perhaps several others, the background information is 
+not verified as being recorded for a material fraction of the cases. 
 Perhaps as much as ten percent of cases do not have the background recorded, 
-although accurately measuring this fraction is problematic 
-because of the unstructured nature of the field, 
-when the header \texttt{Background:} is omitted. 
+although accurately measuring this fraction is problematic because of the 
+unstructured nature of the field, when the header \texttt{Background:} is 
+omitted. 
 
-After a space, the next set of information is 
-a sequence of double-spaced points describing the holdings. 
+After a space, the next set of information is a sequence of double-spaced 
+points describing the holdings. 
 The holdings are preceded by a single line in the form above, as in 
 % 
 \begin{verbatim}
@@ -380,19 +367,21 @@ Holdings: The Court of Appeals, Ebel, Circuit Judge, held that:
 [1] ...
 \end{verbatim}
 % 
-The next several lines comprise a sequence of statements, 
-enumerated in square brackets, as in \texttt{[1]} above. 
-After the last numbered point, the next line is blank 
-and is followed by a statement of the outcome of the case%
+The next several lines comprise a sequence of statements, enumerated in square 
+brackets, as in \texttt{[1]} above. 
+After the last numbered point, the next line is blank and is followed by a 
+statement of the outcome of the case.%
 \footnote{I suspect the technical term for this outcome is ``the verdict.'' 
-Nevertheless, I think we should go through the exercise 
-of identifying the proper terminology for all the fields 
-in the court documents, including the term ``court documents.''
-For example, during one of my meetings with the Westlaw representatives, 
-I learned that terminology for seemingly similar features differ 
-between cases in the courts of appeals and trials in trial courts. 
-The distinction between the terms ``case'' and ``trial'' is just such an example
-that I do not yet precisely understand.}. 
+          Nevertheless, I think we should go through the exercise 
+          of identifying the proper terminology for all the fields 
+          in the court documents, including the term ``court documents.''
+          For example, during one of my meetings with the Westlaw 
+	  representatives, I learned that terminology for seemingly similar 
+	  features differ between cases in the courts of appeals and trials 
+	  in trial courts. 
+          The distinction between the terms ``case'' and ``trial'' is just 
+	  such an example that I do not yet precisely understand.
+	 } 
 In many cases, this is simply the word \texttt{Affirmed.}
 In others, the outcome of the case takes on a hybrid form, such as
 % 
@@ -419,8 +408,8 @@ Table \ref{tab:outcome_list}.
 \label{tab:outcome_list}
 \end{table}
 % 
-We should think about how we use this field 
-to determine which cases to include in our analysis and how to categorize them. 
+We should think about how we use this field to determine which cases to 
+include in our analysis and how to categorize them. 
 
 The holdings and outcome is followed by a statement of procedural posture. 
 In the simplest cases, it may take on the form
@@ -436,21 +425,20 @@ Procedural Posture(s): On Appeal; Motion for Summary Judgment;
 Motion for Judgment as a Matter of Law (JMOL)/Directed Verdict.
 \end{verbatim}
 % 
-These are listed in a single line of text but
-the second statement is shown above on a separate line to show the added item. 
-I don't understand these terms enough to know what to do with these
-but it seems as though these are structured in a such way that it will be easy 
+These are listed in a single line of text, but the second statement is shown 
+above on a separate line to show the added item. 
+I don't understand these terms enough to know what to do with these, but it 
+seems as though these are structured in a such way that it will be easy 
 to parse into separate categories: the items are separated by semicolons 
 and the items take on only so many values. 
-
 
 The next section is often a lengthy listing of quotations from legal documents. 
 It is a numbered list of notes under the heading \texttt{West Headnotes (X)}, 
 which indicates the enumerated list of notes from \texttt{[1]} to \texttt{[X]}. 
 The current version of the \texttt{legalbeagle} module skips this section. 
 
-A few pages later, the next section begins with 
-the header \texttt{Attorneys and Law Firms}. 
+A few pages later, the next section begins with the header 
+\texttt{Attorneys and Law Firms}. 
 A typical example takes on the following form:
 %
 \begin{verbatim}
@@ -471,55 +459,52 @@ dissenting in part.
 \end{verbatim}
 %
 
-The first line contains a list of attorneys and law firms 
-representing the plaintiff-appellant. 
-The second line usually contains a list of attorneys 
-and law firms representing the defendant-appellee. 
-This passage often spans three lines (without word-wrapping)
-but sometimes the attorneys are listed in a single line.
-In any case, the last line in this section is especially important 
-for our research question, 
-since it lists the names of the judges in the judicial panel. 
-This line usually takes the form shown above, 
-as in \texttt{Before: MERRITT, ROGERS, and WHITE, Circuit Judges.}
+The first line contains a list of attorneys and law firms representing the 
+plaintiff-appellant. 
+The second line usually contains a list of attorneys and law firms representing
+the defendant-appellee. 
+This passage often spans three lines (without word-wrapping), but sometimes 
+the attorneys are listed in a single line.
+In any case, the last line in this section is especially important for our 
+research question, since it lists the names of the judges in the judicial 
+panel. 
+This line usually takes the form shown above, as in 
+\texttt{Before: MERRITT, ROGERS, and WHITE, Circuit Judges.}
 It might, however, list two judges as, for example, \texttt{Circuit Judges}
 and a third judge with another title. 
-The structure of this sentence is standardized enough that 
-it should not be too difficult to separate the names of the judges. 
+The structure of this sentence is standardized enough that it should not be 
+too difficult to separate the names of the judges. 
 The judges' names are often---but not always---stated in upper case letters. 
 The names are sometimes listed with first and middle initials
 and sometimes with first names and middle initials. 
-It is a reasonable possibility that the last names of judges will not be unique. 
-For example, we will have to distinguish between judge
+It is a reasonable possibility that the last names of judges will not be 
+unique. 
+For example, we will have to distinguish between judges.
 
-It is possible, though I have not verified this claim, 
-that judges who share the same surname
-are listed with initials or first names. 
-In case this does not the case, we should find another strategy 
-for recording the judges' names
-along with a unique identifier, 
+It is possible, though I have not verified this claim, that judges who 
+share the same surname are listed with initials or first names. 
+In case this does not the case, we should find another strategy for recording 
+the judges' names along with a unique identifier, 
 possibly by scraping a hyperlink from from the documents in another format, 
 such as \texttt{doc} or  \texttt{pdf}. 
-Regardless of how we identify the judges, 
-an important step is to compile a master list 
-of the unique names of judges on these judicial panels
-and attempt to match it to the information in the database of judges. 
+Regardless of how we identify the judges, an important step is to compile a 
+master list of the unique names of judges on these judicial panels and 
+attempt to match it to the information in the database of judges. 
 We have not yet collected information for judges. 
 
-A related set of information is the list of opinions. 
-It is typically labeled as the opinion of one of the judges
-and may be followed by the opinions of some of the other two judges, 
-particularly in the case of a dissenting opinion. 
+A related set of information is the list of opinions.  
+It is typically labelled as the opinion of one of the judges and may be 
+followed by the opinions of some of the other two judges, particularly in 
+the case of a dissenting opinion. 
 The opinions are often written with excerpts from oral arguments or testimony
 and also excerpts from other legal documents. 
 For now, this information is skipped, since it takes on an irregular format, 
 however, it is worth investigating in order to characterize 
 the outcomes of cases with partial verdicts, 
 such as \texttt{Affirmed in part and reversed in part.}
-For our application, it matters whether the ``reversed in part'' part is a result of 
-a disagreement between the judges 
-or a unanimous decision to reverse part of the verdict 
-in the trial case that was appealed. 
+For our application, it matters whether the ``reversed in part'' part is 
+a result of a disagreement between the judges or a unanimous decision to 
+reverse part of the verdict in the trial case that was appealed. 
 
 For instance, the case in file number \texttt{088}, heard in 2011, 
 has the outcome:
@@ -543,14 +528,13 @@ Helene N. White, Circuit Judge, filed an opinion concurring in part and
 dissenting in part.
 \end{verbatim}
 %
-We will have to carefully consider how we categorize this sort of case. 
-An important next step is to tabulate the frequency of each outcome, 
-to determine whether this outcome is unusual. 
-In some documents, the judges' opinions 
-constitute the bulk of the court document. 
+We will have to consider carefully how we categorize this sort of case. 
+An important next step is to tabulate the frequency of each outcome, to 
+determine whether this outcome is unusual. 
+In some documents, the judges' opinions constitute the bulk of the court 
+document. 
 In others, the opinions are briefly stated, often in a single sentence, 
 stating little more than the verdict. 
-
 
 \subsubsection*{Database Constructed from Westlaw Documents}
 
@@ -562,8 +546,8 @@ and cases that Westlaw characterized in the ``Labor and Employment'' category.
 On average,  about 200 cases were heard each year
 but the cases in this category became less frequent over time:
 over 300 such cases were heard in 2000 
-and the number of these cases declined over the sample, 
-with around 150 cases per year in the past decade. 
+and the number of these cases declined over the sample, with around 150 cases 
+per year in the past decade. 
 
 \begin{itemize}
 	\item \texttt{file\_name}: A string of the form 
@@ -694,7 +678,6 @@ To be added.
 	from the Department of Justice}
 
 To be added. 
-
 
 
 \end{document}
