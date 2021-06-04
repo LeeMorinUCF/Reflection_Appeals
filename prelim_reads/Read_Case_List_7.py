@@ -29,16 +29,19 @@
 # and categorized under Labor and Employment. 
 # 
 # TODO: Test cases by year to find which fail. 
-#   Done 2011-2019. Approx 20% failure rate (failure to read to end). 
+#   Done 2011-2019. Approx 20% failure rate (failure to read to end).
+#   100% of files are read without failure; Done.
+#   Some errors remaining in reading the fields.
 # 
-# TODO: Create function to output data frame from list of files.
+# TODO: Create function to output data frame from list of files. Done.
 # TODO: Modify get_case_info() to stop at a certain point, 
-#   for partial reading of files.
-# TODO: Create is_valid_field(line) functions to test at scale.
+#   for partial reading of files. Done.
+# TODO: Create is_valid_field(line) functions to test at scale. Done.
 # TODO: Verify that fields are reading valid information 
-#   (i.e. no wrong fields). 
-# TODO: Display incorrect fields. 
-# TODO: Modify functions collecting invalid feilds and iterate.
+#   (i.e. no wrong fields). Done. Some different case types remain partially read. 
+# TODO: Display incorrect fields. DOne. 
+# TODO: Modify functions collecting invalid feilds and iterate. 
+#   Some iteration complete. Some adjustments remain. 
 # 
 # TODO: Make a function which_case_info(line) to 
 #   determine type of case info, in case the info 

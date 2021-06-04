@@ -976,3 +976,50 @@ def count_valid_obsns(appeals):
 # End
 ##################################################
 
+# Function that identifies which field(s) match(es) a line, if any.
+def which_field(line):
+    
+    field_names = []
+    
+    if is_case_code(line):
+        field_names.append('case_code')
+    
+    if is_uscoa(line):
+        field_names.append('uscoa')
+    
+    if is_circ_num(line):
+        field_names.append('circ_num')
+    
+    if is_pla_appnt(line):
+        field_names.append('pla_appnt')
+    
+    if is_def_appee(line):
+        field_names.append('def_appee')
+    
+    if is_case_num(line):
+        field_names.append('case_num')
+    
+    if is_synopsis(line):
+        field_names.append('synopsis')
+    
+    if is_background(line):
+        field_names.append('background')
+    
+    if is_holdings_hdr(line):
+        field_names.append('holdings_hdr')
+    
+    if is_outcome(line):
+        field_names.append('outcome')
+    
+    if is_posture(line):
+        field_names.append('posture')
+    
+    if is_jurists(line):
+        field_names.append('jurists')
+    
+    if is_panel(line):
+        field_names.append('panel')
+    
+    return(field_names)
+
+
