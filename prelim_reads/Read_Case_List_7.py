@@ -212,7 +212,7 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 # Set path for files in a single year.
 # case_year = 2000
 # case_year = 2001
-# case_year = 2002
+case_year = 2002
 # case_year = 2003 # Background not labeled. 
 # case_year = 2004
 # case_year = 2005
