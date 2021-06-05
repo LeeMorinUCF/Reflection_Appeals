@@ -27,6 +27,7 @@
 # This version processes all 175 cases in 2011
 # referring to sexual harassment
 # and categorized under Labor and Employment. 
+# This version repaets for each year from 2000 to 2019. 
 # 
 # TODO: Test cases by year to find which fail. 
 #   Done 2011-2019. Approx 20% failure rate (failure to read to end).
@@ -45,11 +46,14 @@
 # 
 # TODO: Make a function which_case_info(line) to 
 #   determine type of case info, in case the info 
-#   is skipped or stored in a different order. 
+#   is skipped or stored in a different order. Done. 
 # 
 # TODO: Create function to extract judges' names from
 #   line with judicial panel. 
 # TODO: Create master list of judges. 
+# TODO: Create function that parses case numbers
+#   to get list of numbers of case numbers related to each case. 
+#   Return a list of case numbers. 
 #
 ##################################################
 """

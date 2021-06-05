@@ -309,6 +309,51 @@ def get_case_num(file, last_line):
         
     return(case_num)
 
+def is_case_num_str(sub_str):
+    
+    # Examples:
+    # is_case_num_str('12-1234')
+    # True
+    # is_case_num_str('19-9999')
+    # True
+    # is_case_num_str('No. 12-1')
+    # False
+    # is_case_num_str('leagalbeagle')
+    # False
+    
+    # Determines whether a string is of the form YY-1234.
+    if len(sub_str) == 7:
+        str_1 = sub_str[0:2]
+        str_2 = sub_str[2]
+        str_3 = sub_str[3:len(sub_str)]
+        return(str_1.isdigit() and str_2 == "-" and str_3.isdigit())
+    else:
+        return(False)
+
+
+
+# Get list of case numbers from case_num string. 
+def get_case_num_list(case_num):
+    
+    # Examples:
+    # get_case_num_list('No. 04-6363.')
+    # ['04-6363']
+    # get_case_num_list('No. 2004-6363.')
+    # ['04-6363']
+    # get_case_num_list('Docket No. 04-6363.')
+    # ['04-6363']
+    # get_case_num_list('Nos. 04-6363, 04-6364.')
+    # ['04-6363', '04-6364']
+    case_num_list = []
+    
+    # Loop through characters in string, looking for YY-1234 pattern. 
+    for char_num in range(len(case_num)):
+        sub_str = case_num[char_num:(char_num + 7)]
+        if is_case_num_str(sub_str):
+            case_num_list.append(sub_str)
+    
+    return(case_num_list)
+
 
 def is_synopsis(line):
     
