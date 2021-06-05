@@ -408,6 +408,29 @@ appeals['case_num'][is_valid == False].unique()
 appeals[['file_name', 'case_num']][is_valid == False]
 
 
+appeals['case_num_1']
+appeals['case_num_2']
+appeals['case_num_3']
+
+appeals['num_case_nums'].describe()
+appeals['num_case_nums'].value_counts()
+
+
+appeals['case_num'][appeals['num_case_nums'] == 0]
+appeals['case_num'][appeals['num_case_nums'] == 4]
+appeals['case_num'][appeals['num_case_nums'] == 3]
+appeals['case_num'][appeals['num_case_nums'] == 2]
+# Some cases have suffixes (L) or (XAP)
+# Some cases have trailing 3, 4, or 5 digits.
+
+appeals['case_num_1'].describe()
+appeals['case_num_2'].describe()
+appeals['case_num_3'].describe()
+
+# Save file of case numbers. 
+
+
+
 appeals['case_date_1']
 appeals['case_date_2']
 appeals['case_date_3']
@@ -454,6 +477,33 @@ appeals['judicial_panel'][is_valid == False].unique()
 appeals[['file_name', 'judicial_panel']][is_valid == False]
 
 
+
+appeals['judge_1']
+appeals['judge_2']
+appeals['judge_3']
+appeals['judge_4']
+
+
+appeals['num_judges'].value_counts()
+
+appeals['judicial_panel'][appeals['num_judges'] == 0]
+appeals['judicial_panel'][appeals['num_judges'] == 1]
+# Some names are separated by semicolons.
+appeals['judicial_panel'][appeals['num_judges'] == 4]
+# Some judges have Jr. suffix. 
+appeals['judicial_panel'][appeals['num_judges'] == 5]
+# Some sentances happen to start with the word "Before".
+appeals['judicial_panel'][appeals['num_judges'] == 6]
+appeals['judicial_panel'][appeals['num_judges'] == 7]
+appeals['judicial_panel'][appeals['num_judges'] == 11]
+appeals['judicial_panel'][appeals['num_judges'] == 14]
+
+
+
+appeals['judge_1'].describe()
+appeals['judge_2'].describe()
+appeals['judge_3'].describe()
+appeals['judge_4'].describe()
 
 
 
