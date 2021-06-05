@@ -721,6 +721,53 @@ def get_jurist_list(file, line):
     
     return(jurist_list)
 
+# Function that identifies which field(s) match(es) a line, if any.
+def which_field(line):
+    
+    field_names = []
+    
+    if is_case_code(line):
+        field_names.append('case_code')
+    
+    if is_uscoa(line):
+        field_names.append('uscoa')
+    
+    if is_circ_num(line):
+        field_names.append('circ_num')
+    
+    if is_pla_appnt(line):
+        field_names.append('pla_appnt')
+    
+    if is_def_appee(line):
+        field_names.append('def_appee')
+    
+    if is_case_num(line):
+        field_names.append('case_num')
+    
+    if is_synopsis(line):
+        field_names.append('synopsis')
+    
+    if is_background(line):
+        field_names.append('background')
+    
+    if is_holdings_hdr(line):
+        field_names.append('holdings_hdr')
+    
+    if is_outcome(line):
+        field_names.append('outcome')
+    
+    if is_posture(line):
+        field_names.append('posture')
+    
+    if is_jurists(line):
+        field_names.append('jurists')
+    
+    if is_panel(line):
+        field_names.append('panel')
+    
+    return(field_names)
+
+
 
 
 
@@ -1021,50 +1068,106 @@ def count_valid_obsns(appeals):
 # End
 ##################################################
 
-# Function that identifies which field(s) match(es) a line, if any.
-def which_field(line):
+
+# Separate elements of line into list of 
+# judges' names and titles.
+def get_panel_list(line):
     
-    field_names = []
+    # Examples:
+    # get_panel_list("Before LUCERO, EBEL, and MURPHY, Circuit Judges.")
+    # ['UCERO', 'EBEL', 'MURPHY']
+    # get_panel_list("Before: LUCERO, EBEL, and MURPHY, Circuit Judges.")
+    # ['UCERO', 'EBEL', 'MURPHY']
+    # get_panel_list("Present: LUCERO, EBEL, and MURPHY, Circuit Judges.")
+    # ['UCERO', 'EBEL', 'MURPHY']
+    # get_panel_list("Before: MERRITT, ROGERS, and WHITE, Circuit Judges.")
+    # ['MERRITT', 'ROGERS', 'WHITE']
+    # get_panel_list("Before: J. W. MERRITT, ROGERS, and WHITE, Circuit Judges.")
+    # ['J. W. MERRITT', 'ROGERS', 'WHITE']
+    # get_panel_list("Before: J. W. MERRITT, W. B. ROGERS, and WHITE, Circuit Judges.")
+    # ['J. W. MERRITT', 'W. B. ROGERS', 'WHITE']
     
-    if is_case_code(line):
-        field_names.append('case_code')
+    panel_list = []
     
-    if is_uscoa(line):
-        field_names.append('uscoa')
+    if not is_panel(line):
+        return(panel_list)
+    # Before anything else,
+    # move past string "Before:",  "Before", or  "Present:"
+    hdr_end_1 = line.lower().find('before:') + 7
+    hdr_end_2 = line.lower().find('before') + 6
+    hdr_end_3 = line.lower().find('before:') + 8
+    hdr_end_4 = line.lower().find('before') + 7
+    hdr_end = max(hdr_end_1, hdr_end_2, hdr_end_3, hdr_end_4)
     
-    if is_circ_num(line):
-        field_names.append('circ_num')
+    judge_line = line[hdr_end:(len(line))]
     
-    if is_pla_appnt(line):
-        field_names.append('pla_appnt')
+    # Next is to find commas, take next substring, 
+    # verigy that it is not a judge's title, 
+    # then append the judge's name to the list
+    # and trim it from the string. 
+    while len(judge_line) > 0:
+        
+        # Find the next comma, if any.
+        next_comma = judge_line.find(',')
+        if next_comma == -1:
+            # Nothing left. 
+            # Append last string, if it is not a title.
+            if not is_judge_title(judge_line):
+                clean_str = judge_line.replace("\n","").replace(".","")
+                clean_str = clean_str.replace("and ","").strip()
+                panel_list.append(clean_str)
+            # Now the line is empty.
+            judge_line = ''
+        else:
+            next_str = judge_line[0:(next_comma + 1)]
+            # Append next string, if it is not a title.
+            if not is_judge_title(next_str):
+                clean_str = next_str.replace(",","")
+                clean_str = clean_str.replace("and ","").strip()
+                panel_list.append(clean_str)
+            # Trim this string from the line.
+            judge_line = judge_line[(next_comma + 1):len(judge_line)]
+            
+        
     
-    if is_def_appee(line):
-        field_names.append('def_appee')
+    # Then pull values in between. 
     
-    if is_case_num(line):
-        field_names.append('case_num')
     
-    if is_synopsis(line):
-        field_names.append('synopsis')
+    return(panel_list)
     
-    if is_background(line):
-        field_names.append('background')
+
+# Returns a list of judges' names. 
+def get_judge_names(panel_list):
     
-    if is_holdings_hdr(line):
-        field_names.append('holdings_hdr')
+    # Loops through a list of strings
+    # and returns a string of *hopefully three*
+    # strings that are names of judges. 
     
-    if is_outcome(line):
-        field_names.append('outcome')
+    judge_list = []
+    for panel_str in panel_list:
+        if not is_judge_title(panel_str):
+            # This should be the name of a judge.
+            # Append it to the list. 
+            judge_list.append(panel_str)
     
-    if is_posture(line):
-        field_names.append('posture')
+    return(judge_list)
     
-    if is_jurists(line):
-        field_names.append('jurists')
     
-    if is_panel(line):
-        field_names.append('panel')
+
+
+
     
-    return(field_names)
+    
+# Determine whether a string is one of the common judicial titles.
+def is_judge_title(panel_str):
+    
+    found_judge_title = False
+    
+    found_judge_title = found_judge_title or "judge" in panel_str.lower()
+    found_judge_title = found_judge_title or "circuit" in panel_str.lower()
+    found_judge_title = found_judge_title or "chief" in panel_str.lower()
+
+    
+    return(found_judge_title)
 
 

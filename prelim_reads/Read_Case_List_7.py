@@ -509,6 +509,14 @@ with open(txt_file, 'r', encoding = 'utf-16') as file:
     print(line)
 
 ##################################################
+# Create data frame of strings from the judicial panel.
+##################################################
+
+import caser
+
+
+
+##################################################
 # Extra Code Snippets
 ##################################################
 
