@@ -1071,20 +1071,20 @@ def count_valid_obsns(appeals):
 
 # Separate elements of line into list of 
 # judges' names and titles.
-def get_panel_list(line):
+def get_judge_names(line):
     
     # Examples:
-    # get_panel_list("Before LUCERO, EBEL, and MURPHY, Circuit Judges.")
+    # get_judge_names("Before LUCERO, EBEL, and MURPHY, Circuit Judges.")
     # ['UCERO', 'EBEL', 'MURPHY']
-    # get_panel_list("Before: LUCERO, EBEL, and MURPHY, Circuit Judges.")
+    # get_judge_names("Before: LUCERO, EBEL, and MURPHY, Circuit Judges.")
     # ['UCERO', 'EBEL', 'MURPHY']
-    # get_panel_list("Present: LUCERO, EBEL, and MURPHY, Circuit Judges.")
+    # get_judge_names("Present: LUCERO, EBEL, and MURPHY, Circuit Judges.")
     # ['UCERO', 'EBEL', 'MURPHY']
-    # get_panel_list("Before: MERRITT, ROGERS, and WHITE, Circuit Judges.")
+    # get_judge_names("Before: MERRITT, ROGERS, and WHITE, Circuit Judges.")
     # ['MERRITT', 'ROGERS', 'WHITE']
-    # get_panel_list("Before: J. W. MERRITT, ROGERS, and WHITE, Circuit Judges.")
+    # get_judge_names("Before: J. W. MERRITT, ROGERS, and WHITE, Circuit Judges.")
     # ['J. W. MERRITT', 'ROGERS', 'WHITE']
-    # get_panel_list("Before: J. W. MERRITT, W. B. ROGERS, and WHITE, Circuit Judges.")
+    # get_judge_names("Before: J. W. MERRITT, W. B. ROGERS, and WHITE, Circuit Judges.")
     # ['J. W. MERRITT', 'W. B. ROGERS', 'WHITE']
     
     panel_list = []
@@ -1136,21 +1136,21 @@ def get_panel_list(line):
     return(panel_list)
     
 
-# Returns a list of judges' names. 
-def get_judge_names(panel_list):
+# # Returns a list of judges' names. 
+# def get_judge_names(panel_list):
     
-    # Loops through a list of strings
-    # and returns a string of *hopefully three*
-    # strings that are names of judges. 
+#     # Loops through a list of strings
+#     # and returns a string of *hopefully three*
+#     # strings that are names of judges. 
     
-    judge_list = []
-    for panel_str in panel_list:
-        if not is_judge_title(panel_str):
-            # This should be the name of a judge.
-            # Append it to the list. 
-            judge_list.append(panel_str)
+#     judge_list = []
+#     for panel_str in panel_list:
+#         if not is_judge_title(panel_str):
+#             # This should be the name of a judge.
+#             # Append it to the list. 
+#             judge_list.append(panel_str)
     
-    return(judge_list)
+#     return(judge_list)
     
     
 
