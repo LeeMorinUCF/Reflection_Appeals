@@ -506,6 +506,16 @@ def is_holdings_hdr_vec(df_col):
 def is_finished_holdings(line):
     return(line[0] != '[' and line[0].strip() != '')
 
+
+# Find the section entitled "West Haednotes".
+def is_west_notes(line):
+    line_list = line.split()
+    if len(line_list) > 2:
+        return(line_list[0].lower() == "west" and line_list[0].lower() == "headnotes")
+    else:
+        return False
+
+
 # Record the "Holdings" header statement.
 def get_holdings(file):
     
@@ -515,12 +525,19 @@ def get_holdings(file):
     
     # Skip lines to the holdings header.
     found_holdings_hdr = False
+    # Stop if reached procedural posture or West Headnotes.
+    found_posture = False
+    found_west_notes = False
     lines_read = 0
-    while not found_holdings_hdr and lines_read < 6:
+    while (not found_holdings_hdr and not found_posture 
+           and not found_west_notes and lines_read < 6):
         line = file.readline()
         lines_read = lines_read + 1
         # Check if the next line contains the verb "held".
         found_holdings_hdr =  is_holdings_hdr(line)
+        # Check for items that should come after the header.
+        found_posture =  is_posture(line)
+        found_west_notes =  is_west_notes(line)
     
     
     # The next line is the "Holdings" header statement.
@@ -530,10 +547,14 @@ def get_holdings(file):
     # Append the contents of the holdings. 
     finished_holdings = False
     lines_read = 0
-    while not finished_holdings and lines_read < 20:
+    while (not finished_holdings and not found_posture 
+           and not found_west_notes and lines_read < 20):
         line = file.readline()
         lines_read = lines_read + 1
         finished_holdings = is_finished_holdings(line)
+        # Check for items that should come after the header.
+        found_posture =  is_posture(line)
+        found_west_notes =  is_west_notes(line)
         # Record last line unless it is blank:
         # the last line is the outcome. 
         if line[0].strip() != '':
@@ -565,7 +586,7 @@ def is_outcome_vec(df_col):
 
 # Record the case outcome. 
 def get_outcome(file):
-    # Deprecated: Appended to end of holdings.
+    # DEPRECATED: Appended to end of holdings.
     
     # Assumes the holdings were just passed.
     line = file.readline()
@@ -610,11 +631,15 @@ def get_posture(file):
     # Initialize with what might be a blank line.
     line = file.readline() 
     found_posture = is_posture(line)
+    # If we reach "West Headnotes", we've gone too far.
+    found_west_notes = is_west_notes(line)
     lines_read = 0
-    while not found_posture and lines_read < 7:
+    while not found_posture and not found_west_notes and lines_read < 7:
         line = file.readline()
         lines_read = lines_read + 1
         found_posture = is_posture(line)
+        # Check that we didn't reach "West Headnotes".
+        found_west_notes = is_west_notes(line)
     
     # The last should be the statement of "Procedural Posture(s)", 
     # if it is present.
@@ -649,11 +674,13 @@ def is_panel(line):
     if line_list == []:
         return(False)
     elif len(line_list) > 1:
-        # Sometimes there is a word before "Before".
-        return(line_list[0].lower().strip()[0:6] == "before"
-               or line_list[1].lower().strip()[0:6] == "before"
-               or line_list[0].lower().strip()[0:7] == "present"
-               or line_list[1].lower().strip()[0:7] == "present")
+        # Sometimes there is a word present before "present" or before "Before".
+        judge_hdr = (line_list[0].lower().strip()[0:6] == "before"
+            or line_list[1].lower().strip()[0:6] == "before"
+            or line_list[0].lower().strip()[0:7] == "present"
+            or line_list[1].lower().strip()[0:7] == "present")
+        contains_judge = "judge" in  line.lower()
+        return(judge_hdr and contains_judge)
     else:
         return(False)
 
@@ -854,6 +881,8 @@ def clean_judge_name(judge_str):
     clean_str = clean_str.replace("Appeals"," ")
     clean_str = clean_str.replace("International Trade"," ")
     clean_str = clean_str.replace("sitting by designation"," ")
+    
+    # Remove names or locations of courts.
     clean_str = clean_str.replace("First"," ")
     clean_str = clean_str.replace("Second"," ")
     clean_str = clean_str.replace("Third"," ")
@@ -1099,6 +1128,8 @@ def get_case_info(txt_file, fields = 'all'):
             holdings_hdr = "NA"
             outcome = "NA"
             posture = "NA"
+            # We might have to investigate these types of cases
+            # to add some logic to retrieve these fields.
         
         # Record the names of lawyers, judges and previous case.
         if 'all' in fields or 'judicial_panel' in fields:

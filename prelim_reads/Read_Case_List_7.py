@@ -498,17 +498,18 @@ appeals['judicial_panel'][appeals['num_judges'] == 5]
 appeals['judicial_panel'][appeals['num_judges'] == 6]
 appeals['judicial_panel'][appeals['num_judges'] == 7]
 appeals['judicial_panel'][appeals['num_judges'] == 8]
+appeals['judicial_panel'][appeals['num_judges'] == 10]
 appeals['judicial_panel'][appeals['num_judges'] == 11]
 appeals['judicial_panel'][appeals['num_judges'] == 15]
 
+# In 2002:
 # txt_file_num = 27 # Wordy titles.
 # txt_file_num = 220 # Legit 7 judges.
 # txt_file_num = 231 # Legit 2 judges.
-
-txt_file_num = 4 # Legit 11 judges. 
-txt_file_num = 180 # Legit 11 judges. 
-txt_file_num = 251 # Legit 10 judges. 
-txt_file_num = 226 # Legit 15 judges. 
+# txt_file_num = 4 # Legit 11 judges. 
+# txt_file_num = 180 # Legit 11 judges. 
+# txt_file_num = 251 # Legit 10 judges. 
+# txt_file_num = 226 # Legit 15 judges. 
 
 txt_file = txt_file_list[txt_file_num]
 case_info = caser.get_case_info(txt_file)
@@ -539,7 +540,7 @@ txt_file_num = 0 # In 2019
 txt_file_num = 114 # 32 # 22 # In 2002
 txt_file_num = 0 # In 2003
 
-txt_file_num = 109
+txt_file_num = 96
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
