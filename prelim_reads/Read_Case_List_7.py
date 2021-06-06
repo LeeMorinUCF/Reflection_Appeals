@@ -225,7 +225,7 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 # case_year = 2005
 # case_year = 2006
 # case_year = 2007
-case_year = 2008
+# case_year = 2008
 # case_year = 2009
 # case_year = 2010
 # case_year = 2011
@@ -236,7 +236,7 @@ case_year = 2008
 # case_year = 2016
 # case_year = 2017
 # case_year = 2018
-# case_year = 2019
+case_year = 2019
 
 txt_folder = data_folder + str(case_year) + '\\'
 txt_path = drive_path + txt_folder
@@ -503,7 +503,10 @@ appeals['judicial_panel'][appeals['num_judges'] == 10]
 appeals['judicial_panel'][appeals['num_judges'] == 11]
 appeals['judicial_panel'][appeals['num_judges'] == 12]
 appeals['judicial_panel'][appeals['num_judges'] == 13]
+appeals['judicial_panel'][appeals['num_judges'] == 14]
 appeals['judicial_panel'][appeals['num_judges'] == 15]
+appeals['judicial_panel'][appeals['num_judges'] == 16]
+appeals['judicial_panel'][appeals['num_judges'] == 18]
 
 # # In 2000:
 # txt_file_num = 224 # Legit 10 judges.
@@ -555,8 +558,53 @@ appeals['judicial_panel'][appeals['num_judges'] == 15]
 # txt_file_num = 17 # Legit 10 judges.
 # txt_file_num = 214 # Legit 11 judges.
 
-# In 2008:
-txt_file_num = 17 # Legit 10 judges.
+# # In 2008:
+# txt_file_num = 149 # Legit 2 judges.
+# txt_file_num = 136 # Character '.a1' appended? Remove later?
+
+# # In 2009:
+# txt_file_num = 56 # Contains (Ret.).
+# txt_file_num = 84 # Contains (Ret.).
+# txt_file_num = 34 # Legit 11 judges.
+# txt_file_num = 200 # Legit 16 judges.
+
+# # In 2010:
+# txt_file_num = 71 # Legit 2 judges.
+# txt_file_num = 134 # Legit 2 judges.
+# txt_file_num = 12 # Legit 11 judges.
+# txt_file_num = 125 # Legit 11 judges.
+
+# # In 2011:
+# txt_file_num = 165 # Legit 2 judges.
+
+# # In 2012:
+# txt_file_num = 124 # Legit 18 judges!!!
+
+# # In 2013:
+# txt_file_num = 161 # Legit 11 judges.
+# txt_file_num = 86 # Legit 14 judges!!!
+# txt_file_num = 1 # Legit 16 judges!!!
+
+# # In 2014:
+# txt_file_num = 58 # Legit 11 judges.
+
+# # In 2015:
+# txt_file_num = 27 # Not a judicial panel. Remove sentences by list length?
+# txt_file_num = 124 # Legit 15 judges.
+
+# # In 2016:
+# txt_file_num = 51 # Middle District.
+
+# # In 2017:
+# txt_file_num = 34 # Legit 11 judges.
+# txt_file_num = 79 # Legit 11 judges.
+# txt_file_num = 80 # Legit 11 judges.
+
+# In 2018:
+# All good except for zeros.
+    
+# In 2019:
+txt_file_num = 97 # Legit 11 judges.
 
 
 txt_file = txt_file_list[txt_file_num]

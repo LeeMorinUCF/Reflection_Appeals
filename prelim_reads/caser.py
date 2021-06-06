@@ -850,8 +850,10 @@ def get_judge_names(line):
             if clean_str.lower() == 'jr':
                 # Append the suffix to the previous judge. 
                 panel_list[len(panel_list) - 1] = panel_list[len(panel_list) - 1] + ", Jr."
-            else:
-                # Record the name of the next judge.
+            elif len(clean_str.split()) < 5:
+                # Longer list of strings is probably a sentence and not a name:
+                # Likely an incorrectly classified judicial panel. 
+                # Otherwise, record the name of the next judge.
                 panel_list.append(clean_str)
         
     
@@ -869,10 +871,15 @@ def clean_judge_name(judge_str):
     # Remove judge titles.
     clean_str = clean_str.replace("Judges"," ")
     clean_str = clean_str.replace("Judge"," ")
+    clean_str = clean_str.replace("Justice"," ")
     clean_str = clean_str.replace("Circuit"," ")
     clean_str = clean_str.replace("District"," ")
     clean_str = clean_str.replace("Chief"," ")
+    clean_str = clean_str.replace("Associate"," ")
     clean_str = clean_str.replace("Senior"," ")
+    clean_str = clean_str.replace("Supreme"," ")
+    clean_str = clean_str.replace("Retired"," ")
+    clean_str = clean_str.replace("(Ret.)"," ")
     clean_str = clean_str.replace("En banc"," ")
     
     # Remove other terminology. 
@@ -901,6 +908,7 @@ def clean_judge_name(judge_str):
     clean_str = clean_str.replace("Southern"," ")
     clean_str = clean_str.replace("Eastern"," ")
     clean_str = clean_str.replace("Western"," ")
+    clean_str = clean_str.replace("Middle"," ")
     clean_str = clean_str.replace("Maryland"," ")
     clean_str = clean_str.replace("West Virginia"," ")
     clean_str = clean_str.replace("Virginia"," ")
