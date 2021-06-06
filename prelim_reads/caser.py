@@ -792,8 +792,9 @@ def get_judge_names(line):
         next_comma = judge_line.find(',')
         next_semicolon = judge_line.find(';')
         next_and = judge_line.find(' and ')
+        next_amp = judge_line.find(' & ')
         # If no other bounds, then remaining string might be the last judge.
-        next_bound = find_next_bound(next_comma, next_semicolon, next_and)
+        next_bound = find_next_bound(next_comma, next_semicolon, next_and, next_amp)
         # max_bound = max(next_comma, next_semicolon, next_and)
         if next_bound == -1:
             # No other bounds. 
@@ -896,7 +897,15 @@ def clean_judge_name(judge_str):
     clean_str = clean_str.replace("Eleventh"," ")
     clean_str = clean_str.replace("Twelfth"," ")
     
+    clean_str = clean_str.replace("Northern"," ")
+    clean_str = clean_str.replace("Southern"," ")
+    clean_str = clean_str.replace("Eastern"," ")
+    clean_str = clean_str.replace("Western"," ")
     clean_str = clean_str.replace("Maryland"," ")
+    clean_str = clean_str.replace("West Virginia"," ")
+    clean_str = clean_str.replace("Virginia"," ")
+    clean_str = clean_str.replace("North Carolina"," ")
+    clean_str = clean_str.replace("South Carolina"," ")
     
     # Remove common words.
     clean_str = clean_str.replace(" for "," ")
@@ -911,30 +920,37 @@ def clean_judge_name(judge_str):
     # Remove punctuation marks and bounds. 
     clean_str = clean_str.replace(","," ")
     clean_str = clean_str.replace(";"," ")
-    clean_str = clean_str.replace(" and ","").strip()
+    clean_str = clean_str.replace(" and ","")
+    clean_str = clean_str.replace(" & ","")
+    
+    # Remove digits. 
+    for i in range(10):
+        clean_str = clean_str.replace(str(i)," ")
     
     
+    # Strip the spaces produced by all of the above exclusions.
+    clean_str = clean_str.strip()
     return(clean_str)
     
 
-def find_next_bound(next_comma, next_semicolon, next_and):
+def find_next_bound(next_comma, next_semicolon, next_and, next_amp):
     
     # Find the index of the next bound between strings. 
     # Index skips over the boundary, 
     # which matters if it is more than a punctuation mark.
     # 
     # Examples:
-    # find_next_bound(next_comma = -1, next_semicolon = 3, next_and = 5)
+    # find_next_bound(next_comma = -1, next_semicolon = 3, next_and = 5, next_amp = -1)
     # 4
-    # find_next_bound(next_comma = -1, next_semicolon = -1, next_and = -1)
+    # find_next_bound(next_comma = -1, next_semicolon = -1, next_and = -1, next_amp = -1)
     # -1
-    # find_next_bound(next_comma = -1, next_semicolon = 5, next_and = 2)
+    # find_next_bound(next_comma = -1, next_semicolon = 5, next_and = 2, next_amp = -1)
     # 6
-    # find_next_bound(next_comma = -1, next_semicolon = 7, next_and = 2)
+    # find_next_bound(next_comma = -1, next_semicolon = 7, next_and = 2, next_amp = -1)
     # 7
     
     # If none of the strings are found, return -1.
-    if max(next_comma, next_semicolon, next_and) == -1:
+    if max(next_comma, next_semicolon, next_and, next_amp) == -1:
         next_bound = -1
     else:
         # Find the smallest index among all that are not -1.
@@ -952,8 +968,13 @@ def find_next_bound(next_comma, next_semicolon, next_and):
             next_and_bound = 999
         else:
             next_and_bound = next_and + 5
+    
+        if next_amp == -1:
+            next_amp_bound = 999
+        else:
+            next_amp_bound = next_amp + 3
         
-        next_bound = min(next_comma_bound, next_semicolon_bound, next_and_bound)
+        next_bound = min(next_comma_bound, next_semicolon_bound, next_and_bound, next_amp_bound)
     
     
     return(next_bound)

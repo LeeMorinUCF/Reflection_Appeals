@@ -219,13 +219,13 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 # Set path for files in a single year.
 # case_year = 2000
 # case_year = 2001
-case_year = 2002
+# case_year = 2002
 # case_year = 2003 # Background not labeled. 
 # case_year = 2004
 # case_year = 2005
 # case_year = 2006
 # case_year = 2007
-# case_year = 2008
+case_year = 2008
 # case_year = 2009
 # case_year = 2010
 # case_year = 2011
@@ -498,9 +498,31 @@ appeals['judicial_panel'][appeals['num_judges'] == 5]
 appeals['judicial_panel'][appeals['num_judges'] == 6]
 appeals['judicial_panel'][appeals['num_judges'] == 7]
 appeals['judicial_panel'][appeals['num_judges'] == 8]
+appeals['judicial_panel'][appeals['num_judges'] == 9]
 appeals['judicial_panel'][appeals['num_judges'] == 10]
 appeals['judicial_panel'][appeals['num_judges'] == 11]
+appeals['judicial_panel'][appeals['num_judges'] == 12]
+appeals['judicial_panel'][appeals['num_judges'] == 13]
 appeals['judicial_panel'][appeals['num_judges'] == 15]
+
+# # In 2000:
+# txt_file_num = 224 # Legit 10 judges.
+# txt_file_num = 260 # Legit 11 judges.
+# txt_file_num = 300 # Legit 11 judges.
+# txt_file_num = 191 # Legit 12 judges.
+
+# txt_file_num = 109 # Extra numbers.
+# txt_file_num = 213 # Extra numbers.
+
+
+
+# # In 2001:
+# txt_file_num = 284 # Legit 2 judges.
+# txt_file_num = 81 # Legit 9 judges.
+# txt_file_num = 19 # Legit 11 judges.
+# txt_file_num = 130 # Legit 11 judges.
+
+# txt_file_num = 99 # 2 *767 at end.
 
 # In 2002:
 # txt_file_num = 27 # Wordy titles.
@@ -511,11 +533,37 @@ appeals['judicial_panel'][appeals['num_judges'] == 15]
 # txt_file_num = 251 # Legit 10 judges. 
 # txt_file_num = 226 # Legit 15 judges. 
 
+# # In 2003:
+# txt_file_num = 29 # Legit 2 judges.
+# txt_file_num = 51 # Legit 2 judges.
+# txt_file_num = 142 # Legit 2 judges.
+# txt_file_num = 202 # Legit 10 judges.
+# txt_file_num = 12 # Legit 12 judges.
+
+# # In 2004:
+# txt_file_num = 216 # Legit 11 judges.
+# txt_file_num = 157 # Legit 13 judges.
+
+# # In 2005:
+# txt_file_num = 223 # Legit 2 judges.
+
+# # In 2006:
+# txt_file_num = 60 # Separated by "&".
+# txt_file_num = 114 # Legit 11 judges.
+
+# # In 2007:
+# txt_file_num = 17 # Legit 10 judges.
+# txt_file_num = 214 # Legit 11 judges.
+
+# In 2008:
+txt_file_num = 17 # Legit 10 judges.
+
+
 txt_file = txt_file_list[txt_file_num]
 case_info = caser.get_case_info(txt_file)
 # caser.print_case_info(case_info)
-case_info['judicial_panel']
-case_info['judge_names']
+print(case_info['judicial_panel'])
+print(case_info['judge_names'])
 
 
 appeals['judge_1'].describe()
@@ -540,7 +588,7 @@ txt_file_num = 0 # In 2019
 txt_file_num = 114 # 32 # 22 # In 2002
 txt_file_num = 0 # In 2003
 
-txt_file_num = 96
+txt_file_num = 284
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
