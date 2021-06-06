@@ -501,9 +501,15 @@ appeals['judicial_panel'][appeals['num_judges'] == 8]
 appeals['judicial_panel'][appeals['num_judges'] == 11]
 appeals['judicial_panel'][appeals['num_judges'] == 15]
 
-txt_file_num = 27 # Wordy titles.
+# txt_file_num = 27 # Wordy titles.
 # txt_file_num = 220 # Legit 7 judges.
-txt_file_num = 139
+# txt_file_num = 231 # Legit 2 judges.
+
+txt_file_num = 4 # Legit 11 judges. 
+txt_file_num = 180 # Legit 11 judges. 
+txt_file_num = 251 # Legit 10 judges. 
+txt_file_num = 226 # Legit 15 judges. 
+
 txt_file = txt_file_list[txt_file_num]
 case_info = caser.get_case_info(txt_file)
 # caser.print_case_info(case_info)

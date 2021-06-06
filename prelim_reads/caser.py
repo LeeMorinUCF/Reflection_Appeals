@@ -749,8 +749,8 @@ def get_judge_names(line):
     # move past string "Before:",  "Before", or  "Present:"
     hdr_end_1 = line.lower().find('before:') + 7
     hdr_end_2 = line.lower().find('before') + 6
-    hdr_end_3 = line.lower().find('before:') + 8
-    hdr_end_4 = line.lower().find('before') + 7
+    hdr_end_3 = line.lower().find('present:') + 8
+    hdr_end_4 = line.lower().find('present') + 7
     hdr_end = max(hdr_end_1, hdr_end_2, hdr_end_3, hdr_end_4)
     
     judge_line = line[hdr_end:(len(line))]
@@ -786,8 +786,8 @@ def get_judge_names(line):
             # clean_str = clean_str.replace("*","")
             # clean_str = clean_str.replace(" and ","").strip()
             # If there is anything left, append the judge's name. 
-            if len(clean_str) > 0 and not clean_str.isdigit():
-                panel_list.append(clean_str)
+            # if len(clean_str) > 0 and not clean_str.isdigit():
+            #     panel_list.append(clean_str)
             # Now the line is empty.
             judge_line = ''
         else:
@@ -813,11 +813,18 @@ def get_judge_names(line):
             # clean_str = clean_str.replace(";","")
             # clean_str = clean_str.replace(" and ","").strip()
             # If there is anything left, append the judge's name. 
-            if len(clean_str) > 0 and not clean_str.isdigit():
-                panel_list.append(clean_str)
+            # if len(clean_str) > 0 and not clean_str.isdigit():
+            #     panel_list.append(clean_str)
             # Trim this string from the line.
             judge_line = judge_line[next_bound:len(judge_line)]
             
+        if len(clean_str) > 0 and not clean_str.isdigit():
+            if clean_str.lower() == 'jr':
+                # Append the suffix to the previous judge. 
+                panel_list[len(panel_list) - 1] = panel_list[len(panel_list) - 1] + ", Jr."
+            else:
+                # Record the name of the next judge.
+                panel_list.append(clean_str)
         
     
     # Then pull values in between. 
@@ -838,6 +845,7 @@ def clean_judge_name(judge_str):
     clean_str = clean_str.replace("District"," ")
     clean_str = clean_str.replace("Chief"," ")
     clean_str = clean_str.replace("Senior"," ")
+    clean_str = clean_str.replace("En banc"," ")
     
     # Remove other terminology. 
     clean_str = clean_str.replace("U.S."," ")
@@ -858,6 +866,7 @@ def clean_judge_name(judge_str):
     clean_str = clean_str.replace("Tenth"," ")
     clean_str = clean_str.replace("Eleventh"," ")
     clean_str = clean_str.replace("Twelfth"," ")
+    
     clean_str = clean_str.replace("Maryland"," ")
     
     # Remove common words.
