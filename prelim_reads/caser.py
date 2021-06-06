@@ -761,26 +761,62 @@ def get_judge_names(line):
     # and trim it from the string. 
     while len(judge_line) > 0:
         
-        # Find the next comma, if any.
+        # Find the next comma, semicolon, or " and ", if any.
         next_comma = judge_line.find(',')
-        if next_comma == -1:
-            # Nothing left. 
+        next_semicolon = judge_line.find(';')
+        next_and = judge_line.find(' and ')
+        # If no other bounds, then remaining string might be the last judge.
+        next_bound = find_next_bound(next_comma, next_semicolon, next_and)
+        # max_bound = max(next_comma, next_semicolon, next_and)
+        if next_bound == -1:
+            # No other bounds. 
             # Append last string, if it is not a title.
-            if not is_judge_title(judge_line):
-                clean_str = judge_line.replace("\n","").replace(".","")
-                clean_str = clean_str.replace("and ","").strip()
+            # if not is_judge_title(judge_line):
+            #     clean_str = judge_line.replace("\n","").replace(".","")
+            #     clean_str = clean_str.replace(" and ","").strip()
+            #     panel_list.append(clean_str)
+            # Append last string, removing any titles and special characters.
+            clean_str = clean_judge_name(judge_line)
+            # clean_str = judge_line.replace("\n","").replace(".","")
+            # clean_str = clean_str.replace("Judges","")
+            # clean_str = clean_str.replace("Judge","")
+            # clean_str = clean_str.replace("Circuit","")
+            # clean_str = clean_str.replace("District","")
+            # clean_str = clean_str.replace("Chief","")
+            # clean_str = clean_str.replace("*","")
+            # clean_str = clean_str.replace(" and ","").strip()
+            # If there is anything left, append the judge's name. 
+            if len(clean_str) > 0 and not clean_str.isdigit():
                 panel_list.append(clean_str)
             # Now the line is empty.
             judge_line = ''
         else:
-            next_str = judge_line[0:(next_comma + 1)]
+            next_str = judge_line[0:next_bound]
             # Append next string, if it is not a title.
-            if not is_judge_title(next_str):
-                clean_str = next_str.replace(",","")
-                clean_str = clean_str.replace("and ","").strip()
+            # if not is_judge_title(next_str):
+            #     clean_str = next_str.replace(",","")
+            #     clean_str = clean_str.replace(";","")
+            #     clean_str = clean_str.replace(" and ","").strip()
+            #     if len(clean_str) > 0:
+            #         # Maybe the string is ", and " -> "", so should be skipped.
+            #         panel_list.append(clean_str)
+            # Append last string, removing any titles and special characters.
+            clean_str = clean_judge_name(next_str)
+            # clean_str = next_str.replace("Judges","")
+            # clean_str = clean_str.replace("Judge","")
+            # clean_str = clean_str.replace("Circuit","")
+            # clean_str = clean_str.replace("District","")
+            # clean_str = clean_str.replace("Chief","")
+            # clean_str = clean_str.replace("*","")
+            # # Remove punctuation marks and bounds. 
+            # clean_str = clean_str.replace(",","")
+            # clean_str = clean_str.replace(";","")
+            # clean_str = clean_str.replace(" and ","").strip()
+            # If there is anything left, append the judge's name. 
+            if len(clean_str) > 0 and not clean_str.isdigit():
                 panel_list.append(clean_str)
             # Trim this string from the line.
-            judge_line = judge_line[(next_comma + 1):len(judge_line)]
+            judge_line = judge_line[next_bound:len(judge_line)]
             
         
     
@@ -788,7 +824,101 @@ def get_judge_names(line):
     
     
     return(panel_list)
+
+
+def clean_judge_name(judge_str):
     
+    # Pad with spaces. 
+    clean_str = " " + judge_str + " "
+    
+    # Remove judge titles.
+    clean_str = clean_str.replace("Judges"," ")
+    clean_str = clean_str.replace("Judge"," ")
+    clean_str = clean_str.replace("Circuit"," ")
+    clean_str = clean_str.replace("District"," ")
+    clean_str = clean_str.replace("Chief"," ")
+    clean_str = clean_str.replace("Senior"," ")
+    
+    # Remove other terminology. 
+    clean_str = clean_str.replace("U.S."," ")
+    clean_str = clean_str.replace("United States"," ")
+    clean_str = clean_str.replace("Court"," ")
+    clean_str = clean_str.replace("Appeals"," ")
+    clean_str = clean_str.replace("International Trade"," ")
+    clean_str = clean_str.replace("sitting by designation"," ")
+    clean_str = clean_str.replace("First"," ")
+    clean_str = clean_str.replace("Second"," ")
+    clean_str = clean_str.replace("Third"," ")
+    clean_str = clean_str.replace("Fourth"," ")
+    clean_str = clean_str.replace("Fifth"," ")
+    clean_str = clean_str.replace("Sixth"," ")
+    clean_str = clean_str.replace("Seventh"," ")
+    clean_str = clean_str.replace("Eighth"," ")
+    clean_str = clean_str.replace("Ninth"," ")
+    clean_str = clean_str.replace("Tenth"," ")
+    clean_str = clean_str.replace("Eleventh"," ")
+    clean_str = clean_str.replace("Twelfth"," ")
+    clean_str = clean_str.replace("Maryland"," ")
+    
+    # Remove common words.
+    clean_str = clean_str.replace(" for "," ")
+    clean_str = clean_str.replace(" of "," ")
+    clean_str = clean_str.replace(" the "," ")
+    
+    
+    # Remove line endings and special characters.
+    clean_str = clean_str.replace("\n"," ").replace("."," ")
+    clean_str = clean_str.replace("*"," ")
+    
+    # Remove punctuation marks and bounds. 
+    clean_str = clean_str.replace(","," ")
+    clean_str = clean_str.replace(";"," ")
+    clean_str = clean_str.replace(" and ","").strip()
+    
+    
+    return(clean_str)
+    
+
+def find_next_bound(next_comma, next_semicolon, next_and):
+    
+    # Find the index of the next bound between strings. 
+    # Index skips over the boundary, 
+    # which matters if it is more than a punctuation mark.
+    # 
+    # Examples:
+    # find_next_bound(next_comma = -1, next_semicolon = 3, next_and = 5)
+    # 4
+    # find_next_bound(next_comma = -1, next_semicolon = -1, next_and = -1)
+    # -1
+    # find_next_bound(next_comma = -1, next_semicolon = 5, next_and = 2)
+    # 6
+    # find_next_bound(next_comma = -1, next_semicolon = 7, next_and = 2)
+    # 7
+    
+    # If none of the strings are found, return -1.
+    if max(next_comma, next_semicolon, next_and) == -1:
+        next_bound = -1
+    else:
+        # Find the smallest index among all that are not -1.
+        if next_comma == -1:
+            next_comma_bound = 999
+        else:
+            next_comma_bound = next_comma + 1
+    
+        if next_semicolon == -1:
+            next_semicolon_bound = 999
+        else:
+            next_semicolon_bound = next_semicolon + 1
+    
+        if next_and == -1:
+            next_and_bound = 999
+        else:
+            next_and_bound = next_and + 5
+        
+        next_bound = min(next_comma_bound, next_semicolon_bound, next_and_bound)
+    
+    
+    return(next_bound)
 
 # # Returns a list of judges' names. 
 # def get_judge_names(panel_list):

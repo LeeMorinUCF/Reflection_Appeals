@@ -488,16 +488,27 @@ appeals['num_judges'].value_counts()
 
 appeals['judicial_panel'][appeals['num_judges'] == 0]
 appeals['judicial_panel'][appeals['num_judges'] == 1]
+appeals['judicial_panel'][appeals['num_judges'] == 2]
 # Some names are separated by semicolons.
+appeals['judicial_panel'][appeals['num_judges'] == 3]
 appeals['judicial_panel'][appeals['num_judges'] == 4]
 # Some judges have Jr. suffix. 
 appeals['judicial_panel'][appeals['num_judges'] == 5]
-# Some sentances happen to start with the word "Before".
+# Some sentences happen to start with the word "Before".
 appeals['judicial_panel'][appeals['num_judges'] == 6]
 appeals['judicial_panel'][appeals['num_judges'] == 7]
+appeals['judicial_panel'][appeals['num_judges'] == 8]
 appeals['judicial_panel'][appeals['num_judges'] == 11]
-appeals['judicial_panel'][appeals['num_judges'] == 14]
+appeals['judicial_panel'][appeals['num_judges'] == 15]
 
+txt_file_num = 27 # Wordy titles.
+# txt_file_num = 220 # Legit 7 judges.
+txt_file_num = 139
+txt_file = txt_file_list[txt_file_num]
+case_info = caser.get_case_info(txt_file)
+# caser.print_case_info(case_info)
+case_info['judicial_panel']
+case_info['judge_names']
 
 
 appeals['judge_1'].describe()
@@ -521,6 +532,8 @@ txt_file_num = 7 # In 2017
 txt_file_num = 0 # In 2019
 txt_file_num = 114 # 32 # 22 # In 2002
 txt_file_num = 0 # In 2003
+
+txt_file_num = 109
 
 # Read the information from this case.
 txt_file = txt_file_list[txt_file_num]
