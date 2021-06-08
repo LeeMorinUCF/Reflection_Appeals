@@ -81,6 +81,7 @@ def is_case_code_vec(df_col):
                            index = range(len(df_col)))
     for row in range(len(df_col)):
         test_row = is_case_code(df_col[row])
+        # test_row = is_case_code(df_col.loc[:, row])
         test_vec['is_valid'][row] = test_row
         
     return(test_vec)
@@ -1402,6 +1403,7 @@ def count_valid_obsns(appeals):
     
     valid_counts['file_name'] = appeals['file_name']
     valid_counts['case_code'] = is_case_code_vec(appeals['case_code'])
+    # valid_counts['case_code'] = is_case_code_vec(appeals.ix[:, 'case_code'])
     valid_counts['circ_num'] = is_circ_num_vec(appeals['circ_num'])
     valid_counts['case_num'] = is_case_num_vec(appeals['case_num'])
     valid_counts['background'] = is_background_vec(appeals['background'])

@@ -54,6 +54,8 @@
 # TODO: Create function that parses case numbers
 #   to get list of numbers of case numbers related to each case. 
 #   Return a list of case numbers. 
+# 
+# This version reads all years of data in one sample. 
 #
 ##################################################
 """
@@ -63,8 +65,6 @@
 # Import Modules.
 ##################################################
 
-# from caser import * # To read cases.
-import caser # To read cases.
 
 import os # To set working directory
 
@@ -96,6 +96,10 @@ os.chdir(drive_path + git_path + 'prelim_reads')
 # Check that the change was successful.
 os.getcwd()
 
+# from caser import * # To read cases.
+import caser # To read cases.
+
+
 
 # Note:
 # To change names of files.
@@ -109,7 +113,7 @@ os.getcwd()
 # Translate a year of doc files to txt
 ##################################################
 
-data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_' 
+data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\SH_Sample' 
 
 # # Set path for files in a single year.
 # case_year = 2015
@@ -141,181 +145,79 @@ data_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_'
 
 
 # Loop over files across several years.
+# Append data from each year.
+appeals = pd.DataFrame(columns = ['file_name', 'case_code', 'circ_num', 
+                                      'pla_appnt_1', 'pla_appnt_2', 'pla_appnt_3', 
+                                      'def_appee_1', 'def_appee_2', 'def_appee_3', 'def_appee_4',
+                                      'case_num', 'case_num_list', 'num_case_nums', 
+                                      'case_num_1', 'case_num_2', 'case_num_3',
+                                      'case_date_1', 'case_date_2', 'case_date_3', 'case_date_4', 
+                                      'background', 
+                                      'holdings_hdr', 'outcome', 'posture', 
+                                      'judicial_panel', 'judge_names', 'num_judges', 
+                                      'judge_1', 'judge_2', 'judge_3', 'judge_4'])
 
-# for case_year in range(2000, 2009):
-#     print("Translating files for cases in year " + str(case_year))
+for case_year in range(2000, 2019):
+    print("Translating files for cases in year " + str(case_year))
 
-#     # Set the directory with data files.
-#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011\\'
-#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
-#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
-#     # doc_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
-#     doc_folder = data_folder + str(case_year) + '\\'
-#     doc_path = drive_path + doc_folder
+    # Set the directory with data files.
+    # doc_folder = data_folder + "\\Court_Docs_SH_LE_" + str(case_year) + '\\'
+    # doc_path = drive_path + doc_folder
+    
+    # Set the directory with txt files after translation.
+    txt_folder = data_folder + "\\Court_Docs_SH_LE_" + str(case_year) + '\\'
+    txt_path = drive_path + txt_folder
     
     
-#     # Set the directory with txt files after translation.
-#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Sample_Sex_Har_2011_txt\\'
-#     # Place them in the same folder.
-#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2011\\'
-#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2012\\'
-#     # txt_folder = 'Research\\Appeals_Reflection\\Westlaw_Data\\Court_Docs_SH_LE_2013\\'
-#     txt_folder = data_folder + str(case_year) + '\\'
-#     txt_path = drive_path + txt_folder
+    ##################################################
+    # Translate this doc File to txt
+    ##################################################
+    
+    # Translate them all at once.
+    # It takes a few seconds each. 
+    
+    # # Initialize object for Word application
+    # app = win32com.client.Dispatch('Word.Application')
+    # app.Visible = True
+    
+    # # Translate all files in a folder.
+    # caser.doc2txt_dir(app, doc_path, txt_path)
     
     
     
+    # Get list of all files in a given directory sorted by name
+    txt_file_list = sorted( filter( os.path.isfile,
+                            glob.glob(txt_path + '*' + ".txt") ) )
+    
+    num_files = len(txt_file_list)
+    txt_file_num_list = range(num_files)
     
     
-#     ##################################################
-#     # Translate this doc File to txt
-#     ##################################################
+    # Generate dataset from cases for each year.
+    # fields = 'all'
+    num_fields = 12
+    print_msg = True
+    appeals_sub = caser.get_case_df(txt_file_list, num_fields, print_msg)
     
-#     # Translate them all at once.
-#     # It takes a few seconds each. 
     
-#     # Initialize object for Word application
-#     app = win32com.client.Dispatch('Word.Application')
-#     app.Visible = True
+    # Append into the full dataset. 
+    appeals = appeals.append(appeals_sub)
     
-#     # Translate all files in a folder.
-#     caser.doc2txt_dir(app, doc_path, txt_path)
-
-
-
-##################################################
-# Translate an Individual doc File to txt
-##################################################
-
-
-# Assume all files are translated to txt. 
-# Later version will translate directly from 
-# original doc file. 
-
-# # Translate a single file.
-
-# case_num = '01'
-# party_1 = 'Helm'
-# party_2 = 'Kansas'
-
-# case_file_tag = case_num + " - " + party_1 + " v " + party_2
-# doc_file = doc_path + case_file_tag + ".doc"
-# txt_file = txt_path + case_file_tag + ".txt"
-
-
-# # Initialize object for Word application
-# app = win32com.client.Dispatch('Word.Application')
-# app.Visible = True
-
-
-# doc2txt_file(app, doc_file, txt_file)
-
-
-
-##################################################
-# Read through text files and parse data
-##################################################
-
-# Set path for files in a single year.
-# case_year = 2000
-# case_year = 2001
-# case_year = 2002
-# case_year = 2003 # Background not labeled. 
-# case_year = 2004
-# case_year = 2005
-# case_year = 2006
-# case_year = 2007
-# case_year = 2008
-# case_year = 2009
-# case_year = 2010
-# case_year = 2011
-# case_year = 2012
-# case_year = 2013
-# case_year = 2014
-# case_year = 2015
-# case_year = 2016
-# case_year = 2017
-# case_year = 2018
-case_year = 2019
-
-txt_folder = data_folder + str(case_year) + '\\'
-txt_path = drive_path + txt_folder
-
-
-
-# Get list of all files in a given directory sorted by name
-txt_file_list = sorted( filter( os.path.isfile,
-                        glob.glob(txt_path + '*' + ".txt") ) )
-
-num_files = len(txt_file_list)
-txt_file_num_list = range(num_files)
-
-# Exclude some files that are problematic. 
-txt_file_num_excl = []
-
-# First 20 (now fixed):
-# txt_file_num_excl = [12, 15, 17]
-# txt_file_num_excl = [12, 15]
-# From rest of 2011:
-# txt_file_num_excl = [52, 116]
-# From 2012:
-# txt_file_num_excl = [10, 23, 104, 150, 152, 170]
-# From 2013:
-# txt_file_num_excl = [26, 46, 50, 64, 82, 84, 89, 106, 
-#                       121, 122, 123, 124, 
-#                       132]
-# From 2014:
-# txt_file_num_excl = [5, 17, 34, 62, 65, 82, 86, 93, 96, 98, 106, 113, 123, 137]
-# From 2015:
-# txt_file_num_excl = [15, 21, 55, 57, 71, 75, 86, 94, 109]
-# From 2016:
-# txt_file_num_excl = [34, 
-#                      36, 37, 55, 61, 62, 67, 68, 69, 82, 
-#                       90, 91, 94, 97, 102, 103, 104, 
-#                       109, 111, 115, 116]
-# From 2017:
-# txt_file_num_excl = [7, 15, 16, 23, 29, 45, 58, 61, 63, 65, 74, 
-#                       87, 89, 95, 103, 105, 
-#                       118, 119, 120, 121, 125, 126, 129, 130, 131, 
-#                       134, 135, 136, 147, 151]
-# From 2018:
-# txt_file_num_excl = [19, 25, 35, 39, 48, 51, 53, 59, 62, 63, 65, 70, 
-#                       78, 82, 83, 89, 91, 99, 102, 108, 109, 114, 116]
-# From 2019:
-# txt_file_num_excl = [0, 30, 37, 39, 40, 59, 66, 76, 78, 81, 
-#                       90, 91, 92, 94, 100, 106, 108, 109, 122, 128]
-
-# Fix the anomalies and add them back. 
-
-
-# Calculate sub list after exclusions.
-# txt_file_num_list = list(range(num_files))
-# txt_file_num_list = [num for num in txt_file_num_list if num not in txt_file_num_excl]
-
-# Select subset to skip problematic files. 
-txt_file_list_sel = []
-for txt_file_num in txt_file_num_list:
     
-    if txt_file_num not in txt_file_num_excl:
-        
-        txt_file_list_sel.append(txt_file_list[txt_file_num])
+    
+    # End data collection.
 
 
-# Get data frame of case info from list of case files. 
-# fields = ['file_name', 'case_code', 'circ_num', 
-#           'pla_appnt', 
-#           'def_appee',
-#           'case_num', 
-#           'case_date', 
-#           'background', 
-#           'holdings_hdr', 'outcome', 'posture', 'judicial_panel']
+type(appeals)
+appeals.describe()
 
-import caser
+# Note that index is inherited from sub-data frames:
+# Index restarts at zero each year and multiple rows have same index.
+# Result is a serias on each call of an "element".
+appeals.index
 
-# fields = 'all'
-num_fields = 12
-print_msg = True
-appeals = caser.get_case_df(txt_file_list_sel, num_fields, print_msg)
+# Fix this by replacing with a clean index. 
+appeals.index = range(appeals.shape[0])
 
 
 
