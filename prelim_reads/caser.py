@@ -154,6 +154,11 @@ def get_circ_num(file):
     # The present line should be the circuit number.
     # circ_num = line.split()[0]
     circ_num = line.replace("\n","")
+    # Remove common strings to streamline circuit numbers.
+    circ_num = circ_num.replace("United States Court of Appeals","")
+    circ_num = circ_num.replace(".","")
+    circ_num = circ_num.replace(",","")
+    circ_num = circ_num.strip()
     
     return(circ_num)
 
@@ -879,6 +884,8 @@ def clean_judge_name(judge_str):
     clean_str = clean_str.replace("Associate"," ")
     clean_str = clean_str.replace("Senior"," ")
     clean_str = clean_str.replace("Supreme"," ")
+    clean_str = clean_str.replace("Hon"," ")
+    clean_str = clean_str.replace("Honorable"," ")
     clean_str = clean_str.replace("Retired"," ")
     clean_str = clean_str.replace("(Ret.)"," ")
     clean_str = clean_str.replace("En banc"," ")
@@ -939,6 +946,10 @@ def clean_judge_name(judge_str):
     
     # Strip the spaces produced by all of the above exclusions.
     clean_str = clean_str.strip()
+    
+    # Finally, return name in upper case to avoid unnecessary duplicates.
+    clean_str = clean_str.upper()
+    
     return(clean_str)
     
 

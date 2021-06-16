@@ -213,11 +213,14 @@ appeals.describe()
 
 # Note that index is inherited from sub-data frames:
 # Index restarts at zero each year and multiple rows have same index.
-# Result is a serias on each call of an "element".
+# Result is a series on each call of an "element".
 appeals.index
 
 # Fix this by replacing with a clean index. 
 appeals.index = range(appeals.shape[0])
+
+# Much better.
+appeals.index
 
 
 
@@ -242,7 +245,7 @@ valid_counts[['background', 'holdings_hdr', 'outcome',
 # Inspect the fields individually.
 ##################################################
 
-print(num_files - len(txt_file_num_excl))
+# print(num_files - len(txt_file_num_excl))
 
 
 # Print selected fields to screen. 
@@ -378,6 +381,8 @@ appeals['judicial_panel'][is_valid == False].unique()
 
 appeals[['file_name', 'judicial_panel']][is_valid == False]
 
+appeals['file_name'][is_valid == False]
+
 
 
 appeals['judge_1']
@@ -409,6 +414,77 @@ appeals['judicial_panel'][appeals['num_judges'] == 14]
 appeals['judicial_panel'][appeals['num_judges'] == 15]
 appeals['judicial_panel'][appeals['num_judges'] == 16]
 appeals['judicial_panel'][appeals['num_judges'] == 18]
+
+appeals['judicial_panel'][appeals['num_judges'] > 3]
+
+
+appeals[['file_name', 'judicial_panel']][appeals['num_judges'] == 11]
+
+# The panels with > 3 judges are "en banc" hearings, 
+# after a reguler three-judge panel "makes a goofy decision". 
+appeals[['circ_num', 'num_judges']][appeals['num_judges'] > 3].sort_values(by = 'circ_num')
+
+appeals[['circ_num', 'num_judges']][appeals['num_judges'] == 2].sort_values(by = 'circ_num')
+
+
+
+
+
+# Check list of circuit numbers.
+appeals['circ_num'].unique()
+
+appeals['circ_num'].value_counts()
+circ_num_list = appeals['circ_num'].unique()
+# These are consistent enough to use as a reliable group by variable. 
+
+
+# Create a master table of judges. 
+judge_list_cols = ['circ_num', 'judge_name']
+judge_list = pd.DataFrame(columns = judge_list_cols)
+
+# Stack all of the first three judges names and remove duplicates. 
+
+is_valid = caser.is_panel_vec(appeals['judicial_panel'])['is_valid']
+judge_list_sub = appeals[['circ_num', 'judge_1']][is_valid == True]
+judge_list_sub.columns = judge_list_cols
+judge_list = judge_list.append(judge_list_sub)
+
+judge_list_sub = appeals[['circ_num', 'judge_2']][is_valid == True]
+judge_list_sub.columns = judge_list_cols
+judge_list = judge_list.append(judge_list_sub)
+
+judge_list_sub = appeals[['circ_num', 'judge_3']][is_valid == True]
+judge_list_sub.columns = judge_list_cols
+judge_list = judge_list.append(judge_list_sub)
+
+
+
+judge_list.index = range(judge_list.shape[0])
+
+
+# Select unique judge names. 
+# judge_list = judge_list.drop_duplicates()
+# judge_list.index
+# Now only 1863 judges total (includes position number, in error). 
+# Now only 1154 judges total. 
+# Down to 1010 after rmoving invalids and converting to upper case. 
+
+# Instead, preserve number of appearances with a group_by.
+judge_list['num'] = 1
+judge_list = judge_list.groupby(['circ_num','judge_name'], as_index = False).sum()
+
+judge_list.index
+judge_list.columns
+
+
+# Print out judge list by circuit number.
+circ_num_sel = 'First Circuit'
+judge_list[['circ_num','judge_name']][judge_list['circ_num'] == circ_num_sel].value_counts()
+
+
+judge_list.sort_values(by=['circ_num','judge_name'], inplace = True)
+
+judge_list.to_csv('judge_list.csv')
 
 # # In 2000:
 # txt_file_num = 224 # Legit 10 judges.
