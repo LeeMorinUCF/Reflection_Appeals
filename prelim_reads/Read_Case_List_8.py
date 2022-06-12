@@ -321,18 +321,86 @@ appeals['num_case_nums'].describe()
 appeals['num_case_nums'].value_counts()
 
 
-appeals['case_num'][appeals['num_case_nums'] == 0]
-appeals['case_num'][appeals['num_case_nums'] == 4]
-appeals['case_num'][appeals['num_case_nums'] == 3]
+
+
+
+
+
+# Investigate the cases with multiple case numbers.
 appeals['case_num'][appeals['num_case_nums'] == 2]
-# Some cases have suffixes (L) or (XAP)
+appeals['case_num'][appeals['num_case_nums'] == 3]
+appeals['case_num'][appeals['num_case_nums'] == 4]
+appeals['case_num'][appeals['num_case_nums'] == 5]
+appeals['case_num'][appeals['num_case_nums'] == 6]
+appeals['case_num'][appeals['num_case_nums'] == 7]
+
+
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 7]
+print(appeals['case_num'][appeals['num_case_nums'] == 7])
+appeals.loc[1891,'case_num']
+# Legit 7 case numbers. 
+
+
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 6]
+print(appeals['case_num'][appeals['num_case_nums'] == 6])
+appeals.loc[1191,'case_num']
+# Legit 6 case numbers. 
+
+
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 5]
+print(appeals['case_num'][appeals['num_case_nums'] == 5])
+sel_index = appeals['case_num'][appeals['num_case_nums'] == 5].index
+for i in range(len(sel_index)):
+    print(appeals.loc[sel_index[i],'case_num'])
+# All legit 5 case numbers. 
+
+
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 4]
+print(appeals['case_num'][appeals['num_case_nums'] == 4])
+sel_index = appeals['case_num'][appeals['num_case_nums'] == 4].index
+for i in range(len(sel_index)):
+    print(appeals.loc[sel_index[i],'case_num'])
+# All legit 4 case numbers. 
+
+
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 3]
+print(appeals['case_num'][appeals['num_case_nums'] == 3])
+sel_index = appeals['case_num'][appeals['num_case_nums'] == 3].index
+for i in range(len(sel_index)):
+    print(appeals.loc[sel_index[i],'case_num'])
+# All legit 3 case numbers. 
+
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 2]
+print(appeals['case_num'][appeals['num_case_nums'] == 2])
+sel_index = appeals['case_num'][appeals['num_case_nums'] == 2].index
+for i in range(len(sel_index)):
+    print(appeals.loc[sel_index[i],'case_num'])
+# All legit 2 case numbers. 
+
+
+
+
+# Investigate the cases with missing case numbers.
+appeals['case_num'][appeals['num_case_nums'] == 0]
+appeals[['file_name', 'case_num']][appeals['num_case_nums'] == 0]
+# Many seem valid but incorrectly identified. 
+# Some cases have suffixes (L) or (XAP) or -cv
 # Some cases have trailing 3, 4, or 5 digits.
+
+
+
+
 
 appeals['case_num_1'].describe()
 appeals['case_num_2'].describe()
 appeals['case_num_3'].describe()
 
 # Save file of case numbers. 
+
+
+
+
+
 
 
 

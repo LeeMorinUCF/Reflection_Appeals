@@ -1,1011 +1,1011 @@
 ,circ_num,judge_name,num
-0,District of Columbia Circuit,BROWN,11
-1,District of Columbia Circuit,EDWARDS,13
-2,District of Columbia Circuit,GARLAND,15
-3,District of Columbia Circuit,GINSBURG,14
-4,District of Columbia Circuit,GRIFFITH,7
-5,District of Columbia Circuit,HENDERSON,15
-6,District of Columbia Circuit,KAREN LECRAFT HENDERSON,1
-7,District of Columbia Circuit,KAVANAUGH,4
-8,District of Columbia Circuit,MILLETT,1
-9,District of Columbia Circuit,PILLARD,1
-10,District of Columbia Circuit,RANDOLPH,10
-11,District of Columbia Circuit,ROBERTS,2
-12,District of Columbia Circuit,ROGERS,13
-13,District of Columbia Circuit,SENTELLE,10
-14,District of Columbia Circuit,SILBERMAN,5
-15,District of Columbia Circuit,SRINIVASAN,3
-16,District of Columbia Circuit,TATEL,11
-17,District of Columbia Circuit,WILKINS,1
-18,District of Columbia Circuit,WILLIAMS,10
-19,Eighth Circuit,ARNOLD,14
-20,Eighth Circuit,BARNES,2
-21,Eighth Circuit,BATTEY,3
-22,Eighth Circuit,BEAM,48
-23,Eighth Circuit,BENTON,40
-24,Eighth Circuit,BOGUE,6
-25,Eighth Circuit,BOWMAN,46
-26,Eighth Circuit,BRIGHT,11
-27,Eighth Circuit,BYE,54
-28,Eighth Circuit,CARMAN,3
-29,Eighth Circuit,COLLOTON,41
-30,Eighth Circuit,DAVIS,1
-31,Eighth Circuit,DORR,1
-32,Eighth Circuit,ERICKSEN,2
-33,Eighth Circuit,ERICKSON,2
-34,Eighth Circuit,FAGG,12
-35,Eighth Circuit,FLOYD R  GIBSON,1
-36,Eighth Circuit,GERRARD,1
-37,Eighth Circuit,GOLDBERG,3
-38,Eighth Circuit,GRASZ,2
-39,Eighth Circuit,GRITZNER,2
-40,Eighth Circuit,GRUENDER,36
-41,Eighth Circuit,HAMILTON,2
-42,Eighth Circuit,HANSEN,41
-43,Eighth Circuit,HEANEY,22
-44,Eighth Circuit,JARVEY,1
-45,Eighth Circuit,JOHN R  GIBSON,17
-46,Eighth Circuit,JONES,1
-47,Eighth Circuit,KAYS,1
-48,Eighth Circuit,KELLY,6
-49,Eighth Circuit,KYLE,1
-50,Eighth Circuit,LAY,12
-51,Eighth Circuit,LOKEN,68
-52,Eighth Circuit,MAGILL,3
-53,Eighth Circuit,MAGNUSON,4
-54,Eighth Circuit,MCMILLIAN,33
-55,Eighth Circuit,MELLOY,61
-56,Eighth Circuit,MILLS,1
-57,Eighth Circuit,MOODY,4
-58,Eighth Circuit,MORRIS SHEPPARD ARNOLD,26
-59,Eighth Circuit,MURPHY,56
-60,Eighth Circuit,NANGLE,1
-61,Eighth Circuit,PANNER,1
-62,Eighth Circuit,PERRY,1
-63,Eighth Circuit,PRATT,1
-64,Eighth Circuit,RICHARD S  ARNOLD,25
-65,Eighth Circuit,RILEY,55
-66,Eighth Circuit,ROSS,3
-67,Eighth Circuit,SHEPHERD,37
-68,Eighth Circuit,SMITH,48
-69,Eighth Circuit,STRAND,1
-70,Eighth Circuit,STRAS,1
-71,Eighth Circuit,STROM,1
-72,Eighth Circuit,TASHIMA,3
-73,Eighth Circuit,TUNHEIM,2
-74,Eighth Circuit,VIETOR,1
-75,Eighth Circuit,WEBB,1
-76,Eighth Circuit,WOLLMAN,57
-77,Eleventh Circuit,ALAIMO,1
-78,Eleventh Circuit,ALARCON,1
-79,Eleventh Circuit,ALARCÓN,2
-80,Eleventh Circuit,ALBRITTON,2
-81,Eleventh Circuit,ALTONAGA,1
-82,Eleventh Circuit,ANDERSON,65
-83,Eleventh Circuit,BARBOUR,1
-84,Eleventh Circuit,BARKETT,40
-85,Eleventh Circuit,BARZILAY,1
-86,Eleventh Circuit,BERMAN,1
-87,Eleventh Circuit,BIRCH,32
-88,Eleventh Circuit,BLACK,44
-89,Eleventh Circuit,BOWEN,1
-90,Eleventh Circuit,BRANCH,2
-91,Eleventh Circuit,BRIGHT,2
-92,Eleventh Circuit,CARNES,57
-93,Eleventh Circuit,CLEVENGER,1
-94,Eleventh Circuit,COOGLER,1
-95,Eleventh Circuit,CORRIGAN,1
-96,Eleventh Circuit,COWEN,1
-97,Eleventh Circuit,COX,18
-98,Eleventh Circuit,CUDAHY,2
-99,Eleventh Circuit,DUBINA,34
-100,Eleventh Circuit,EBEL,1
-101,Eleventh Circuit,ED CARNES,10
-102,Eleventh Circuit,EDMONDSON,37
-103,Eleventh Circuit,EVANS,2
-104,Eleventh Circuit,FARRIS,6
-105,Eleventh Circuit,FAY,39
-106,Eleventh Circuit,FULLER,1
-107,Eleventh Circuit,GEORGE,1
-108,Eleventh Circuit,GIBSON,1
-109,Eleventh Circuit,GODBOLD,1
-110,Eleventh Circuit,GOLD,1
-111,Eleventh Circuit,GOLDBERG,2
-112,Eleventh Circuit,GRAHAM,1
-113,Eleventh Circuit,HALL,2
-114,Eleventh Circuit,HANCOCK,1
-115,Eleventh Circuit,HAND,1
-116,Eleventh Circuit,HIGGINBOTHAM,1
-117,Eleventh Circuit,HILL,6
-118,Eleventh Circuit,HODGES,2
-119,Eleventh Circuit,HUCK,1
-120,Eleventh Circuit,HULL,70
-121,Eleventh Circuit,HUNT,1
-122,Eleventh Circuit,JILL PRYOR,7
-123,Eleventh Circuit,JORDAN,36
-124,Eleventh Circuit,JULIE CARNES,11
-125,Eleventh Circuit,KLEINFELD,2
-126,Eleventh Circuit,KRAVITCH,28
-127,Eleventh Circuit,LAND,1
-128,Eleventh Circuit,LIMBAUGH,1
-129,Eleventh Circuit,MARCUS,58
-130,Eleventh Circuit,MARTIN,29
-131,Eleventh Circuit,MARTINEZ,2
-132,Eleventh Circuit,MIDDLEBROOKS,2
-133,Eleventh Circuit,MILLS,1
-134,Eleventh Circuit,MOODY,1
-135,Eleventh Circuit,MORENO,1
-136,Eleventh Circuit,MUSGRAVE,1
-137,Eleventh Circuit,NA,1
-138,Eleventh Circuit,NANGLE,2
-139,Eleventh Circuit,NEWSOM,2
-140,Eleventh Circuit,O'KELLEY,1
-141,Eleventh Circuit,O'SCANNLAIN,1
-142,Eleventh Circuit,OWENS,1
-143,Eleventh Circuit,POGUE,1
-144,Eleventh Circuit,POLLAK,2
-145,Eleventh Circuit,PROCTOR,1
-146,Eleventh Circuit,PROPST,1
-147,Eleventh Circuit,PRYOR,53
-148,Eleventh Circuit,QUIST,1
-149,Eleventh Circuit,REAVLEY,1
-150,Eleventh Circuit,RESTANI,2
-151,Eleventh Circuit,RIPPLE,2
-152,Eleventh Circuit,RODGERS,1
-153,Eleventh Circuit,RONEY,3
-154,Eleventh Circuit,ROSENBAUM,12
-155,Eleventh Circuit,ROTHSTEIN,1
-156,Eleventh Circuit,RYSKAMP,3
-157,Eleventh Circuit,SANDS,1
-158,Eleventh Circuit,SCHLESINGER,2
-159,Eleventh Circuit,SCOLA,1
-160,Eleventh Circuit,SEYMOUR,1
-161,Eleventh Circuit,SILER,2
-162,Eleventh Circuit,SMITH,1
-163,Eleventh Circuit,STROM,2
-164,Eleventh Circuit,TJOFLAT,64
-165,Eleventh Circuit,VINING,2
-166,Eleventh Circuit,VINSON,2
-167,Eleventh Circuit,WALTER,3
-168,Eleventh Circuit,WILLIAM PRYOR,12
-169,Eleventh Circuit,WILSON,70
-170,Eleventh Circuit,WOOD,4
-171,Federal Circuit,ARCHER,1
-172,Federal Circuit,BRYSON,17
-173,Federal Circuit,CHEN,1
-174,Federal Circuit,CLEVENGER,11
-175,Federal Circuit,DYK,14
-176,Federal Circuit,FRIEDMAN,2
-177,Federal Circuit,GAJARSA,15
-178,Federal Circuit,HUGHES,3
-179,Federal Circuit,LINN,6
-180,Federal Circuit,LOURIE,10
-181,Federal Circuit,MAYER,6
-182,Federal Circuit,MICHEL,4
-183,Federal Circuit,MOORE,6
-184,Federal Circuit,NEWMAN,9
-185,Federal Circuit,O'MALLEY,3
-186,Federal Circuit,PATEL,1
-187,Federal Circuit,PLAGER,4
-188,Federal Circuit,PROST,10
-189,Federal Circuit,RADER,12
-190,Federal Circuit,REYNA,2
-191,Federal Circuit,SARIS,1
-192,Federal Circuit,SCHALL,6
-193,Federal Circuit,SMITH,2
-194,Federal Circuit,TARANTO,2
-195,Federal Circuit,WALLACH,2
-196,Fifth Circuit,AND PRADO,1
-197,Fifth Circuit,BARKSDALE,56
-198,Fifth Circuit,BARZILAY,1
-199,Fifth Circuit,BENAVIDES,61
-200,Fifth Circuit,CARL E  STEWART,1
-201,Fifth Circuit,CLEMENT,61
-202,Fifth Circuit,COSTA,13
-203,Fifth Circuit,CYNTHIA HOLCOMB HALL,1
-204,Fifth Circuit,"DAVID D  DOWD, Jr.",1
-205,Fifth Circuit,DAVIS,58
-206,Fifth Circuit,DEMOSS,40
-207,Fifth Circuit,DENNIS,88
-208,Fifth Circuit,DUHE',1
-209,Fifth Circuit,DUHÉ,5
-210,Fifth Circuit,DUPLANTIER,1
-211,Fifth Circuit,EDITH BROWN CLEMENT,1
-212,Fifth Circuit,ELROD,27
-213,Fifth Circuit,EMILIO M  GARZA,18
-214,Fifth Circuit,ENGELHARDT,2
-215,Fifth Circuit,GARWOOD,14
-216,Fifth Circuit,GARZA,28
-217,Fifth Circuit,GOLDBERG,1
-218,Fifth Circuit,GRAVES,26
-219,Fifth Circuit,HALL,1
-220,Fifth Circuit,HAYNES,26
-221,Fifth Circuit,HEAD,1
-222,Fifth Circuit,HICKS,1
-223,Fifth Circuit,HIGGINBOTHAM,61
-224,Fifth Circuit,HIGGINSON,24
-225,Fifth Circuit,JOLLY,62
-226,Fifth Circuit,JONES,45
-227,Fifth Circuit,JUNELL,1
-228,Fifth Circuit,KAZEN,2
-229,Fifth Circuit,KING,84
-230,Fifth Circuit,KINKEADE,1
-231,Fifth Circuit,LINDSAY,1
-232,Fifth Circuit,LITTLE,4
-233,Fifth Circuit,LYNN,1
-234,Fifth Circuit,MARTINEZ,2
-235,Fifth Circuit,NA,3
-236,Fifth Circuit,O'CONNOR,1
-237,Fifth Circuit,OWEN,49
-238,Fifth Circuit,PARKER,18
-239,Fifth Circuit,PICKERING,6
-240,Fifth Circuit,POLITZ,7
-241,Fifth Circuit,PRADO,43
-242,Fifth Circuit,REAVLEY,38
-243,Fifth Circuit,REEVES,2
-244,Fifth Circuit,REYNALDO G  GARZA,2
-245,Fifth Circuit,SMITH,81
-246,Fifth Circuit,SOUTHWICK,40
-247,Fifth Circuit,SPARKS,1
-248,Fifth Circuit,STEWART,78
-249,Fifth Circuit,WALTER,1
-250,Fifth Circuit,WIENER,50
-251,Fifth Circuit,WILLETT,2
-252,First Circuit,B  FLETCHER,1
-253,First Circuit,BALDOCK,9
-254,First Circuit,BARRON,5
-255,First Circuit,BOUDIN,31
-256,First Circuit,BOWNES,3
-257,First Circuit,CAMPBELL,5
-258,First Circuit,CARTER,1
-259,First Circuit,CASELLAS,1
-260,First Circuit,COFFIN,9
-261,First Circuit,CYR,7
-262,First Circuit,DOMINGUEZ,1
-263,First Circuit,DYK,3
-264,First Circuit,FUSTÉ,1
-265,First Circuit,GERTNER,1
-266,First Circuit,GIBSON,1
-267,First Circuit,GORTON,2
-268,First Circuit,GREENBERG,1
-269,First Circuit,HANSEN,2
-270,First Circuit,HOWARD,44
-271,First Circuit,HUG,1
-272,First Circuit,JOHN R  GIBSON,1
-273,First Circuit,KAYATTA,10
-274,First Circuit,LEVAL,1
-275,First Circuit,LIPEZ,54
-276,First Circuit,LISI,2
-277,First Circuit,LYNCH,64
-278,First Circuit,MAGILL,1
-279,First Circuit,MCAULIFFE,1
-280,First Circuit,O'TOOLE,2
-281,First Circuit,PORFILIO,2
-282,First Circuit,RIPPLE,1
-283,First Circuit,SARIS,1
-284,First Circuit,SELYA,42
-285,First Circuit,SHADUR,1
-286,First Circuit,SILER,4
-287,First Circuit,SMITH,1
-288,First Circuit,SOUTER,4
-289,First Circuit,STAFFORD,1
-290,First Circuit,STAHL,22
-291,First Circuit,STAPLETON,1
-292,First Circuit,TASHIMA,1
-293,First Circuit,THOMPSON,13
-294,First Circuit,TORRUELLA,54
-295,First Circuit,TORUELLA,1
-296,First Circuit,WALLACE,1
-297,First Circuit,WILLIAM W  SCHWARZER,1
-298,First Circuit,WOODLOCK,1
-299,Fourth Circuit,AGEE,23
-300,Fourth Circuit,ALARCON,1
-301,Fourth Circuit,ANTHONY J  TRENGA,1
-302,Fourth Circuit,BENSON EVERETT LEGG,1
-303,Fourth Circuit,BRUCE H  HENDRICKS,1
-304,Fourth Circuit,BUTZNER,2
-305,Fourth Circuit,C  ARLEN BEAM,1
-306,Fourth Circuit,CACHERIS,1
-307,Fourth Circuit,CATHERINE C  BLAKE,1
-308,Fourth Circuit,CHASANOW,1
-309,Fourth Circuit,CHERYL ANN KRAUSE,1
-310,Fourth Circuit,COPENHAVER,2
-311,Fourth Circuit,DAMON J  KEITH,1
-312,Fourth Circuit,DAVID A  FABER,1
-313,Fourth Circuit,DAVID C  NORTON,1
-314,Fourth Circuit,DAVID R  HANSEN,1
-315,Fourth Circuit,DAVIS,10
-316,Fourth Circuit,DIANA GRIBBON MOTZ,1
-317,Fourth Circuit,DIAZ,14
-318,Fourth Circuit,DUNCAN,26
-319,Fourth Circuit,FLOYD,12
-320,Fourth Circuit,FRANK J  MAGILL,1
-321,Fourth Circuit,FRIEDMAN,1
-322,Fourth Circuit,GREGORY,32
-323,Fourth Circuit,HAMILTON,33
-324,Fourth Circuit,HARRIS,10
-325,Fourth Circuit,HENRY E  HUDSON,2
-326,Fourth Circuit,HENRY F  FLOYD,1
-327,Fourth Circuit,HILTON,1
-328,Fourth Circuit,IRENE M  KEELEY,1
-329,Fourth Circuit,JACKSON L  KISER,1
-330,Fourth Circuit,JAMES C  DEVER III,1
-331,Fourth Circuit,"JAMES H  MICHAEL, Jr.",1
-332,Fourth Circuit,JAMES P  JONES,1
-333,Fourth Circuit,"JOHN A  GIBNEY, Jr.",1
-334,Fourth Circuit,"JOSEPH F  ANDERSON, Jr.",1
-335,Fourth Circuit,JOSEPH R  GOODWIN,2
-336,Fourth Circuit,KEELEY,1
-337,Fourth Circuit,KEENAN,17
-338,Fourth Circuit,KING,66
-339,Fourth Circuit,LORETTA C  BIGGS,1
-340,Fourth Circuit,LOUISE W  FLANAGAN,1
-341,Fourth Circuit,LUTTIG,18
-342,Fourth Circuit,MAGILL,1
-343,Fourth Circuit,MARGARET B  SEYMOUR,1
-344,Fourth Circuit,MARK S  DAVIS,1
-345,Fourth Circuit,MARYANNE TRUMP BARRY,1
-346,Fourth Circuit,"MAX O  COGBURN, Jr.",1
-347,Fourth Circuit,MICHAEL,38
-348,Fourth Circuit,MOTZ,38
-349,Fourth Circuit,MURNAGHAN,6
-350,Fourth Circuit,NIEMEYER,56
-351,Fourth Circuit,PAULA XINIS,1
-352,Fourth Circuit,R  BRYAN HARWELL,1
-353,Fourth Circuit,RAYMOND A  JACKSON,2
-354,Fourth Circuit,RICHARD M  GERGEL,1
-355,Fourth Circuit,ROBERT E  PAYNE,1
-356,Fourth Circuit,"ROBERT J  CONRAD, Jr.",3
-357,Fourth Circuit,ROBERT R  BEEZER,1
-358,Fourth Circuit,SAMUEL G  WILSON,1
-359,Fourth Circuit,SEYMOUR,1
-360,Fourth Circuit,SHEDD,22
-361,Fourth Circuit,THACKER,7
-362,Fourth Circuit,THOMAS L  AMBRO,1
-363,Fourth Circuit,TRAXLER,47
-364,Fourth Circuit,WIDENER,23
-365,Fourth Circuit,WILKINS,28
-366,Fourth Circuit,WILKINSON,46
-367,Fourth Circuit,WILLIAMS,27
-368,Fourth Circuit,WYNN,10
+562,Second Circuit,""" WHICH",1
 369,Ninth Circuit,A  WALLACE TASHIMA,5
+762,Sixth Circuit,ACKERMAN,1
+938,Third Circuit,ACKERMAN,1
+763,Sixth Circuit,ADAMS,4
 370,Ninth Circuit,ADELMAN,1
-371,Ninth Circuit,ALARCON,3
+701,Seventh Circuit,ADELMAN,1
+299,Fourth Circuit,AGEE,23
+77,Eleventh Circuit,ALAIMO,1
+79,Eleventh Circuit,ALARCÓN,2
 372,Ninth Circuit,ALARCÓN,8
+885,Tenth Circuit,ALARCÓN,2
+939,Third Circuit,ALARCÓN,1
+78,Eleventh Circuit,ALARCON,1
+300,Fourth Circuit,ALARCON,1
+371,Ninth Circuit,ALARCON,3
+80,Eleventh Circuit,ALBRITTON,2
 373,Ninth Circuit,ALDISERT,3
+940,Third Circuit,ALDISERT,22
+764,Sixth Circuit,ALDRICH,5
 374,Ninth Circuit,ALEX KOZINSKI,8
 375,Ninth Circuit,ALFRED T  GOODWIN,2
+941,Third Circuit,ALITO,12
+886,Tenth Circuit,ALLEY,3
 376,Ninth Circuit,ALSUP,1
-377,Ninth Circuit,ANDREW D  HURWITZ,3
-378,Ninth Circuit,ANDREW J  KLEINFELD,2
-379,Ninth Circuit,ANTOON,1
-380,Ninth Circuit,ARCHER,1
-381,Ninth Circuit,ARNOLD,1
-382,Ninth Circuit,ARTHUR L  ALARCÓN,1
-383,Ninth Circuit,B  FLETCHER,27
-384,Ninth Circuit,"BARRINGTON D  PARKER, Jr.",1
-385,Ninth Circuit,BARRY G  SILVERMAN,2
-386,Ninth Circuit,BEA,19
-387,Ninth Circuit,BEEZER,6
-388,Ninth Circuit,BENITEZ,1
-389,Ninth Circuit,BENNETT,1
-390,Ninth Circuit,BERG,1
-391,Ninth Circuit,BERTELSMAN,2
-392,Ninth Circuit,BERZON,22
-393,Ninth Circuit,BETTY B  FLETCHER,2
-394,Ninth Circuit,BLACK,1
-395,Ninth Circuit,BLOCK,1
-396,Ninth Circuit,BOOCHEVER,2
-397,Ninth Circuit,BRIGHT,3
-398,Ninth Circuit,BROWNING,4
-399,Ninth Circuit,BRUNETTI,5
-400,Ninth Circuit,BYBEE,17
-401,Ninth Circuit,C  ROGER VINSON,1
-402,Ninth Circuit,CALLAHAN,24
-403,Ninth Circuit,CANBY,23
-404,Ninth Circuit,"CANBY, Jr.",1
-405,Ninth Circuit,CARLOS T  BEA,3
-406,Ninth Circuit,CARNEY,1
-407,Ninth Circuit,CARROLL,1
-408,Ninth Circuit,CASTEL,1
-409,Ninth Circuit,CHOY,2
-410,Ninth Circuit,CHRISTEN,2
-411,Ninth Circuit,CLIFTON,20
-412,Ninth Circuit,COLLINS,3
-413,Ninth Circuit,CONLON,1
-414,Ninth Circuit,CONSUELO M  CALLAHAN,4
-415,Ninth Circuit,COWEN,1
-416,Ninth Circuit,COX,2
-417,Ninth Circuit,CUDAHY,1
-418,Ninth Circuit,D W  NELSON,16
-419,Ninth Circuit,DANA L  CHRISTENSEN,1
-420,Ninth Circuit,DAVID C  BURY,1
-421,Ninth Circuit,DAVID R  THOMPSON,1
-422,Ninth Circuit,DIARMUID F  O'SCANNLAIN,6
-423,Ninth Circuit,DONALD E  WALTER,1
-424,Ninth Circuit,DUFFY,3
-425,Ninth Circuit,DUHÉ,1
-426,Ninth Circuit,EDMUNDS,1
-427,Ninth Circuit,FABER,1
-428,Ninth Circuit,FARRIS,8
-429,Ninth Circuit,FERGUSON,10
-430,Ninth Circuit,FERNANDEZ,17
-431,Ninth Circuit,FISHER,30
-432,Ninth Circuit,FITZGERALD,2
-433,Ninth Circuit,FOGEL,1
-434,Ninth Circuit,FRIEDLAND,3
-435,Ninth Circuit,GARBIS,1
-436,Ninth Circuit,GARY FEINERMAN,1
-437,Ninth Circuit,GEORGE,1
-438,Ninth Circuit,GIBSON,1
-439,Ninth Circuit,GOODWIN,15
-440,Ninth Circuit,GOULD,31
-441,Ninth Circuit,GRABER,32
-442,Ninth Circuit,GRAHAM,1
-443,Ninth Circuit,GREENBERG,1
-444,Ninth Circuit,GUTIERREZ,1
-445,Ninth Circuit,GWIN,3
-446,Ninth Circuit,HALL,4
-447,Ninth Circuit,HARRY PREGERSON,6
-448,Ninth Circuit,HAWKINS,27
-449,Ninth Circuit,HILL,1
-450,Ninth Circuit,HOLLAND,1
-451,Ninth Circuit,HUG,23
-452,Ninth Circuit,HURWITZ,3
-453,Ninth Circuit,IKUTA,12
-454,Ninth Circuit,J  CLIFFORD WALLACE,2
-455,Ninth Circuit,JACQUELINE H  NGUYEN,2
-456,Ninth Circuit,JAMES K  SINGLETON,1
-457,Ninth Circuit,JAMES R  BROWNING,2
-458,Ninth Circuit,JAY S  BYBEE,10
-459,Ninth Circuit,JEROME FARRIS,1
-460,Ninth Circuit,JOHN R  TUNHEIM,1
-461,Ninth Circuit,JOHN T  NOONAN,4
-462,Ninth Circuit,JOHNNIE B  RAWLINSON,1
-463,Ninth Circuit,JOSEPH F  BATAILLON,1
-464,Ninth Circuit,KIM MCLANE WARDLAW,1
-465,Ninth Circuit,KING,4
-466,Ninth Circuit,KLEINFELD,15
-467,Ninth Circuit,KORMAN,2
-468,Ninth Circuit,KOZINSKI,26
-469,Ninth Circuit,LARRY A  BURNS,1
-470,Ninth Circuit,LAY,4
-471,Ninth Circuit,LEAVY,14
-472,Ninth Circuit,LEIGHTON,1
-473,Ninth Circuit,LORENZ,1
-474,Ninth Circuit,LOUIS H  POLLAK,2
-475,Ninth Circuit,LYNN,2
-476,Ninth Circuit,M  MARGARET MCKEOWN,3
-477,Ninth Circuit,M  SMITH,8
-478,Ninth Circuit,MAGILL,3
-479,Ninth Circuit,MARK W  BENNETT,1
-480,Ninth Circuit,MARSHA S  BERZON,7
-481,Ninth Circuit,MARY H  MURGUIA,2
-482,Ninth Circuit,MARY M  SCHROEDER,4
-483,Ninth Circuit,MCKEOWN,21
-484,Ninth Circuit,MICHAEL A  PONSOR,1
-485,Ninth Circuit,MICHAEL DALY HAWKINS,3
-486,Ninth Circuit,MICHAEL W  MOSMAN,1
-487,Ninth Circuit,MICHELLE T  FRIEDLAND,2
-488,Ninth Circuit,"MILAN D  SMITH, Jr.",7
-489,Ninth Circuit,MILLER,2
-490,Ninth Circuit,MILTON I  SHADUR,1
-491,Ninth Circuit,MOLLWAY,2
-492,Ninth Circuit,MORGAN CHRISTEN,1
-493,Ninth Circuit,MORRIS S  ARNOLD,1
-494,Ninth Circuit,MURGUIA,11
-495,Ninth Circuit,N  RANDY SMITH,3
-496,Ninth Circuit,N R  SMITH,17
-497,Ninth Circuit,NGUYEN,2
-498,Ninth Circuit,NOONAN,12
-499,Ninth Circuit,O'SCANNLAIN,26
-500,Ninth Circuit,OLIVER,1
-501,Ninth Circuit,OWENS,3
-502,Ninth Circuit,PAEZ,32
-503,Ninth Circuit,PAUL J  WATFORD,1
-504,Ninth Circuit,POLITZ,3
-505,Ninth Circuit,PREGERSON,32
-506,Ninth Circuit,"PROCTER HUG, Jr.",1
-507,Ninth Circuit,QUIST,2
-508,Ninth Circuit,RAWLINSON,20
-509,Ninth Circuit,RAYMOND C  FISHER,8
-510,Ninth Circuit,REAVLEY,3
-511,Ninth Circuit,REINHARDT,29
-512,Ninth Circuit,RESTANI,3
-513,Ninth Circuit,RHOADES,1
-514,Ninth Circuit,RICHARD A  PAEZ,4
-515,Ninth Circuit,RICHARD C  TALLMAN,8
-516,Ninth Circuit,RICHARD D  CUDAHY,1
-517,Ninth Circuit,RICHARD R  CLIFTON,3
-518,Ninth Circuit,RIPPLE,2
-519,Ninth Circuit,ROBERT D  SACK,1
-520,Ninth Circuit,ROBERT H  WHALEY,1
-521,Ninth Circuit,ROBERT R  BEEZER,2
-522,Ninth Circuit,ROGER T  BENITEZ,1
-523,Ninth Circuit,RONALD M  GOULD,7
-524,Ninth Circuit,ROTH,2
-525,Ninth Circuit,RYMER,24
-526,Ninth Circuit,SANDRA DAY O'CONNOR,1
-527,Ninth Circuit,SANDRA S  IKUTA,5
-528,Ninth Circuit,SCHROEDER,27
-529,Ninth Circuit,SCHWARZER,3
-530,Ninth Circuit,SEDWICK,1
-531,Ninth Circuit,SETTLE,1
-532,Ninth Circuit,SHADUR,1
-533,Ninth Circuit,SIDNEY R  THOMAS,3
-534,Ninth Circuit,SILVERMAN,29
-535,Ninth Circuit,SKOPIL,1
-536,Ninth Circuit,SMITH,1
-537,Ninth Circuit,SNEED,5
-538,Ninth Circuit,STEPHEN REINHARDT,9
-539,Ninth Circuit,STEPHEN S  TROTT,2
-540,Ninth Circuit,SUSAN P  GRABER,4
-541,Ninth Circuit,T G  NELSON,18
-542,Ninth Circuit,TALLMAN,38
-543,Ninth Circuit,TASHIMA,31
-544,Ninth Circuit,TEILBORG,2
-545,Ninth Circuit,THOMAS,42
-546,Ninth Circuit,THOMPSON,13
-547,Ninth Circuit,TROTT,34
-548,Ninth Circuit,UNPINGCO,1
-549,Ninth Circuit,VANASKIE,1
-550,Ninth Circuit,W  FLETCHER,41
-551,Ninth Circuit,WALLACE,14
-552,Ninth Circuit,WALTER,1
-553,Ninth Circuit,WARDLAW,18
-554,Ninth Circuit,WATFORD,5
-555,Ninth Circuit,WEINER,1
-556,Ninth Circuit,WILKEN,1
-557,Ninth Circuit,WILLIAM A  FLETCHER,3
-558,Ninth Circuit,WILLIAM H  ALSUP,1
-559,Ninth Circuit,WILLIAM O  BERTELSMAN,1
-560,Ninth Circuit,"WOOD, Jr.",1
-561,Ninth Circuit,ZOUHARY,1
-562,Second Circuit,""" WHICH",1
+81,Eleventh Circuit,ALTONAGA,1
 563,Second Circuit,ALVIN K  HELLERSTEIN,1
 564,Second Circuit,AMALYA L  KEARSE,4
+942,Third Circuit,AMBRO,45
 565,Second Circuit,AMON,3
+702,Seventh Circuit,AMY J  ST  EVE,3
 566,Second Circuit,AND DRONEY,1
+196,Fifth Circuit,AND PRADO,1
+82,Eleventh Circuit,ANDERSON,65
+765,Sixth Circuit,ANDERSON,1
+887,Tenth Circuit,ANDERSON,39
+377,Ninth Circuit,ANDREW D  HURWITZ,3
+378,Ninth Circuit,ANDREW J  KLEINFELD,2
 567,Second Circuit,"ANDREW L  CARTER, Jr.",1
+703,Seventh Circuit,ANN CLAIRE WILLIAMS,8
+301,Fourth Circuit,ANTHONY J  TRENGA,1
+379,Ninth Circuit,ANTOON,1
+171,Federal Circuit,ARCHER,1
+380,Ninth Circuit,ARCHER,1
+888,Tenth Circuit,ARMIJO,2
+19,Eighth Circuit,ARNOLD,14
+381,Ninth Circuit,ARNOLD,1
+382,Ninth Circuit,ARTHUR L  ALARCÓN,1
+252,First Circuit,B  FLETCHER,1
+383,Ninth Circuit,B  FLETCHER,27
 568,Second Circuit,B  FLETCHER,1
 569,Second Circuit,B D  PARKER,24
 570,Second Circuit,"B D  PARKER, Jr.",3
-571,Second Circuit,BARRINGTON D  PARKER,6
-572,Second Circuit,BLOCK,1
-573,Second Circuit,BOLDEN,1
-574,Second Circuit,BRIAN M  COGAN,2
-575,Second Circuit,BRIEANT,1
-576,Second Circuit,CABRANES,28
-577,Second Circuit,CALABRESI,32
-578,Second Circuit,CARDAMONE,8
-579,Second Circuit,CARNEY,3
-580,Second Circuit,CAROL BAGLEY AMON,2
-581,Second Circuit,CEDARBAUM,2
-582,Second Circuit,CHATIGNY,1
-583,Second Circuit,CHESTER J  STRAUB,8
-584,Second Circuit,CHIN,12
-585,Second Circuit,CHRISTINA REISS,1
-586,Second Circuit,CHRISTOPHER F  DRONEY,15
-587,Second Circuit,COLLEEN MCMAHON,1
-588,Second Circuit,COTE,1
-589,Second Circuit,DANIELS,1
-590,Second Circuit,DAVID G  TRAGER,1
-591,Second Circuit,DEBRA A  LIVINGSTON,1
-592,Second Circuit,DEBRA ANN LIVINGSON,1
-593,Second Circuit,DEBRA ANN LIVINGSTON,26
-594,Second Circuit,DENNIS JACOBS,13
-595,Second Circuit,DENNY CHIN,17
-596,Second Circuit,DRONEY,12
-597,Second Circuit,EDWARD R  KORMAN,2
-598,Second Circuit,ELLSWORTH VAN GRAAFEILAND,1
-599,Second Circuit,F I  PARKER,9
-600,Second Circuit,FEINBERG,16
-601,Second Circuit,"FRANK P  GERACI, Jr.",1
-602,Second Circuit,GARAUFIS,1
-603,Second Circuit,GEOFFREY W  CRAWFORD,1
-604,Second Circuit,GERARD E  LYNCH,24
-605,Second Circuit,GERTNER,2
-606,Second Circuit,GIBSON,1
-607,Second Circuit,GLEESON,4
-608,Second Circuit,GOLDBERG,5
-609,Second Circuit,GUIDO CALABRESI,17
-610,Second Circuit,HALL,16
-611,Second Circuit,HURD,2
-612,Second Circuit,IF FOUND,1
-613,Second Circuit,J  CLIFFORD WALLACE,1
-614,Second Circuit,J  GARVAN MURTHA,2
-615,Second Circuit,JACOBS,29
-616,Second Circuit,JANE A  RESTANI,6
-617,Second Circuit,JED S  RAKOFF,5
-618,Second Circuit,JOHN F  KEENAN,2
-619,Second Circuit,JOHN GLEESON,1
-620,Second Circuit,"JOHN M  WALKER, Jr.",8
-621,Second Circuit,JOHN R  GIBSON,1
-622,Second Circuit,JON O  NEWMAN,7
-623,Second Circuit,JOSEPH M  MCLAUGHLIN,10
-624,Second Circuit,JOSÉ A  CABRANES,23
-625,Second Circuit,KAPLAN,3
-626,Second Circuit,KATHERINE B  FORREST,2
-627,Second Circuit,KATZMANN,30
-628,Second Circuit,KEARSE,22
-629,Second Circuit,KEITH,2
-630,Second Circuit,KOELTL,2
-631,Second Circuit,KORMAN,2
-632,Second Circuit,LARIMER,1
-633,Second Circuit,LAURA TAYLOR SWAIN,1
-634,Second Circuit,LEVAL,17
-635,Second Circuit,LEWIS A  KAPLAN,1
-636,Second Circuit,LIVINGSTON,7
-637,Second Circuit,LOHIER,7
-638,Second Circuit,LORETTA A  PRESKA,1
-639,Second Circuit,LYNCH,11
-640,Second Circuit,MARGO K  BRODIE,1
-641,Second Circuit,MARRERO,1
-642,Second Circuit,MARTIN,2
-643,Second Circuit,MATSUMOTO,1
-644,Second Circuit,MCAVOY,1
-645,Second Circuit,MCLAUGHLIN,16
-646,Second Circuit,MESKILL,6
-647,Second Circuit,MICHAEL P  SHEA,1
-648,Second Circuit,MINER,7
-649,Second Circuit,MIRIAM GOLDMAN CEDARBAUM,4
-650,Second Circuit,MURTHA,1
-651,Second Circuit,NA,4
-652,Second Circuit,NEWMAN,20
-653,Second Circuit,OAKES,12
-654,Second Circuit,ORABLE REENA RAGGI,1
-655,Second Circuit,ORABLE RICHARD J  CARDAMONE,1
-656,Second Circuit,ORABLE THOMAS J  MESKILL,1
-657,Second Circuit,PARKER,6
-658,Second Circuit,PAUL A  ENGELMAYER,1
-659,Second Circuit,PAUL G  GARDEPHE,1
-660,Second Circuit,PAULEY,1
-661,Second Circuit,PETER W  HALL,22
-662,Second Circuit,PIERRE N  LEVAL,11
-663,Second Circuit,POOLER,30
-664,Second Circuit,RAGGI,20
-665,Second Circuit,RAKOFF,3
-666,Second Circuit,RALPH K  WINTER,12
-667,Second Circuit,"RAYMOND J  LOHIER, Jr.",13
-668,Second Circuit,REENA RAGGI,31
-669,Second Circuit,REISS,1
-670,Second Circuit,RESTANI,1
-671,Second Circuit,RICHARD C  WESLEY,21
-672,Second Circuit,RICHARD W  GOLDBERG,1
-673,Second Circuit,ROBERT A  KATZMANN,17
-674,Second Circuit,ROBERT D  SACK,18
-675,Second Circuit,ROBERT W  SWEET,1
-676,Second Circuit,ROGER J  MINER,5
-677,Second Circuit,ROSEMARY S  POOLER,22
-678,Second Circuit,ROSLYNN R  MAUSKOPF,1
-679,Second Circuit,SACK,35
-680,Second Circuit,SAND,1
-681,Second Circuit,SCHEINDLIN,1
-682,Second Circuit,SCULLIN,1
-683,Second Circuit,SIDNEY H  STEIN,1
-684,Second Circuit,SONIA SOTOMAYOR,8
-685,Second Circuit,SOTOMAYOR,18
-686,Second Circuit,STANCEU,1
-687,Second Circuit,STEIN,1
-688,Second Circuit,STRAUB,16
-689,Second Circuit,SUSAN L  CARNEY,11
-690,Second Circuit,THOMAS J  MESKILL,3
-691,Second Circuit,TRAGER,1
-692,Second Circuit,TRIAL,1
-693,Second Circuit,UNDERHILL,2
-694,Second Circuit,VAN GRAAFEILAND,8
-695,Second Circuit,VICTOR MARRERO,1
-696,Second Circuit,VILARDO,1
-697,Second Circuit,WALKER,28
-698,Second Circuit,WESLEY,10
-699,Second Circuit,WILFRED FEINBERG,1
-700,Second Circuit,WINTER,17
-701,Seventh Circuit,ADELMAN,1
-702,Seventh Circuit,AMY J  ST  EVE,3
-703,Seventh Circuit,ANN CLAIRE WILLIAMS,8
-704,Seventh Circuit,BARRETT,3
-705,Seventh Circuit,BAUER,75
-706,Seventh Circuit,C A,1
-707,Seventh Circuit,CHANG,1
-708,Seventh Circuit,COFFEY,32
-709,Seventh Circuit,COLEMAN,1
-710,Seventh Circuit,CONLEY,1
-711,Seventh Circuit,CUDAHY,27
-712,Seventh Circuit,DANIEL A  MANION,14
-713,Seventh Circuit,DAVID F  HAMILTON,11
-714,Seventh Circuit,DEGUILIO,1
-715,Seventh Circuit,DIANE P  WOOD,52
-716,Seventh Circuit,DIANE S  SYKES,19
-717,Seventh Circuit,DURKIN,1
-718,Seventh Circuit,EASTERBROOK,84
-719,Seventh Circuit,EVANS,64
-720,Seventh Circuit,FAIRCHILD,2
-721,Seventh Circuit,FEINERMAN,1
-722,Seventh Circuit,FLAUM,76
-723,Seventh Circuit,FRANK H  EASTERBROOK,20
-724,Seventh Circuit,GRIESBACH,2
-725,Seventh Circuit,HAMILTON,31
-726,Seventh Circuit,"HARLINGTON WOOD, Jr.",1
-727,Seventh Circuit,ILANA DIAMOND ROVNER,20
-728,Seventh Circuit,INDEED,1
-729,Seventh Circuit,JOEL M  FLAUM,13
-730,Seventh Circuit,JOHN D  TINDER,1
-731,Seventh Circuit,JOHN DANIEL TINDER,7
-732,Seventh Circuit,JOHN L  COFFEY,7
-733,Seventh Circuit,KANNE,64
-734,Seventh Circuit,KAPALA,2
-735,Seventh Circuit,KENDALL,1
-736,Seventh Circuit,KENNETH F  RIPPLE,10
-737,Seventh Circuit,LAWRENCE,1
-738,Seventh Circuit,LEE,1
-739,Seventh Circuit,MAGNUS-STINSON,1
-740,Seventh Circuit,MANION,63
-741,Seventh Circuit,MICHAEL S  KANNE,17
-742,Seventh Circuit,MICHAEL Y  SCUDDER,1
-743,Seventh Circuit,MILLER,1
-744,Seventh Circuit,NA,3
-745,Seventh Circuit,POSNER,92
-746,Seventh Circuit,RICHARD A  POSNER,15
-747,Seventh Circuit,RICHARD D  CUDAHY,5
-748,Seventh Circuit,RIPPLE,67
-749,Seventh Circuit,ROVNER,89
-750,Seventh Circuit,SCUDDER,2
-751,Seventh Circuit,SHADID,1
-752,Seventh Circuit,SHAH,1
-753,Seventh Circuit,ST  EVE,4
-754,Seventh Circuit,SYKES,44
-755,Seventh Circuit,TERENCE T  EVANS,14
-756,Seventh Circuit,TINDER,19
-757,Seventh Circuit,WILLIAM J  BAUER,13
-758,Seventh Circuit,WILLIAMS,72
-759,Seventh Circuit,WOOD,55
-760,Seventh Circuit,"WOOD, Jr.",4
-761,Seventh Circuit,YOUNG,2
-762,Sixth Circuit,ACKERMAN,1
-763,Sixth Circuit,ADAMS,4
-764,Sixth Circuit,ALDRICH,5
-765,Sixth Circuit,ANDERSON,1
+889,Tenth Circuit,BACHARACH,13
+253,First Circuit,BALDOCK,9
 766,Sixth Circuit,BALDOCK,3
+890,Tenth Circuit,BALDOCK,46
+83,Eleventh Circuit,BARBOUR,1
+84,Eleventh Circuit,BARKETT,40
+197,Fifth Circuit,BARKSDALE,56
+20,Eighth Circuit,BARNES,2
+704,Seventh Circuit,BARRETT,3
+891,Tenth Circuit,BARRETT,1
+571,Second Circuit,BARRINGTON D  PARKER,6
+384,Ninth Circuit,"BARRINGTON D  PARKER, Jr.",1
+254,First Circuit,BARRON,5
+943,Third Circuit,BARRY,49
+385,Ninth Circuit,BARRY G  SILVERMAN,2
+85,Eleventh Circuit,BARZILAY,1
+198,Fifth Circuit,BARZILAY,1
 767,Sixth Circuit,BARZILAY,1
 768,Sixth Circuit,BATCHELDER,45
+21,Eighth Circuit,BATTEY,3
+705,Seventh Circuit,BAUER,75
+386,Ninth Circuit,BEA,19
+22,Eighth Circuit,BEAM,48
+944,Third Circuit,BECKER,10
 769,Sixth Circuit,BECKWITH,4
+387,Ninth Circuit,BEEZER,6
 770,Sixth Circuit,BELL,10
+199,Fifth Circuit,BENAVIDES,61
+388,Ninth Circuit,BENITEZ,1
+389,Ninth Circuit,BENNETT,1
+302,Fourth Circuit,BENSON EVERETT LEGG,1
+23,Eighth Circuit,BENTON,40
+390,Ninth Circuit,BERG,1
+86,Eleventh Circuit,BERMAN,1
+391,Ninth Circuit,BERTELSMAN,2
 771,Sixth Circuit,BERTELSMAN,4
+392,Ninth Circuit,BERZON,22
+393,Ninth Circuit,BETTY B  FLETCHER,2
+945,Third Circuit,BIBAS,2
+87,Eleventh Circuit,BIRCH,32
+88,Eleventh Circuit,BLACK,44
+394,Ninth Circuit,BLACK,1
 772,Sixth Circuit,BLACK,1
+395,Ninth Circuit,BLOCK,1
+572,Second Circuit,BLOCK,1
 773,Sixth Circuit,BOGGS,64
+24,Eighth Circuit,BOGUE,6
+573,Second Circuit,BOLDEN,1
+396,Ninth Circuit,BOOCHEVER,2
 774,Sixth Circuit,BOOGS,1
 775,Sixth Circuit,BORMAN,2
-776,Sixth Circuit,BRIGHT,3
-777,Sixth Circuit,BUNNING,3
-778,Sixth Circuit,BUSH,2
-779,Sixth Circuit,CARR,2
-780,Sixth Circuit,CLAY,88
-781,Sixth Circuit,CLELAND,3
-782,Sixth Circuit,COFFMAN,1
-783,Sixth Circuit,COHN,9
-784,Sixth Circuit,COLE,69
-785,Sixth Circuit,COLLIER,2
-786,Sixth Circuit,CONTIE,1
-787,Sixth Circuit,COOK,38
-788,Sixth Circuit,CUDAHY,2
-789,Sixth Circuit,DAUGHTREY,56
-790,Sixth Circuit,DAVID A  NELSON,3
-791,Sixth Circuit,DONALD,17
-792,Sixth Circuit,DOWD,5
-793,Sixth Circuit,DUGGAN,2
-794,Sixth Circuit,DUPLANTIER,1
-795,Sixth Circuit,ECONOMUS,3
-796,Sixth Circuit,EDMUNDS,4
-797,Sixth Circuit,ENGEL,1
-798,Sixth Circuit,FARRIS,2
-799,Sixth Circuit,FORESTER,7
-800,Sixth Circuit,GARWOOD,1
-801,Sixth Circuit,GIBBONS,53
-802,Sixth Circuit,GIBSON,2
-803,Sixth Circuit,GILMAN,62
-804,Sixth Circuit,GRAHAM,1
-805,Sixth Circuit,GREER,2
-806,Sixth Circuit,GRIFFIN,36
-807,Sixth Circuit,GUY,32
-808,Sixth Circuit,GWIN,3
-809,Sixth Circuit,HAYNES,4
-810,Sixth Circuit,HELMICK,1
-811,Sixth Circuit,HEYBURN,1
-812,Sixth Circuit,HOOD,13
-813,Sixth Circuit,HUCK,1
-814,Sixth Circuit,HULL,1
-815,Sixth Circuit,JOHN R  GIBSON,1
-816,Sixth Circuit,JONES,11
-817,Sixth Circuit,JORDAN,3
-818,Sixth Circuit,KATZ,1
-819,Sixth Circuit,KEITH,28
-820,Sixth Circuit,KENNEDY,24
-821,Sixth Circuit,KETHLEDGE,25
-822,Sixth Circuit,KRUPANSKY,13
-823,Sixth Circuit,LAWSON,6
-824,Sixth Circuit,LAY,2
-825,Sixth Circuit,LEITMAN,1
-826,Sixth Circuit,MAGILL,3
-827,Sixth Circuit,MARBLEY,4
-828,Sixth Circuit,MARTIN,43
-829,Sixth Circuit,MATIA,1
-830,Sixth Circuit,MAYS,1
-831,Sixth Circuit,MCCALLA,3
-832,Sixth Circuit,MCKEAGUE,39
-833,Sixth Circuit,MCKINLEY,1
-834,Sixth Circuit,MERRITT,37
-835,Sixth Circuit,MILLS,8
-836,Sixth Circuit,MOORE,74
-837,Sixth Circuit,MURPHY,1
-838,Sixth Circuit,NELSON,12
-839,Sixth Circuit,NIXON,1
-840,Sixth Circuit,NORRIS,32
-841,Sixth Circuit,NUGENT,2
-842,Sixth Circuit,O'CONNOR,1
-843,Sixth Circuit,O'KELLEY,1
-844,Sixth Circuit,O'MALLEY,5
-845,Sixth Circuit,O'MEARA,4
-846,Sixth Circuit,OBERDORFER,1
-847,Sixth Circuit,OLIVER,6
-848,Sixth Circuit,PEARSON,1
-849,Sixth Circuit,PHILLIPS,1
-850,Sixth Circuit,POLSTER,5
-851,Sixth Circuit,QUIST,3
-852,Sixth Circuit,"RALPH B  GUY, Jr.",1
-853,Sixth Circuit,REEVES,3
-854,Sixth Circuit,RICE,1
-855,Sixth Circuit,RIPPLE,1
-856,Sixth Circuit,ROBERTS,1
-857,Sixth Circuit,ROGERS,56
-858,Sixth Circuit,ROSE,1
-859,Sixth Circuit,ROSEN,1
-860,Sixth Circuit,RUSSELL,4
-861,Sixth Circuit,RYAN,10
-862,Sixth Circuit,SARGUS,3
-863,Sixth Circuit,SCHWARZER,2
-864,Sixth Circuit,SHADUR,1
-865,Sixth Circuit,SHARP,1
-866,Sixth Circuit,SILER,48
-867,Sixth Circuit,SPIEGEL,1
-868,Sixth Circuit,STAFFORD,4
-869,Sixth Circuit,STAMP,2
-870,Sixth Circuit,STEEH,3
-871,Sixth Circuit,STRANCH,21
-872,Sixth Circuit,SUHRHEINRICH,38
-873,Sixth Circuit,SUTTON,55
-874,Sixth Circuit,TARNOW,9
-875,Sixth Circuit,THAPAR,6
-876,Sixth Circuit,VAN TATENHOVE,1
-877,Sixth Circuit,VINSON,1
-878,Sixth Circuit,WATSON,2
-879,Sixth Circuit,WEBER,1
-880,Sixth Circuit,WELLFORD,1
-881,Sixth Circuit,WHITE,37
-882,Sixth Circuit,WILLIAMS,2
-883,Sixth Circuit,WISEMAN,3
-884,Sixth Circuit,ZATKOFF,7
-885,Tenth Circuit,ALARCÓN,2
-886,Tenth Circuit,ALLEY,3
-887,Tenth Circuit,ANDERSON,39
-888,Tenth Circuit,ARMIJO,2
-889,Tenth Circuit,BACHARACH,13
-890,Tenth Circuit,BALDOCK,46
-891,Tenth Circuit,BARRETT,1
+255,First Circuit,BOUDIN,31
+89,Eleventh Circuit,BOWEN,1
+25,Eighth Circuit,BOWMAN,46
+256,First Circuit,BOWNES,3
 892,Tenth Circuit,BRACK,1
+90,Eleventh Circuit,BRANCH,2
+574,Second Circuit,BRIAN M  COGAN,2
+575,Second Circuit,BRIEANT,1
+26,Eighth Circuit,BRIGHT,11
+91,Eleventh Circuit,BRIGHT,2
+397,Ninth Circuit,BRIGHT,3
+776,Sixth Circuit,BRIGHT,3
+946,Third Circuit,BRIGHT,1
 893,Tenth Circuit,BRIMMER,1
 894,Tenth Circuit,BRISCOE,57
 895,Tenth Circuit,BRORBY,33
+0,District of Columbia Circuit,BROWN,11
+398,Ninth Circuit,BROWNING,4
+303,Fourth Circuit,BRUCE H  HENDRICKS,1
+399,Ninth Circuit,BRUNETTI,5
+172,Federal Circuit,BRYSON,17
+777,Sixth Circuit,BUNNING,3
+778,Sixth Circuit,BUSH,2
+304,Fourth Circuit,BUTZNER,2
+400,Ninth Circuit,BYBEE,17
+27,Eighth Circuit,BYE,54
+305,Fourth Circuit,C  ARLEN BEAM,1
+401,Ninth Circuit,C  ROGER VINSON,1
+706,Seventh Circuit,C A,1
+576,Second Circuit,CABRANES,28
+306,Fourth Circuit,CACHERIS,1
+577,Second Circuit,CALABRESI,32
+402,Ninth Circuit,CALLAHAN,24
+257,First Circuit,CAMPBELL,5
+403,Ninth Circuit,CANBY,23
+404,Ninth Circuit,"CANBY, Jr.",1
+578,Second Circuit,CARDAMONE,8
+200,Fifth Circuit,CARL E  STEWART,1
+405,Ninth Circuit,CARLOS T  BEA,3
+28,Eighth Circuit,CARMAN,3
+92,Eleventh Circuit,CARNES,57
+406,Ninth Circuit,CARNEY,1
+579,Second Circuit,CARNEY,3
+580,Second Circuit,CAROL BAGLEY AMON,2
+779,Sixth Circuit,CARR,2
+407,Ninth Circuit,CARROLL,1
+258,First Circuit,CARTER,1
+259,First Circuit,CASELLAS,1
 896,Tenth Circuit,CASSELL,1
+408,Ninth Circuit,CASTEL,1
+307,Fourth Circuit,CATHERINE C  BLAKE,1
+581,Second Circuit,CEDARBAUM,2
+947,Third Circuit,CHAGARES,32
+707,Seventh Circuit,CHANG,1
+308,Fourth Circuit,CHASANOW,1
+582,Second Circuit,CHATIGNY,1
+173,Federal Circuit,CHEN,1
+948,Third Circuit,CHERTOFF,6
+309,Fourth Circuit,CHERYL ANN KRAUSE,1
+583,Second Circuit,CHESTER J  STRAUB,8
+584,Second Circuit,CHIN,12
+409,Ninth Circuit,CHOY,2
+410,Ninth Circuit,CHRISTEN,2
+585,Second Circuit,CHRISTINA REISS,1
+586,Second Circuit,CHRISTOPHER F  DRONEY,15
+780,Sixth Circuit,CLAY,88
+781,Sixth Circuit,CLELAND,3
+201,Fifth Circuit,CLEMENT,61
+93,Eleventh Circuit,CLEVENGER,1
+174,Federal Circuit,CLEVENGER,11
+411,Ninth Circuit,CLIFTON,20
+708,Seventh Circuit,COFFEY,32
+260,First Circuit,COFFIN,9
+782,Sixth Circuit,COFFMAN,1
+783,Sixth Circuit,COHN,9
+784,Sixth Circuit,COLE,69
+709,Seventh Circuit,COLEMAN,1
+587,Second Circuit,COLLEEN MCMAHON,1
+785,Sixth Circuit,COLLIER,2
+412,Ninth Circuit,COLLINS,3
+29,Eighth Circuit,COLLOTON,41
+710,Seventh Circuit,CONLEY,1
+413,Ninth Circuit,CONLON,1
+414,Ninth Circuit,CONSUELO M  CALLAHAN,4
+786,Sixth Circuit,CONTIE,1
+94,Eleventh Circuit,COOGLER,1
+787,Sixth Circuit,COOK,38
+310,Fourth Circuit,COPENHAVER,2
+95,Eleventh Circuit,CORRIGAN,1
+202,Fifth Circuit,COSTA,13
+588,Second Circuit,COTE,1
+96,Eleventh Circuit,COWEN,1
+415,Ninth Circuit,COWEN,1
+949,Third Circuit,COWEN,23
+97,Eleventh Circuit,COX,18
+416,Ninth Circuit,COX,2
+98,Eleventh Circuit,CUDAHY,2
+417,Ninth Circuit,CUDAHY,1
+711,Seventh Circuit,CUDAHY,27
+788,Sixth Circuit,CUDAHY,2
+950,Third Circuit,CUDAHY,3
+203,Fifth Circuit,CYNTHIA HOLCOMB HALL,1
+261,First Circuit,CYR,7
+418,Ninth Circuit,D W  NELSON,16
+311,Fourth Circuit,DAMON J  KEITH,1
+419,Ninth Circuit,DANA L  CHRISTENSEN,1
+712,Seventh Circuit,DANIEL A  MANION,14
+589,Second Circuit,DANIELS,1
+789,Sixth Circuit,DAUGHTREY,56
+312,Fourth Circuit,DAVID A  FABER,1
+790,Sixth Circuit,DAVID A  NELSON,3
+420,Ninth Circuit,DAVID C  BURY,1
+313,Fourth Circuit,DAVID C  NORTON,1
+204,Fifth Circuit,"DAVID D  DOWD, Jr.",1
+713,Seventh Circuit,DAVID F  HAMILTON,11
+590,Second Circuit,DAVID G  TRAGER,1
+314,Fourth Circuit,DAVID R  HANSEN,1
+421,Ninth Circuit,DAVID R  THOMPSON,1
+30,Eighth Circuit,DAVIS,1
+205,Fifth Circuit,DAVIS,58
+315,Fourth Circuit,DAVIS,10
+951,Third Circuit,DEBEVOISE,2
+591,Second Circuit,DEBRA A  LIVINGSTON,1
+592,Second Circuit,DEBRA ANN LIVINGSON,1
+593,Second Circuit,DEBRA ANN LIVINGSTON,26
+714,Seventh Circuit,DEGUILIO,1
+206,Fifth Circuit,DEMOSS,40
+207,Fifth Circuit,DENNIS,88
+594,Second Circuit,DENNIS JACOBS,13
+595,Second Circuit,DENNY CHIN,17
+952,Third Circuit,DIAMOND,3
+316,Fourth Circuit,DIANA GRIBBON MOTZ,1
+715,Seventh Circuit,DIANE P  WOOD,52
+716,Seventh Circuit,DIANE S  SYKES,19
+422,Ninth Circuit,DIARMUID F  O'SCANNLAIN,6
+317,Fourth Circuit,DIAZ,14
+953,Third Circuit,DITTER,1
+262,First Circuit,DOMINGUEZ,1
+791,Sixth Circuit,DONALD,17
+423,Ninth Circuit,DONALD E  WALTER,1
+31,Eighth Circuit,DORR,1
+792,Sixth Circuit,DOWD,5
+954,Third Circuit,DOWD,1
+596,Second Circuit,DRONEY,12
+99,Eleventh Circuit,DUBINA,34
+424,Ninth Circuit,DUFFY,3
+793,Sixth Circuit,DUGGAN,2
+209,Fifth Circuit,DUHÉ,5
+425,Ninth Circuit,DUHÉ,1
+955,Third Circuit,DUHÉ,1
+208,Fifth Circuit,DUHE',1
+318,Fourth Circuit,DUNCAN,26
+210,Fifth Circuit,DUPLANTIER,1
+794,Sixth Circuit,DUPLANTIER,1
+717,Seventh Circuit,DURKIN,1
+175,Federal Circuit,DYK,14
+263,First Circuit,DYK,3
 897,Tenth Circuit,EAGAN,2
+718,Seventh Circuit,EASTERBROOK,84
+100,Eleventh Circuit,EBEL,1
 898,Tenth Circuit,EBEL,51
+795,Sixth Circuit,ECONOMUS,3
+101,Eleventh Circuit,ED CARNES,10
+211,Fifth Circuit,EDITH BROWN CLEMENT,1
+102,Eleventh Circuit,EDMONDSON,37
+426,Ninth Circuit,EDMUNDS,1
+796,Sixth Circuit,EDMUNDS,4
+597,Second Circuit,EDWARD R  KORMAN,2
+1,District of Columbia Circuit,EDWARDS,13
 899,Tenth Circuit,ELLISON,3
+598,Second Circuit,ELLSWORTH VAN GRAAFEILAND,1
+212,Fifth Circuit,ELROD,27
+213,Fifth Circuit,EMILIO M  GARZA,18
+797,Sixth Circuit,ENGEL,1
+214,Fifth Circuit,ENGELHARDT,2
+32,Eighth Circuit,ERICKSEN,2
+33,Eighth Circuit,ERICKSON,2
+103,Eleventh Circuit,EVANS,2
+719,Seventh Circuit,EVANS,64
+599,Second Circuit,F I  PARKER,9
+427,Ninth Circuit,FABER,1
+34,Eighth Circuit,FAGG,12
+720,Seventh Circuit,FAIRCHILD,2
+104,Eleventh Circuit,FARRIS,6
+428,Ninth Circuit,FARRIS,8
+798,Sixth Circuit,FARRIS,2
+105,Eleventh Circuit,FAY,39
+600,Second Circuit,FEINBERG,16
+721,Seventh Circuit,FEINERMAN,1
+429,Ninth Circuit,FERGUSON,10
+430,Ninth Circuit,FERNANDEZ,17
 900,Tenth Circuit,FIGA,2
+431,Ninth Circuit,FISHER,30
+956,Third Circuit,FISHER,53
+432,Ninth Circuit,FITZGERALD,2
+722,Seventh Circuit,FLAUM,76
+319,Fourth Circuit,FLOYD,12
+35,Eighth Circuit,FLOYD R  GIBSON,1
+433,Ninth Circuit,FOGEL,1
+799,Sixth Circuit,FORESTER,7
+723,Seventh Circuit,FRANK H  EASTERBROOK,20
+320,Fourth Circuit,FRANK J  MAGILL,1
+601,Second Circuit,"FRANK P  GERACI, Jr.",1
+434,Ninth Circuit,FRIEDLAND,3
+176,Federal Circuit,FRIEDMAN,2
+321,Fourth Circuit,FRIEDMAN,1
 901,Tenth Circuit,FRIZZELL,1
+957,Third Circuit,FUENTES,45
+958,Third Circuit,FULLAM,1
+106,Eleventh Circuit,FULLER,1
+264,First Circuit,FUSTÉ,1
+177,Federal Circuit,GAJARSA,15
+602,Second Circuit,GARAUFIS,1
+435,Ninth Circuit,GARBIS,1
+2,District of Columbia Circuit,GARLAND,15
+959,Third Circuit,GARTH,13
+215,Fifth Circuit,GARWOOD,14
+800,Sixth Circuit,GARWOOD,1
+436,Ninth Circuit,GARY FEINERMAN,1
+216,Fifth Circuit,GARZA,28
+603,Second Circuit,GEOFFREY W  CRAWFORD,1
+107,Eleventh Circuit,GEORGE,1
+437,Ninth Circuit,GEORGE,1
+604,Second Circuit,GERARD E  LYNCH,24
+36,Eighth Circuit,GERRARD,1
+265,First Circuit,GERTNER,1
+605,Second Circuit,GERTNER,2
+801,Sixth Circuit,GIBBONS,53
+108,Eleventh Circuit,GIBSON,1
+266,First Circuit,GIBSON,1
+438,Ninth Circuit,GIBSON,1
+606,Second Circuit,GIBSON,1
+802,Sixth Circuit,GIBSON,2
 902,Tenth Circuit,GIBSON,1
+960,Third Circuit,GIBSON,1
+803,Sixth Circuit,GILMAN,62
 903,Tenth Circuit,GILMAN,1
+3,District of Columbia Circuit,GINSBURG,14
+607,Second Circuit,GLEESON,4
+109,Eleventh Circuit,GODBOLD,1
+110,Eleventh Circuit,GOLD,1
+37,Eighth Circuit,GOLDBERG,3
+111,Eleventh Circuit,GOLDBERG,2
+217,Fifth Circuit,GOLDBERG,1
+608,Second Circuit,GOLDBERG,5
+439,Ninth Circuit,GOODWIN,15
 904,Tenth Circuit,GORSUCH,33
+267,First Circuit,GORTON,2
+440,Ninth Circuit,GOULD,31
+441,Ninth Circuit,GRABER,32
+112,Eleventh Circuit,GRAHAM,1
+442,Ninth Circuit,GRAHAM,1
+804,Sixth Circuit,GRAHAM,1
+38,Eighth Circuit,GRASZ,2
+218,Fifth Circuit,GRAVES,26
+961,Third Circuit,"GREENAWAY, Jr.",38
+268,First Circuit,GREENBERG,1
+443,Ninth Circuit,GREENBERG,1
+962,Third Circuit,GREENBERG,20
+805,Sixth Circuit,GREER,2
+322,Fourth Circuit,GREGORY,32
+724,Seventh Circuit,GRIESBACH,2
+806,Sixth Circuit,GRIFFIN,36
+4,District of Columbia Circuit,GRIFFITH,7
+39,Eighth Circuit,GRITZNER,2
+40,Eighth Circuit,GRUENDER,36
+609,Second Circuit,GUIDO CALABRESI,17
+444,Ninth Circuit,GUTIERREZ,1
+807,Sixth Circuit,GUY,32
+445,Ninth Circuit,GWIN,3
+808,Sixth Circuit,GWIN,3
+113,Eleventh Circuit,HALL,2
+219,Fifth Circuit,HALL,1
+446,Ninth Circuit,HALL,4
+610,Second Circuit,HALL,16
 905,Tenth Circuit,HALL,1
+41,Eighth Circuit,HAMILTON,2
+323,Fourth Circuit,HAMILTON,33
+725,Seventh Circuit,HAMILTON,31
+114,Eleventh Circuit,HANCOCK,1
+115,Eleventh Circuit,HAND,1
+42,Eighth Circuit,HANSEN,41
+269,First Circuit,HANSEN,2
+963,Third Circuit,HARDIMAN,41
+726,Seventh Circuit,"HARLINGTON WOOD, Jr.",1
+324,Fourth Circuit,HARRIS,10
+447,Ninth Circuit,HARRY PREGERSON,6
 906,Tenth Circuit,HARTZ,48
+448,Ninth Circuit,HAWKINS,27
+964,Third Circuit,HAYDEN,1
+220,Fifth Circuit,HAYNES,26
+809,Sixth Circuit,HAYNES,4
+221,Fifth Circuit,HEAD,1
+43,Eighth Circuit,HEANEY,22
+810,Sixth Circuit,HELMICK,1
+5,District of Columbia Circuit,HENDERSON,15
 907,Tenth Circuit,HENRY,34
+325,Fourth Circuit,HENRY E  HUDSON,2
+326,Fourth Circuit,HENRY F  FLOYD,1
+811,Sixth Circuit,HEYBURN,1
+222,Fifth Circuit,HICKS,1
+116,Eleventh Circuit,HIGGINBOTHAM,1
+223,Fifth Circuit,HIGGINBOTHAM,61
+224,Fifth Circuit,HIGGINSON,24
+117,Eleventh Circuit,HILL,6
+449,Ninth Circuit,HILL,1
+327,Fourth Circuit,HILTON,1
+118,Eleventh Circuit,HODGES,2
+450,Ninth Circuit,HOLLAND,1
 908,Tenth Circuit,HOLLOWAY,16
 909,Tenth Circuit,HOLMES,19
+812,Sixth Circuit,HOOD,13
+270,First Circuit,HOWARD,44
+119,Eleventh Circuit,HUCK,1
+813,Sixth Circuit,HUCK,1
+271,First Circuit,HUG,1
+451,Ninth Circuit,HUG,23
+178,Federal Circuit,HUGHES,3
+120,Eleventh Circuit,HULL,70
+814,Sixth Circuit,HULL,1
+121,Eleventh Circuit,HUNT,1
+611,Second Circuit,HURD,2
+452,Ninth Circuit,HURWITZ,3
+612,Second Circuit,IF FOUND,1
+453,Ninth Circuit,IKUTA,12
+727,Seventh Circuit,ILANA DIAMOND ROVNER,20
+728,Seventh Circuit,INDEED,1
+965,Third Circuit,IRENAS,4
+328,Fourth Circuit,IRENE M  KEELEY,1
+454,Ninth Circuit,J  CLIFFORD WALLACE,2
+613,Second Circuit,J  CLIFFORD WALLACE,1
+614,Second Circuit,J  GARVAN MURTHA,2
 910,Tenth Circuit,JACKSON,1
+329,Fourth Circuit,JACKSON L  KISER,1
+615,Second Circuit,JACOBS,29
+455,Ninth Circuit,JACQUELINE H  NGUYEN,2
+330,Fourth Circuit,JAMES C  DEVER III,1
+331,Fourth Circuit,"JAMES H  MICHAEL, Jr.",1
+456,Ninth Circuit,JAMES K  SINGLETON,1
+332,Fourth Circuit,JAMES P  JONES,1
+457,Ninth Circuit,JAMES R  BROWNING,2
+616,Second Circuit,JANE A  RESTANI,6
+44,Eighth Circuit,JARVEY,1
+458,Ninth Circuit,JAY S  BYBEE,10
+617,Second Circuit,JED S  RAKOFF,5
 911,Tenth Circuit,JENKINS,1
+459,Ninth Circuit,JEROME FARRIS,1
+122,Eleventh Circuit,JILL PRYOR,7
+729,Seventh Circuit,JOEL M  FLAUM,13
+333,Fourth Circuit,"JOHN A  GIBNEY, Jr.",1
 912,Tenth Circuit,JOHN C  PORFILIO,1
+730,Seventh Circuit,JOHN D  TINDER,1
+731,Seventh Circuit,JOHN DANIEL TINDER,7
+618,Second Circuit,JOHN F  KEENAN,2
+619,Second Circuit,JOHN GLEESON,1
+732,Seventh Circuit,JOHN L  COFFEY,7
+620,Second Circuit,"JOHN M  WALKER, Jr.",8
+45,Eighth Circuit,JOHN R  GIBSON,17
+272,First Circuit,JOHN R  GIBSON,1
+621,Second Circuit,JOHN R  GIBSON,1
+815,Sixth Circuit,JOHN R  GIBSON,1
+460,Ninth Circuit,JOHN R  TUNHEIM,1
+461,Ninth Circuit,JOHN T  NOONAN,4
+462,Ninth Circuit,JOHNNIE B  RAWLINSON,1
+225,Fifth Circuit,JOLLY,62
+622,Second Circuit,JON O  NEWMAN,7
+46,Eighth Circuit,JONES,1
+226,Fifth Circuit,JONES,45
+816,Sixth Circuit,JONES,11
+966,Third Circuit,JONES,2
+123,Eleventh Circuit,JORDAN,36
+817,Sixth Circuit,JORDAN,3
+967,Third Circuit,JORDAN,38
+624,Second Circuit,JOSÉ A  CABRANES,23
+334,Fourth Circuit,"JOSEPH F  ANDERSON, Jr.",1
+463,Ninth Circuit,JOSEPH F  BATAILLON,1
+623,Second Circuit,JOSEPH M  MCLAUGHLIN,10
+335,Fourth Circuit,JOSEPH R  GOODWIN,2
+124,Eleventh Circuit,JULIE CARNES,11
+227,Fifth Circuit,JUNELL,1
 913,Tenth Circuit,KANE,1
+733,Seventh Circuit,KANNE,64
+734,Seventh Circuit,KAPALA,2
+625,Second Circuit,KAPLAN,3
+6,District of Columbia Circuit,KAREN LECRAFT HENDERSON,1
+626,Second Circuit,KATHERINE B  FORREST,2
+818,Sixth Circuit,KATZ,1
+627,Second Circuit,KATZMANN,30
+7,District of Columbia Circuit,KAVANAUGH,4
+273,First Circuit,KAYATTA,10
+47,Eighth Circuit,KAYS,1
+228,Fifth Circuit,KAZEN,2
+628,Second Circuit,KEARSE,22
+336,Fourth Circuit,KEELEY,1
+337,Fourth Circuit,KEENAN,17
+629,Second Circuit,KEITH,2
+819,Sixth Circuit,KEITH,28
+48,Eighth Circuit,KELLY,6
 914,Tenth Circuit,KELLY,53
+735,Seventh Circuit,KENDALL,1
+820,Sixth Circuit,KENNEDY,24
+736,Seventh Circuit,KENNETH F  RIPPLE,10
+821,Sixth Circuit,KETHLEDGE,25
+464,Ninth Circuit,KIM MCLANE WARDLAW,1
+229,Fifth Circuit,KING,84
+338,Fourth Circuit,KING,66
+465,Ninth Circuit,KING,4
+230,Fifth Circuit,KINKEADE,1
+125,Eleventh Circuit,KLEINFELD,2
+466,Ninth Circuit,KLEINFELD,15
+630,Second Circuit,KOELTL,2
+467,Ninth Circuit,KORMAN,2
+631,Second Circuit,KORMAN,2
+468,Ninth Circuit,KOZINSKI,26
+968,Third Circuit,KRAUSE,13
+126,Eleventh Circuit,KRAVITCH,28
+822,Sixth Circuit,KRUPANSKY,13
+49,Eighth Circuit,KYLE,1
+127,Eleventh Circuit,LAND,1
+632,Second Circuit,LARIMER,1
+469,Ninth Circuit,LARRY A  BURNS,1
+633,Second Circuit,LAURA TAYLOR SWAIN,1
+737,Seventh Circuit,LAWRENCE,1
+823,Sixth Circuit,LAWSON,6
+50,Eighth Circuit,LAY,12
+470,Ninth Circuit,LAY,4
+824,Sixth Circuit,LAY,2
+969,Third Circuit,LAY,1
+471,Ninth Circuit,LEAVY,14
+738,Seventh Circuit,LEE,1
+472,Ninth Circuit,LEIGHTON,1
+825,Sixth Circuit,LEITMAN,1
+274,First Circuit,LEVAL,1
+634,Second Circuit,LEVAL,17
+635,Second Circuit,LEWIS A  KAPLAN,1
+970,Third Circuit,LIFLAND,1
+128,Eleventh Circuit,LIMBAUGH,1
+231,Fifth Circuit,LINDSAY,1
+179,Federal Circuit,LINN,6
+275,First Circuit,LIPEZ,54
+276,First Circuit,LISI,2
+232,Fifth Circuit,LITTLE,4
+636,Second Circuit,LIVINGSTON,7
+637,Second Circuit,LOHIER,7
+51,Eighth Circuit,LOKEN,68
+473,Ninth Circuit,LORENZ,1
+638,Second Circuit,LORETTA A  PRESKA,1
+339,Fourth Circuit,LORETTA C  BIGGS,1
+474,Ninth Circuit,LOUIS H  POLLAK,2
+340,Fourth Circuit,LOUISE W  FLANAGAN,1
+180,Federal Circuit,LOURIE,10
+971,Third Circuit,LOURIE,2
 915,Tenth Circuit,LUCERO,57
+341,Fourth Circuit,LUTTIG,18
+277,First Circuit,LYNCH,64
+639,Second Circuit,LYNCH,11
+233,Fifth Circuit,LYNN,1
+475,Ninth Circuit,LYNN,2
+476,Ninth Circuit,M  MARGARET MCKEOWN,3
+477,Ninth Circuit,M  SMITH,8
+52,Eighth Circuit,MAGILL,3
+278,First Circuit,MAGILL,1
+342,Fourth Circuit,MAGILL,1
+478,Ninth Circuit,MAGILL,3
+826,Sixth Circuit,MAGILL,3
+972,Third Circuit,MAGILL,1
+53,Eighth Circuit,MAGNUSON,4
+739,Seventh Circuit,MAGNUS-STINSON,1
+740,Seventh Circuit,MANION,63
+973,Third Circuit,MANSMANN,1
+827,Sixth Circuit,MARBLEY,4
+129,Eleventh Circuit,MARCUS,58
+343,Fourth Circuit,MARGARET B  SEYMOUR,1
+640,Second Circuit,MARGO K  BRODIE,1
+344,Fourth Circuit,MARK S  DAVIS,1
+479,Ninth Circuit,MARK W  BENNETT,1
+641,Second Circuit,MARRERO,1
+480,Ninth Circuit,MARSHA S  BERZON,7
 916,Tenth Circuit,MARTEN,3
+130,Eleventh Circuit,MARTIN,29
+642,Second Circuit,MARTIN,2
+828,Sixth Circuit,MARTIN,43
+131,Eleventh Circuit,MARTINEZ,2
+234,Fifth Circuit,MARTINEZ,2
+481,Ninth Circuit,MARY H  MURGUIA,2
+482,Ninth Circuit,MARY M  SCHROEDER,4
+345,Fourth Circuit,MARYANNE TRUMP BARRY,1
 917,Tenth Circuit,MATHESON,15
+829,Sixth Circuit,MATIA,1
+643,Second Circuit,MATSUMOTO,1
+346,Fourth Circuit,"MAX O  COGBURN, Jr.",1
+181,Federal Circuit,MAYER,6
+830,Sixth Circuit,MAYS,1
+279,First Circuit,MCAULIFFE,1
+644,Second Circuit,MCAVOY,1
+831,Sixth Circuit,MCCALLA,3
+974,Third Circuit,MCCLURE,1
 918,Tenth Circuit,MCCONNELL,18
 919,Tenth Circuit,MCHUGH,9
 920,Tenth Circuit,MCKAY,47
-921,Tenth Circuit,MCWILLIAMS,12
-922,Tenth Circuit,MORITZ,9
-923,Tenth Circuit,MURPHY,61
-924,Tenth Circuit,O'BRIEN,39
-925,Tenth Circuit,PHILLIPS,9
-926,Tenth Circuit,PORFILIO,28
-927,Tenth Circuit,REAVLEY,2
-928,Tenth Circuit,ROGERS,1
-929,Tenth Circuit,SCOTT M  MATHESON,1
-930,Tenth Circuit,SEYMOUR,27
-931,Tenth Circuit,SHADUR,3
-932,Tenth Circuit,STAMP,1
-933,Tenth Circuit,STEPHEN H  ANDERSON,2
-934,Tenth Circuit,TACHA,36
-935,Tenth Circuit,TYMKOVICH,38
-936,Tenth Circuit,WEINSHIENK,1
-937,Tenth Circuit,WINDER,1
-938,Third Circuit,ACKERMAN,1
-939,Third Circuit,ALARCÓN,1
-940,Third Circuit,ALDISERT,22
-941,Third Circuit,ALITO,12
-942,Third Circuit,AMBRO,45
-943,Third Circuit,BARRY,49
-944,Third Circuit,BECKER,10
-945,Third Circuit,BIBAS,2
-946,Third Circuit,BRIGHT,1
-947,Third Circuit,CHAGARES,32
-948,Third Circuit,CHERTOFF,6
-949,Third Circuit,COWEN,23
-950,Third Circuit,CUDAHY,3
-951,Third Circuit,DEBEVOISE,2
-952,Third Circuit,DIAMOND,3
-953,Third Circuit,DITTER,1
-954,Third Circuit,DOWD,1
-955,Third Circuit,DUHÉ,1
-956,Third Circuit,FISHER,53
-957,Third Circuit,FUENTES,45
-958,Third Circuit,FULLAM,1
-959,Third Circuit,GARTH,13
-960,Third Circuit,GIBSON,1
-961,Third Circuit,"GREENAWAY, Jr.",38
-962,Third Circuit,GREENBERG,20
-963,Third Circuit,HARDIMAN,41
-964,Third Circuit,HAYDEN,1
-965,Third Circuit,IRENAS,4
-966,Third Circuit,JONES,2
-967,Third Circuit,JORDAN,38
-968,Third Circuit,KRAUSE,13
-969,Third Circuit,LAY,1
-970,Third Circuit,LIFLAND,1
-971,Third Circuit,LOURIE,2
-972,Third Circuit,MAGILL,1
-973,Third Circuit,MANSMANN,1
-974,Third Circuit,MCCLURE,1
+832,Sixth Circuit,MCKEAGUE,39
 975,Third Circuit,MCKEE,43
+483,Ninth Circuit,MCKEOWN,21
+833,Sixth Circuit,MCKINLEY,1
+645,Second Circuit,MCLAUGHLIN,16
+54,Eighth Circuit,MCMILLIAN,33
+921,Tenth Circuit,MCWILLIAMS,12
+55,Eighth Circuit,MELLOY,61
 976,Third Circuit,MELLOY,1
+834,Sixth Circuit,MERRITT,37
+646,Second Circuit,MESKILL,6
+347,Fourth Circuit,MICHAEL,38
+484,Ninth Circuit,MICHAEL A  PONSOR,1
+485,Ninth Circuit,MICHAEL DALY HAWKINS,3
+647,Second Circuit,MICHAEL P  SHEA,1
+741,Seventh Circuit,MICHAEL S  KANNE,17
+486,Ninth Circuit,MICHAEL W  MOSMAN,1
+742,Seventh Circuit,MICHAEL Y  SCUDDER,1
+182,Federal Circuit,MICHEL,4
 977,Third Circuit,MICHEL,4
+487,Ninth Circuit,MICHELLE T  FRIEDLAND,2
+132,Eleventh Circuit,MIDDLEBROOKS,2
+488,Ninth Circuit,"MILAN D  SMITH, Jr.",7
+489,Ninth Circuit,MILLER,2
+743,Seventh Circuit,MILLER,1
+8,District of Columbia Circuit,MILLETT,1
+56,Eighth Circuit,MILLS,1
+133,Eleventh Circuit,MILLS,1
+835,Sixth Circuit,MILLS,8
+490,Ninth Circuit,MILTON I  SHADUR,1
+648,Second Circuit,MINER,7
+649,Second Circuit,MIRIAM GOLDMAN CEDARBAUM,4
+491,Ninth Circuit,MOLLWAY,2
+57,Eighth Circuit,MOODY,4
+134,Eleventh Circuit,MOODY,1
+183,Federal Circuit,MOORE,6
+836,Sixth Circuit,MOORE,74
+135,Eleventh Circuit,MORENO,1
+492,Ninth Circuit,MORGAN CHRISTEN,1
+922,Tenth Circuit,MORITZ,9
+493,Ninth Circuit,MORRIS S  ARNOLD,1
+58,Eighth Circuit,MORRIS SHEPPARD ARNOLD,26
+348,Fourth Circuit,MOTZ,38
+494,Ninth Circuit,MURGUIA,11
+349,Fourth Circuit,MURNAGHAN,6
+59,Eighth Circuit,MURPHY,56
+837,Sixth Circuit,MURPHY,1
+923,Tenth Circuit,MURPHY,61
+650,Second Circuit,MURTHA,1
+136,Eleventh Circuit,MUSGRAVE,1
+495,Ninth Circuit,N  RANDY SMITH,3
+496,Ninth Circuit,N R  SMITH,17
+137,Eleventh Circuit,NA,1
+235,Fifth Circuit,NA,3
+651,Second Circuit,NA,4
+744,Seventh Circuit,NA,3
+60,Eighth Circuit,NANGLE,1
+138,Eleventh Circuit,NANGLE,2
+838,Sixth Circuit,NELSON,12
+184,Federal Circuit,NEWMAN,9
+652,Second Circuit,NEWMAN,20
+139,Eleventh Circuit,NEWSOM,2
+497,Ninth Circuit,NGUYEN,2
+350,Fourth Circuit,NIEMEYER,56
+839,Sixth Circuit,NIXON,1
+498,Ninth Circuit,NOONAN,12
 978,Third Circuit,NOONAN,1
+840,Sixth Circuit,NORRIS,32
+841,Sixth Circuit,NUGENT,2
 979,Third Circuit,NYGAARD,33
-980,Third Circuit,O'CONNOR,1
+653,Second Circuit,OAKES,12
+846,Sixth Circuit,OBERDORFER,1
 981,Third Circuit,OBERDORFER,2
+924,Tenth Circuit,O'BRIEN,39
+236,Fifth Circuit,O'CONNOR,1
+842,Sixth Circuit,O'CONNOR,1
+980,Third Circuit,O'CONNOR,1
+140,Eleventh Circuit,O'KELLEY,1
+843,Sixth Circuit,O'KELLEY,1
+500,Ninth Circuit,OLIVER,1
+847,Sixth Circuit,OLIVER,6
+185,Federal Circuit,O'MALLEY,3
+844,Sixth Circuit,O'MALLEY,5
+845,Sixth Circuit,O'MEARA,4
+654,Second Circuit,ORABLE REENA RAGGI,1
+655,Second Circuit,ORABLE RICHARD J  CARDAMONE,1
+656,Second Circuit,ORABLE THOMAS J  MESKILL,1
+141,Eleventh Circuit,O'SCANNLAIN,1
+499,Ninth Circuit,O'SCANNLAIN,26
+280,First Circuit,O'TOOLE,2
+237,Fifth Circuit,OWEN,49
+142,Eleventh Circuit,OWENS,1
+501,Ninth Circuit,OWENS,3
 982,Third Circuit,PADOVA,2
+502,Ninth Circuit,PAEZ,32
+61,Eighth Circuit,PANNER,1
+238,Fifth Circuit,PARKER,18
+657,Second Circuit,PARKER,6
+186,Federal Circuit,PATEL,1
+658,Second Circuit,PAUL A  ENGELMAYER,1
+659,Second Circuit,PAUL G  GARDEPHE,1
+503,Ninth Circuit,PAUL J  WATFORD,1
+351,Fourth Circuit,PAULA XINIS,1
+660,Second Circuit,PAULEY,1
+848,Sixth Circuit,PEARSON,1
+62,Eighth Circuit,PERRY,1
+661,Second Circuit,PETER W  HALL,22
+849,Sixth Circuit,PHILLIPS,1
+925,Tenth Circuit,PHILLIPS,9
+239,Fifth Circuit,PICKERING,6
+662,Second Circuit,PIERRE N  LEVAL,11
+9,District of Columbia Circuit,PILLARD,1
+187,Federal Circuit,PLAGER,4
+143,Eleventh Circuit,POGUE,1
 983,Third Circuit,POGUE,2
+240,Fifth Circuit,POLITZ,7
+504,Ninth Circuit,POLITZ,3
+144,Eleventh Circuit,POLLAK,2
 984,Third Circuit,POLLAK,9
+850,Sixth Circuit,POLSTER,5
+663,Second Circuit,POOLER,30
+281,First Circuit,PORFILIO,2
+926,Tenth Circuit,PORFILIO,28
+745,Seventh Circuit,POSNER,92
+241,Fifth Circuit,PRADO,43
+63,Eighth Circuit,PRATT,1
+505,Ninth Circuit,PREGERSON,32
+506,Ninth Circuit,"PROCTER HUG, Jr.",1
+145,Eleventh Circuit,PROCTOR,1
+146,Eleventh Circuit,PROPST,1
+188,Federal Circuit,PROST,10
+147,Eleventh Circuit,PRYOR,53
+148,Eleventh Circuit,QUIST,1
+507,Ninth Circuit,QUIST,2
+851,Sixth Circuit,QUIST,3
+352,Fourth Circuit,R  BRYAN HARWELL,1
+189,Federal Circuit,RADER,12
+664,Second Circuit,RAGGI,20
+665,Second Circuit,RAKOFF,3
+852,Sixth Circuit,"RALPH B  GUY, Jr.",1
+666,Second Circuit,RALPH K  WINTER,12
+10,District of Columbia Circuit,RANDOLPH,10
+508,Ninth Circuit,RAWLINSON,20
+353,Fourth Circuit,RAYMOND A  JACKSON,2
+509,Ninth Circuit,RAYMOND C  FISHER,8
+667,Second Circuit,"RAYMOND J  LOHIER, Jr.",13
+149,Eleventh Circuit,REAVLEY,1
+242,Fifth Circuit,REAVLEY,38
+510,Ninth Circuit,REAVLEY,3
+927,Tenth Circuit,REAVLEY,2
+668,Second Circuit,REENA RAGGI,31
+243,Fifth Circuit,REEVES,2
+853,Sixth Circuit,REEVES,3
+511,Ninth Circuit,REINHARDT,29
+669,Second Circuit,REISS,1
 985,Third Circuit,RENDELL,47
+150,Eleventh Circuit,RESTANI,2
+512,Ninth Circuit,RESTANI,3
+670,Second Circuit,RESTANI,1
 986,Third Circuit,RESTANI,2
 987,Third Circuit,RESTREPO,3
+190,Federal Circuit,REYNA,2
+244,Fifth Circuit,REYNALDO G  GARZA,2
+513,Ninth Circuit,RHOADES,1
+854,Sixth Circuit,RICE,1
+514,Ninth Circuit,RICHARD A  PAEZ,4
+746,Seventh Circuit,RICHARD A  POSNER,15
+515,Ninth Circuit,RICHARD C  TALLMAN,8
+671,Second Circuit,RICHARD C  WESLEY,21
+516,Ninth Circuit,RICHARD D  CUDAHY,1
+747,Seventh Circuit,RICHARD D  CUDAHY,5
+354,Fourth Circuit,RICHARD M  GERGEL,1
+517,Ninth Circuit,RICHARD R  CLIFTON,3
+64,Eighth Circuit,RICHARD S  ARNOLD,25
+672,Second Circuit,RICHARD W  GOLDBERG,1
+65,Eighth Circuit,RILEY,55
+151,Eleventh Circuit,RIPPLE,2
+282,First Circuit,RIPPLE,1
+518,Ninth Circuit,RIPPLE,2
+748,Seventh Circuit,RIPPLE,67
+855,Sixth Circuit,RIPPLE,1
+673,Second Circuit,ROBERT A  KATZMANN,17
+519,Ninth Circuit,ROBERT D  SACK,1
+674,Second Circuit,ROBERT D  SACK,18
+355,Fourth Circuit,ROBERT E  PAYNE,1
+520,Ninth Circuit,ROBERT H  WHALEY,1
+356,Fourth Circuit,"ROBERT J  CONRAD, Jr.",3
+357,Fourth Circuit,ROBERT R  BEEZER,1
+521,Ninth Circuit,ROBERT R  BEEZER,2
+675,Second Circuit,ROBERT W  SWEET,1
+11,District of Columbia Circuit,ROBERTS,2
+856,Sixth Circuit,ROBERTS,1
+152,Eleventh Circuit,RODGERS,1
+676,Second Circuit,ROGER J  MINER,5
+522,Ninth Circuit,ROGER T  BENITEZ,1
+12,District of Columbia Circuit,ROGERS,13
+857,Sixth Circuit,ROGERS,56
+928,Tenth Circuit,ROGERS,1
+523,Ninth Circuit,RONALD M  GOULD,7
+153,Eleventh Circuit,RONEY,3
+858,Sixth Circuit,ROSE,1
+677,Second Circuit,ROSEMARY S  POOLER,22
+859,Sixth Circuit,ROSEN,1
+154,Eleventh Circuit,ROSENBAUM,12
 988,Third Circuit,ROSENN,6
 989,Third Circuit,ROSENTHAL,2
+678,Second Circuit,ROSLYNN R  MAUSKOPF,1
+66,Eighth Circuit,ROSS,3
+524,Ninth Circuit,ROTH,2
 990,Third Circuit,ROTH,45
+155,Eleventh Circuit,ROTHSTEIN,1
+749,Seventh Circuit,ROVNER,89
 991,Third Circuit,RUFE,1
+860,Sixth Circuit,RUSSELL,4
+861,Sixth Circuit,RYAN,10
+525,Ninth Circuit,RYMER,24
+156,Eleventh Circuit,RYSKAMP,3
+1003,Third Circuit,SÁNCHEZ,1
+679,Second Circuit,SACK,35
+358,Fourth Circuit,SAMUEL G  WILSON,1
+680,Second Circuit,SAND,1
+526,Ninth Circuit,SANDRA DAY O'CONNOR,1
+527,Ninth Circuit,SANDRA S  IKUTA,5
+157,Eleventh Circuit,SANDS,1
+862,Sixth Circuit,SARGUS,3
+191,Federal Circuit,SARIS,1
+283,First Circuit,SARIS,1
+192,Federal Circuit,SCHALL,6
+681,Second Circuit,SCHEINDLIN,1
+158,Eleventh Circuit,SCHLESINGER,2
+528,Ninth Circuit,SCHROEDER,27
+529,Ninth Circuit,SCHWARZER,3
+863,Sixth Circuit,SCHWARZER,2
 992,Third Circuit,SCHWARZER,2
 993,Third Circuit,SCIRICA,45
+159,Eleventh Circuit,SCOLA,1
+929,Tenth Circuit,SCOTT M  MATHESON,1
+750,Seventh Circuit,SCUDDER,2
+682,Second Circuit,SCULLIN,1
+530,Ninth Circuit,SEDWICK,1
+284,First Circuit,SELYA,42
+13,District of Columbia Circuit,SENTELLE,10
+531,Ninth Circuit,SETTLE,1
+160,Eleventh Circuit,SEYMOUR,1
+359,Fourth Circuit,SEYMOUR,1
+930,Tenth Circuit,SEYMOUR,27
+751,Seventh Circuit,SHADID,1
+285,First Circuit,SHADUR,1
+532,Ninth Circuit,SHADUR,1
+864,Sixth Circuit,SHADUR,1
+931,Tenth Circuit,SHADUR,3
 994,Third Circuit,SHADUR,1
+752,Seventh Circuit,SHAH,1
 995,Third Circuit,SHAPIRO,1
+865,Sixth Circuit,SHARP,1
+360,Fourth Circuit,SHEDD,22
+67,Eighth Circuit,SHEPHERD,37
 996,Third Circuit,SHWARTZ,23
+683,Second Circuit,SIDNEY H  STEIN,1
+533,Ninth Circuit,SIDNEY R  THOMAS,3
+14,District of Columbia Circuit,SILBERMAN,5
+161,Eleventh Circuit,SILER,2
+286,First Circuit,SILER,4
+866,Sixth Circuit,SILER,48
 997,Third Circuit,SILER,2
+534,Ninth Circuit,SILVERMAN,29
+535,Ninth Circuit,SKOPIL,1
 998,Third Circuit,SLOVITER,53
+68,Eighth Circuit,SMITH,48
+162,Eleventh Circuit,SMITH,1
+193,Federal Circuit,SMITH,2
+245,Fifth Circuit,SMITH,81
+287,First Circuit,SMITH,1
+536,Ninth Circuit,SMITH,1
 999,Third Circuit,SMITH,42
+537,Ninth Circuit,SNEED,5
+684,Second Circuit,SONIA SOTOMAYOR,8
+685,Second Circuit,SOTOMAYOR,18
+288,First Circuit,SOUTER,4
+246,Fifth Circuit,SOUTHWICK,40
+247,Fifth Circuit,SPARKS,1
+867,Sixth Circuit,SPIEGEL,1
+15,District of Columbia Circuit,SRINIVASAN,3
+753,Seventh Circuit,ST  EVE,4
+289,First Circuit,STAFFORD,1
+868,Sixth Circuit,STAFFORD,4
 1000,Third Circuit,STAFFORD,2
+290,First Circuit,STAHL,22
+869,Sixth Circuit,STAMP,2
+932,Tenth Circuit,STAMP,1
+686,Second Circuit,STANCEU,1
+291,First Circuit,STAPLETON,1
 1001,Third Circuit,STAPLETON,14
 1002,Third Circuit,STEARNS,3
-1003,Third Circuit,SÁNCHEZ,1
+870,Sixth Circuit,STEEH,3
+687,Second Circuit,STEIN,1
+933,Tenth Circuit,STEPHEN H  ANDERSON,2
+538,Ninth Circuit,STEPHEN REINHARDT,9
+539,Ninth Circuit,STEPHEN S  TROTT,2
+248,Fifth Circuit,STEWART,78
+871,Sixth Circuit,STRANCH,21
+69,Eighth Circuit,STRAND,1
+70,Eighth Circuit,STRAS,1
+688,Second Circuit,STRAUB,16
+71,Eighth Circuit,STROM,1
+163,Eleventh Circuit,STROM,2
+872,Sixth Circuit,SUHRHEINRICH,38
+689,Second Circuit,SUSAN L  CARNEY,11
+540,Ninth Circuit,SUSAN P  GRABER,4
+873,Sixth Circuit,SUTTON,55
+754,Seventh Circuit,SYKES,44
+541,Ninth Circuit,T G  NELSON,18
+934,Tenth Circuit,TACHA,36
+542,Ninth Circuit,TALLMAN,38
+194,Federal Circuit,TARANTO,2
+874,Sixth Circuit,TARNOW,9
+72,Eighth Circuit,TASHIMA,3
+292,First Circuit,TASHIMA,1
+543,Ninth Circuit,TASHIMA,31
 1004,Third Circuit,TASHIMA,4
+16,District of Columbia Circuit,TATEL,11
+544,Ninth Circuit,TEILBORG,2
+755,Seventh Circuit,TERENCE T  EVANS,14
+361,Fourth Circuit,THACKER,7
+875,Sixth Circuit,THAPAR,6
+545,Ninth Circuit,THOMAS,42
+690,Second Circuit,THOMAS J  MESKILL,3
+362,Fourth Circuit,THOMAS L  AMBRO,1
+293,First Circuit,THOMPSON,13
+546,Ninth Circuit,THOMPSON,13
+756,Seventh Circuit,TINDER,19
+164,Eleventh Circuit,TJOFLAT,64
+294,First Circuit,TORRUELLA,54
+295,First Circuit,TORUELLA,1
+691,Second Circuit,TRAGER,1
+363,Fourth Circuit,TRAXLER,47
+692,Second Circuit,TRIAL,1
+547,Ninth Circuit,TROTT,34
+73,Eighth Circuit,TUNHEIM,2
+935,Tenth Circuit,TYMKOVICH,38
+693,Second Circuit,UNDERHILL,2
+548,Ninth Circuit,UNPINGCO,1
 1005,Third Circuit,VAN ANTWERPEN,23
+694,Second Circuit,VAN GRAAFEILAND,8
+876,Sixth Circuit,VAN TATENHOVE,1
+549,Ninth Circuit,VANASKIE,1
 1006,Third Circuit,VANASKIE,28
+695,Second Circuit,VICTOR MARRERO,1
+74,Eighth Circuit,VIETOR,1
+696,Second Circuit,VILARDO,1
+165,Eleventh Circuit,VINING,2
+166,Eleventh Circuit,VINSON,2
+877,Sixth Circuit,VINSON,1
+550,Ninth Circuit,W  FLETCHER,41
+697,Second Circuit,WALKER,28
+296,First Circuit,WALLACE,1
+551,Ninth Circuit,WALLACE,14
+195,Federal Circuit,WALLACH,2
 1007,Third Circuit,WALLACH,1
+167,Eleventh Circuit,WALTER,3
+249,Fifth Circuit,WALTER,1
+552,Ninth Circuit,WALTER,1
 1008,Third Circuit,WARD,1
+553,Ninth Circuit,WARDLAW,18
+554,Ninth Circuit,WATFORD,5
+878,Sixth Circuit,WATSON,2
+75,Eighth Circuit,WEBB,1
+879,Sixth Circuit,WEBER,1
+555,Ninth Circuit,WEINER,1
+936,Tenth Circuit,WEINSHIENK,1
 1009,Third Circuit,WEIS,15
+880,Sixth Circuit,WELLFORD,1
+698,Second Circuit,WESLEY,10
+881,Sixth Circuit,WHITE,37
+364,Fourth Circuit,WIDENER,23
+250,Fifth Circuit,WIENER,50
+699,Second Circuit,WILFRED FEINBERG,1
+556,Ninth Circuit,WILKEN,1
+17,District of Columbia Circuit,WILKINS,1
+365,Fourth Circuit,WILKINS,28
+366,Fourth Circuit,WILKINSON,46
+251,Fifth Circuit,WILLETT,2
+557,Ninth Circuit,WILLIAM A  FLETCHER,3
+558,Ninth Circuit,WILLIAM H  ALSUP,1
+757,Seventh Circuit,WILLIAM J  BAUER,13
+559,Ninth Circuit,WILLIAM O  BERTELSMAN,1
+168,Eleventh Circuit,WILLIAM PRYOR,12
+297,First Circuit,WILLIAM W  SCHWARZER,1
+18,District of Columbia Circuit,WILLIAMS,10
+367,Fourth Circuit,WILLIAMS,27
+758,Seventh Circuit,WILLIAMS,72
+882,Sixth Circuit,WILLIAMS,2
+169,Eleventh Circuit,WILSON,70
+937,Tenth Circuit,WINDER,1
+700,Second Circuit,WINTER,17
+883,Sixth Circuit,WISEMAN,3
+76,Eighth Circuit,WOLLMAN,57
+170,Eleventh Circuit,WOOD,4
+759,Seventh Circuit,WOOD,55
+560,Ninth Circuit,"WOOD, Jr.",1
+760,Seventh Circuit,"WOOD, Jr.",4
+298,First Circuit,WOODLOCK,1
+368,Fourth Circuit,WYNN,10
+761,Seventh Circuit,YOUNG,2
+884,Sixth Circuit,ZATKOFF,7
+561,Ninth Circuit,ZOUHARY,1
