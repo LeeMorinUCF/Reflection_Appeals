@@ -57,7 +57,7 @@ Harry J. Paarsch \\
 
 \pagebreak
 
-\section*{Appendix A: Simulation Evidence}
+\section{Appendix A: Simulation Evidence}
 
 We conducted a series of simulations to investigate the properties of the 
 econometric model that we described in the body of the paper. 
@@ -159,12 +159,12 @@ the estimates are unbiased,
 and the parameters in the model are identified. 
 
 
-\section*{Appendix B: Data Description}
+\section{Appendix B: Data Description}
 
 
-\subsection*{Westlaw Database}
+\subsection{Westlaw Database}
 
-\subsubsection*{Structure of Documents}
+\subsubsection{Structure of Documents} \label{sec:doc_structure}
 
 The primary raw source of data is the Westlaw database, which includes a 
 collection of documents that describe cases heard in the United States Courts 
@@ -186,7 +186,7 @@ changes in format over the years, but the information is mainly organized with
 information listed in the same order and written with stable patterns in the 
 text. 
 
-We wrote a Python module called \texttt{legalbeagle}, which tracks down 
+We wrote a Python module called \texttt{legal.beagle}, which tracks down 
 information from the text in court documents, and fetches these to be stored 
 in a data frame, with one row for each case. 
 The data in each line of text are categorized into one of several fields using 
@@ -198,6 +198,10 @@ a function.
 These functions, in turn, either read from the file or continue from the 
 last line read by the previous function to parse a field from the court 
 document. 
+An additional set of functions take the form \texttt{is\_valid\_[field name](line)}, which tests whether the return value of \texttt{get\_[field name]()} truly represents an instance of the field in question. 
+Since text data are highly irregular, this field is used to refine the
+algorithms in the \texttt{is\_[field name]()} and \texttt{get\_[field name]()}
+functions, until a reasonable fraction of fields are obtained. 
 
 Some of the fields are described over a number of lines that varies across 
 court cases, so the function reads until another field type is recognized, 
@@ -294,7 +298,7 @@ Some court records list multiple parties before or after the \texttt{v.}, and
 some court records list multiple parties separated by multiple \texttt{v.}s. 
 In some cases with multiple parties, the multiple parties are listed on
 multiple lines but in many other cases the parties are listed within a 
-single line. 
+single line separated by commas. 
 Although this may be useful information for each case later on, we collected 
 the list of names of parties but did not separate nor classify them, as we 
 do not yet have a need for this data.
@@ -311,9 +315,9 @@ In some files, the case number has the suffix \texttt{-cv} appended, as in
 \texttt{No. YY-1234-cv}. 
 In other files, multiple case numbers are listed, as in 
 \texttt{Nos. YY-1234, YY-4567}, and a few files have many case numbers listed. 
-Later versions of the \texttt{legalbeagle} module will include functions for 
+Later versions of the \texttt{legal.beagle} module will include functions for 
 parsing the case number in the form \texttt{YY-1234} to join with information 
-contained in other databases, such as those available on the webpage of the 
+contained in other databases, such as those available on the Webpage of the 
 Department of Justice.
 
 The text after the case number is often separated by a single line with a pipe 
@@ -334,7 +338,16 @@ Decided and Filed: June 28, 2011.
 \end{verbatim}
 % 
 Since we have no immediate need for this information, the dates are collected 
-and stored only to continue the flow of the program through the file. 
+and stored only to continue the flow of the program through the file%
+\footnote{Perhaps this information will be useful to link the cases to
+records in the databases available on the Webpage 
+of the Federal Judicial Center under the heading
+{\it Appellate cases filed, terminated, and pending from FY 2008 to present}, 
+which is available at 
+\texttt{https://www.fjc.gov/research/idb/appellate-cases-filed-terminated-and-pending-fy-2008-present}.
+These files contain many variables relating to the case, except for
+the identification of the judges, which is stripped from the publicly-available files. 
+See Section \ref{sec:FJC_appeals}.}. 
 
 The next line describes the case in sentences. 
 The first line of this description contains only the word \texttt{Synopsis}. 
@@ -390,26 +403,9 @@ Affirmed in part and reversed in part.
 \end{verbatim}
 % 
 A complete listing of the outcomes of the case is listed in 
-Table \ref{tab:outcome_list}. 
-% 
-\begin{table}[ht]
-\centering
-\begin{tabular}{l l}
-  \hline
-	Frequency 	& Outcome \\ 
-  \hline
-  	9,999 		& Examples \\ 
-  	1,000 		& \texttt{Affirmed.} \\ 
-	   250 		& \texttt{Affirmed in part and reversed in part.} \\ 
-  	1,000 		& Other \\ 
-   \hline
-\end{tabular}
-\caption{Outcomes of Cases in U.S.~Courts of Appeals} 
-\label{tab:outcome_list}
-\end{table}
-% 
-We should think about how we use this field to determine which cases to 
-include in our analysis and how to categorize them. 
+Table \ref{tab:outcome_list} in Section \ref{WestLaw_sample}. 
+
+
 
 The holdings and outcome is followed by a statement of procedural posture. 
 In the simplest cases, it may take on the form
@@ -435,7 +431,7 @@ and the items take on only so many values.
 The next section is often a lengthy listing of quotations from legal documents. 
 It is a numbered list of notes under the heading \texttt{West Headnotes (X)}, 
 which indicates the enumerated list of notes from \texttt{[1]} to \texttt{[X]}. 
-The current version of the \texttt{legalbeagle} module skips this section. 
+The current version of the \texttt{legal.beagle} module skips this section. 
 
 A few pages later, the next section begins with the header 
 \texttt{Attorneys and Law Firms}. 
@@ -536,9 +532,12 @@ document.
 In others, the opinions are briefly stated, often in a single sentence, 
 stating little more than the verdict. 
 
-\subsubsection*{Database Constructed from Westlaw Documents}
 
-After running the scripts with the functions in the \texttt{legalbeagle} module 
+
+
+\subsubsection{Sample Drawn from Westlaw Documents} \label{WestLaw_sample}
+
+After running the scripts with the functions in the \texttt{legal.beagle} module 
 on the court documents, the results are compiled into a data frame. 
 I collected files over the twenty-year period from 2000 to 2019. 
 The sample includes files that contain the phrase ``sexual harassment'' 
@@ -548,6 +547,12 @@ but the cases in this category became less frequent over time:
 over 300 such cases were heard in 2000 
 and the number of these cases declined over the sample, with around 150 cases 
 per year in the past decade. 
+In total, the sample comprises 3,825 cases
+from the same number of files in the form 
+described in Section \ref{sec:doc_structure} above.
+
+The algorithms in the \texttt{legal.beagle} module
+collect the following fields from the court documents. 
 
 \begin{itemize}
 	\item \texttt{file\_name}: A string of the form 
@@ -555,7 +560,7 @@ per year in the past decade.
 		The number is generated by the Westlaw GUI 
 		when the files are downloaded in batches of 200---%
 		the limit in Westlaw, which is close to the number of cases per year. 
-		Once downloaded, I changed the file names in unix to follow a sequence 
+		Once downloaded, I changed the file names in UNIX to follow a sequence 
 		counting up to the number of cases for a particular year. 
 		The rest of the file name is the listing of the main parties involved 
 		in the case. 
@@ -563,31 +568,50 @@ per year in the past decade.
 	\item \texttt{case\_code}: A string of the form \texttt{123 abcdef 456}
 		representing the... I'm not sure yet, but it is easy to collect. 
 		Examples: \texttt{656 F.3d 1277}, \texttt{643 F.3d 502}, 
-		or \texttt{175 Fed.Appx. 207}.
+		or \texttt{175 Fed.Appx. 207}. 
+		In the sample, the \texttt{case\_code}s from all 3,825 cases appear to
+		be valid, with 3,795 unique values. 
 
 	\item \texttt{circ\_num}: A string of the form \texttt{Nth Circuit.}, 
+		or sometimes \texttt{Judicial Council of} \texttt{the Nth Circuit.},
 		which represents the circuit number 
-		from \texttt{First Circuit} to \texttt{Twelfth Circuit}, 
-		and also \texttt{D.C. Circuit}. 
+		from \texttt{First Circuit} to \texttt{Eleventh Circuit}, 
+		as well as \texttt{District of Columbia Circuit} \texttt{Federal Circuit}. 
+		All 3,825 circuit numbers are recorded. 
 
 	\item \texttt{pla\_appnt\_1} to \texttt{pla\_appnt\_3}: A string listing 
 		the name(s) of the plaintiff(s)-appellee(s), 
 		such as \texttt{Pamela D. FYE, Plaintiff-Appellee,} 
-		but possibly a list of multiple plaintiffs-appellees on one line. 
-		Three fields are collected since the parties are sometimes 
-		listed on several lines. 
+		but possibly a list of multiple plaintiffs-appellees will be listed on one line. 
+		Three fields are collected because the parties are sometimes 
+		listed on several lines and this helps the algorithms 
+		pass on to more interesting fields. 
+		It is difficult to identify which are valid, since many 
+		parties are listed by name and it is often difficult 
+		to identify names within strings of text.  
+		For example, although Cameron, Morin and Paarsch could be 
+		classified as names, Brown, Fox, and Hunter would be more difficult
+		once the filler words such as ``and'' are removed. 
+		As a result, even though all of the records
+		should contain at least one name in the field \texttt{pla\_appnt\_1}, 
+		only 3,732 contain names that can be verified with the current algorithm. 
+		Upon visual inspection, the remaining 93 appear to contain 
+		valid names, even though it cannot be reliably verified. 
+		Again, since these fields are not our primary goal, 
+		these are collected only to skip to the remaining fields.
 
-	\item \texttt{def\_appee\_1} to \texttt{def\_appee\_4}: A string listing 
+	\item \texttt{def\_appee\_1} to \texttt{def\_appee\_4}: 
+		Similar to the previous field, this is a string listing 
 		the name(s) of the defendant(s)-appellant(s), 
 		such as \texttt{Pamela D. FYE, Plaintiff-Appellee,} 
 		but possibly a list of multiple defendants-appellants
 		on one line. 
 		Four fields are collected since the parties are sometimes 
 		listed on several lines. 
-		I can check the numbers later but it seems as though 
+		We can review this later but it seems as though 
 		more cases have a longer list of defendant(s)-appellant(s)
 		than plaintiff(s)-appellee(s). 
-		I suppose this is because each person has eight fingers 
+		This may be partly because each person has eight fingers 
 		to point at other people. 
 
 	\item \texttt{case\_num}: A string of the form \texttt{No. YY-1234},  
@@ -595,17 +619,24 @@ per year in the past decade.
 		or  \texttt{Docket No. YY-1234}, 
 		which is probably called the docket number. 
 		Sometimes multiple docket numbers are listed in a single string.
+		Among the 3,825 cases, only two docket numbers were not found
+		but this will likely be easy to fix when it is a priority. 
 
 	\item \texttt{case\_date\_1} to \texttt{case\_date\_4}: A string of the form 
 		\texttt{Month DD, YYYY}, for the cases in which one date is listed. 
 		Sometimes several dates are listed, 
 		each with the name of the event that took place, 
 		such as \texttt{Submitted}, \texttt{Filed},\texttt{Argued}, etc. 
+		We did not create functions to parse out the dates 
+		of stages in the appeals but we will if it is needed 
+		to match the cases to the trials. 
 
 	\item \texttt{background}: A string containing a description of the case, 
 		in several sentences, 
 		often preceded by the header \texttt{Background:}. 
 		Follows a line with the heading \texttt{Synopsis}. 
+		This field is collected and ignored. 
+		It is intended for human readers. 
 
 	\item \texttt{holdings\_hdr}: A string of the form 
 		\texttt{Holdings: The Court of Appeals, Smith, Circuit Judge, held that:},
@@ -634,7 +665,150 @@ per year in the past decade.
 
 \end{itemize}
 
-\subsubsection*{Next Steps}
+A few fields are worth discussing in greater detail. 
+The docket numbers do not all relate to unique trials;
+Table \ref{tab:num_docket_numbers} shows that 
+many appeals are filed against the decisions in multiple trials. 
+The vast majority--3,458 cases--appeal a decision
+handed down in a single trial. 
+This is consistent with the econometric model that we have specified. 
+
+%1    3458
+%2     245
+%3      53
+%0      50
+%4      11
+%5       6
+%7       1
+%6       1
+%Name: num_case_nums, dtype: int64
+% 
+\begin{table}[ht]
+\centering
+\begin{tabular}{c r}
+  \hline
+	Number of 			& Frequency \\ 
+	Docket Numbers 	&  \\ 
+  \hline
+	 0 							& 50 \\ 
+	 1 							& 3,458 \\ 
+	 2 							& 245 \\ 
+	 3 							& 53 \\ 
+	 4 							& 11 \\ 
+	 5 							& 6 \\ 
+	 6 							& 1 \\ 
+	 7 							& 1 \\ 
+   \hline
+\end{tabular}
+\caption{Number of Trials Referenced in Cases in U.S.~Courts of Appeals} 
+\label{tab:num_docket_numbers}
+\end{table}
+
+The cases naming multiple trials were inspected visually
+and they did, in fact, refer to the stated number of trials.
+We may decide to omit these cases 
+or to include them with an indicator 
+that allows us to test for sensitivity. 
+Ignoring these would remove ninety percent of the cases
+but mitigate the lack of independence between these cases. 
+Furthermore, cases with many appeals often have a higher profile. 
+One case involving the rights of couples in same-sex marriages
+referred to many trials in which spousal benefits were denied. 
+Sometimes the purpose of the appeal is to achieve a second opinion on
+the application of existing law;
+in others, the purpose is to change the law. 
+
+
+\noindent Note that, in some cases, the algorithm suggests that 
+zero trials are named. 
+This is either a failure to identify the line of text as not containing 
+a docket number (a false positive) or a failure to extract the individual 
+docket numbers within a string that contains multiple docket numbers. 
+Upon visual inspection, these are about evenly split between each type.
+Some lines clearly do not contain docket numbers
+and others contain docket numbers in slightly different formats, with prefixes or suffixes. 
+We will have to revise this algorithm before joining the cases to the trials. 
+This shouldn't be too difficult because the fields are highly structured. 
+
+Finding the outcome of the case is a different matter. 
+In the sample of 3,825 cases, the algorithm extracted 414 distinct strings of text. 
+Upon inspection, these fields did contain many frequently-appearing terms
+such as conjugations of the verbs 
+\texttt{Affirm}, 
+\texttt{Grant}, 
+\texttt{Reverse},
+\texttt{Vacate}, 
+\texttt{Deny},
+\texttt{Dismiss}  and 
+\texttt{Remand}.
+Of the 3,825 cases, 2,730 instances of the \texttt{outcome} field
+contained at least one of the above words. 
+Other possibilities are more complex, 
+reflecting combinations of the above terms,
+such as \texttt{Affirmed in part and reversed in part.}.
+Some were much more complex, such as 
+\texttt{Review granted in part and denied in part; order enforced in part; remanded.} or even
+\texttt{Affirmed in part, reversed in part, and vacated in part; appeal dismissed in part.}. 
+We may decide to drop some of these ambiguous outcomes. 
+There also exist some that did not make it as far, 
+such as \texttt{Certificate of appealability denied.}.
+We should think about how we use this field to determine which cases to 
+include in our analysis and how to categorize them. 
+
+
+
+%A complete listing of the outcomes of the case is listed in 
+%Table \ref{tab:outcome_list}
+%% 
+%\begin{table}[ht]
+%\centering
+%\begin{tabular}{l l}
+%  \hline
+%	Frequency 		& Outcome \\ 
+%	(approximate) 	& (sample) \\ 
+%  \hline
+%  	1,000 				& \texttt{Affirmed.} \\ 
+%	   250 				& \texttt{Affirmed in part and reversed in part.} \\ 
+%  	1,000 				& Other \\ 
+%   \hline
+%\end{tabular}
+%\caption{Outcomes of Cases in U.S.~Courts of Appeals (sample from WestLaw)} 
+%\label{tab:outcome_list}
+%\end{table}
+% 
+
+
+We could also resort to joining the case documents to the publicly-available
+datasets, in case the outcomes are classified more systematically. 
+The Integrated Database at the Federal Judicial Center
+includes the field \texttt{OUTCOME}, which we might be able to
+join to our data using the other text fields from the court documents.  
+% 
+The \texttt{OUTCOME} variable can take on the values
+in Table \ref{tab:outcome_list_FJC}.
+% 
+\begin{table}[ht]
+\centering
+\begin{tabular}{l l}
+  \hline
+	Value 		& Outcome \\ 
+  \hline
+	1 				& Affirmed - Enforced \\
+	2 				& Reversed, Vacated \\
+	3 				& Affirmed in part and reversed/vacated in part \\
+	5 				& Dismissed \\
+	7 				& Other  \\
+	9 				& Certificate of appealability \\
+	-8 			& Missing \\
+   \hline
+\end{tabular}
+\caption{Outcomes of Cases in U.S.~Courts of Appeals (Federal Judicial Center)} 
+\label{tab:outcome_list_FJC}
+\end{table}
+% 
+
+
+\subsubsection{Next Steps}
 
 \begin{itemize}
 
@@ -659,25 +833,94 @@ per year in the past decade.
 
 	\item Read some files related to the cases in the sample 
 		in the \texttt{dta} datasets to compare against the fields
-		read by the functions in the \texttt{legalbeagle} module.
+		read by the functions in the \texttt{legal.beagle} module.
 
 \end{itemize}
 
 
-\subsubsection*{Database of Corresponding Trials 
+\subsubsection{Sample of Corresponding Trials 
 	in the Westlaw Database}
 
-To be added. 
+This is the next stage of our data collection strategy. 
+Our approach differs from that of a legal professional in that
+we are collecting information for a large sample of appellate court cases.  
+A legal professional working on a single case might search for information relating to the corresponding trial and perhaps several other related cases or trials. 
+WestLaw even provides hyperlinks to the relevant trials and cases to facilitate this process. 
+For our purposes, however, the repeated search across individual cases would be very tedious. 
+Instead, we will pursue a brute-force strategy of querying the WestLaw database for all cases involving, for example, sexual harassment
+and read the case or docket number and verify whether it is in the set of numbers found in the court records for the cases that were appealed. 
+This will involve reading through a large number of documents, 
+because only a fraction of cases are appealed 
+and because some cases are only appealed years later. 
+On the other hand, we need only a small number of fields that
+we suspect will be reliably obtained from these records on a large scale:
+the judge's name and the case number or docket number. 
+These fields are already reliably obtained from the documents from cases in the courts of appeal. 
 
-\subsubsection*{Database of Judges' Characteristics 
+A potential difficulty with this strategy is that
+the documents from the lower courts may contain more variation
+in the formatting of the files. 
+We may have to introduce some logic to determine the format of the files
+and then extract the required fields. 
+Although it may be time-consuming, this approach might be sufficient
+for our project. 
+
+
+
+
+
+\subsubsection{Database of Judges' Characteristics 
 	from Westlaw Litigation Analytics}
 
-To be added. 
+WestLaw offers a product called {\it Litigation Analytics}
+which provides links to information relating to the cases recorded in WestLaw. 
+Although this may contain variables that are not available in the public data sources, we have not found it necessary to investigate {\it Litigation Analytics}.
+The public database, 
+{\it Biographical Directory of Article III Federal Judges}, 
+the Federal Judicial Center contains information
+on appointments to courts for each judge, 
+which enables an accurate match rate on the judge's names extracted from the court records on WestLaw. 
+The public database at the FJC contains many variables of interest
+and might be sufficient.
 
-\subsubsection*{Database of Cases in the U.S. Courts of Appeals 
-	from the Department of Justice}
+The WestLaw product does contain information relating to the attorneys on the case, which could augment our analysis. 
+For example, if a judge and an attorney had both gone to the same law school, 
+it may help to predict the outcome of the case. 
+This might prove to be a fruitful avenue of research; 
+however, it would entail another text extraction exercise to join these data
+to a large sample of cases. 
+We omit this exercise for now. 
 
-To be added. 
+
+
+\subsubsection{Database of Cases in the U.S. Courts of Appeals 
+	from the Department of Justice} \label{sec:FJC_appeals}
+
+The Federal Judicial Center maintains a database containing an
+exhaustive set of variables relating to cases heard in the U.S. Courts of Appeal. 
+This is available on the Webpage 
+of the Federal Judicial Center under the heading
+{\it Appellate cases filed, terminated, and pending from FY 2008 to present}, 
+which is available at 
+\texttt{www.fjc.gov/research/idb/appellate-cases-filed-terminated-
+and-pending-fy-2008-present}.
+These files contain many variables relating to the case, except for
+the identification of the judges, which is stripped from the publicly-available files. 
+For our project, these are the most important fields in each case. 
+
+After a quick examination, however, we have determined that this database may be useful
+for quality control purposes.
+It may be possible to join the records from court documents in WestLaw
+to the records in the database of appellate cases using several of
+the fields from the WestLaw database. 
+This may help to identify more accurately the outcomes of the cases and the opinions of the three judges.
+
+On the other hand, the \texttt{outcome} field in the sample of the WestLaw documents seems to be structured such that obtaining the outcomes and opinions may be possible without the database at the FJC. 
+For our purposes, the decision to pursue this avenue presents a cost-benefit
+trade-off between the quality of data extracted from a few fields (judge's names, trial numbers and outcomes) from WestLaw
+versus a reasonable fit of a larger number of fields that can be used to
+execute a fuzzy match to the FJC databases, which can then be used to verify the outcomes and opinions extracted from WestLaw. 
+Our strategy so far is to refine the WestLaw data unless it becomes necessary to match the contents from the FJC database. 
 
 
 \end{document}
