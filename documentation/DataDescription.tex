@@ -705,12 +705,12 @@ This is consistent with the econometric model that we have specified.
 \end{table}
 
 The cases naming multiple trials were inspected visually
-and they did, in fact, refer to the stated number of trials.
+and the cases did, in fact, correspond to the stated number of trials.
 We may decide to omit these cases 
 or to include them with an indicator 
 that allows us to test for sensitivity. 
-Ignoring these would remove ninety percent of the cases
-but mitigate the lack of independence between these cases. 
+Ignoring these would remove only ten percent of the cases
+but would be reasonable on account of the lack of independence between these cases. 
 Furthermore, cases with many appeals often have a higher profile. 
 One case involving the rights of couples in same-sex marriages
 referred to many trials in which spousal benefits were denied. 
@@ -727,8 +727,11 @@ docket numbers within a string that contains multiple docket numbers.
 Upon visual inspection, these are about evenly split between each type.
 Some lines clearly do not contain docket numbers
 and others contain docket numbers in slightly different formats, with prefixes or suffixes. 
-We will have to revise this algorithm before joining the cases to the trials. 
-This shouldn't be too difficult because the fields are highly structured. 
+We will have to revise this algorithm before joining the cases to the trials
+(joining to either the cases read in WestLaw 
+or the datasets on the Website of the Federal Judicial Center). 
+Parsing these docket numbers shouldn't be too difficult 
+because the fields are highly structured. 
 
 Finding the outcome of the case is a different matter. 
 In the sample of 3,825 cases, the algorithm extracted 414 distinct strings of text. 
@@ -757,26 +760,58 @@ include in our analysis and how to categorize them.
 
 
 
-%A complete listing of the outcomes of the case is listed in 
-%Table \ref{tab:outcome_list}
-%% 
-%\begin{table}[ht]
-%\centering
-%\begin{tabular}{l l}
-%  \hline
-%	Frequency 		& Outcome \\ 
-%	(approximate) 	& (sample) \\ 
-%  \hline
-%  	1,000 				& \texttt{Affirmed.} \\ 
-%	   250 				& \texttt{Affirmed in part and reversed in part.} \\ 
-%  	1,000 				& Other \\ 
-%   \hline
-%\end{tabular}
-%\caption{Outcomes of Cases in U.S.~Courts of Appeals (sample from WestLaw)} 
-%\label{tab:outcome_list}
-%\end{table}
+The twenty most frequent outcomes of the cases are listed in 
+Table \ref{tab:outcome_list}
 % 
-
+\begin{table}[ht]
+\centering
+\begin{tabular}{p{5in} r}
+  \hline
+	Outcome 		& Frequency \\ 
+	(raw text) 	&  \\ 
+  \hline
+Affirmed.                                                                                        & 1,654 \\
+Affirmed in part, reversed in part, and remanded.                             & 171 \\
+Reversed and remanded.                                                                 & 170 \\
+Vacated and remanded.                                                                   &  80 \\
+Affirmed in part, vacated in part, and remanded.                               &  77 \\
+Procedural Posture(s): On Appeal; Motion to Dismiss.                        &  44 \\
+Petition denied.                                                                                &  39 \\
+Reversed.                                                                                         &  37 \\
+Affirmed in part and reversed in part.                                                &  36 \\
+Procedural Posture(s): On Appeal; Motion to Dismiss; 
+Motion to Dismiss for Failure to State a Claim.     						&  13 \\
+Affirmed in part and reversed and remanded in part.                          &  12 \\
+Affirmed in part, and reversed in part.                                                &  11 \\
+Appeal dismissed.                                                                              &  10 \\
+Affirmed and remanded.                                                                    &    8 \\
+Affirmed in part and dismissed in part.                                               &    6 \\
+Affirmed in part; reversed and remanded in part.                               &    6 \\
+Procedural Posture(s): On Appeal; 
+Motion to Dismiss for Failure to State a Claim.                         			&    6 \\
+Dismissed.                                                                                         &   6 \\
+Affirmed in part, vacated and remanded in part.                                  &    6 \\
+Affirmed in part, reversed in part, vacated in part, and remanded.       &    6 \\
+   \hline
+\end{tabular}
+\caption{Outcomes of Cases in U.S.~Courts of Appeals (sample from WestLaw)} 
+\label{tab:outcome_list}
+\end{table}
+% 
+The most frequent outcome is \texttt{Affirmed}, which occurs in 1,654 cases, 
+which is roughly 43 percent of the cases. 
+On the other end of the spectrum, 
+the terms \texttt{Petition denied},  \texttt{Reversed},  
+\texttt{Appeal dismissed} and  \texttt{Dismissed}
+account for 92 cases, which is only 2.5 percent of the cases. 
+Te remaining valid outcomes are combinations of these outcomes. 
+In the empirical analysis, we will have to formulate a definition of the outcome
+variable in the trivariate probit model 
+and conduct sensitivity analysis with respect to this definition.
+Three outcomes among the top twenty are misclassified statements of the procedural posture, 
+which are falsely classified on account of the term ``dismissed'' found within the line of text.
+Although we may not be interested in recording the procedural posture {\it per se}, 
+doing so would improve the collection of variables found later in the documents. 
 
 We could also resort to joining the case documents to the publicly-available
 datasets, in case the outcomes are classified more systematically. 
@@ -807,35 +842,183 @@ in Table \ref{tab:outcome_list_FJC}.
 \end{table}
 % 
 
+The frequency of mixed verdicts suggests the we pay careful attention 
+to the names of judges presiding over each case.
+Sometimes the partial verdict is settle upon unanimously and sometimes
+the mixed verdict arises from a dissenting opinion of one of the judges. 
+Not only will we have to identify the judges on the case
+but we will also have to assign any concurring or dissenting opinions
+to each judge. 
+This requires the accurate classification of the names of judges.
+Furthermore, an accurate classification is critical to ensure that the correct 
+characteristics are matched to each judge. 
+This matching exercise is problematic, first of all, because the judges' names 
+have been stripped from the publicly-available datasets. 
+Secondly, although each judges is assigned unique keys in the databases, 
+these keys do not appear in the text of the court documents. 
+Consequently matching must be achieved by matching the text of judges' names. 
 
-\subsubsection{Next Steps}
+The process of obtaining the names of judges is divided into three parts: 
+obtain lines of text containing judges' names,
+remove words that are not names,
+and separate into three judges' names.
 
-\begin{itemize}
+The firs step is to read and identify the lines of text in the court documents
+that con the judges' names. 
+This is straightforward, relative to other fields, 
+since the is identified with a few unique phrases. 
+In the simplest cases, the line containing the judicial panel 
+begins with \texttt{Before:} or \texttt{Present:}, either
+with or without the colon. 
+Sometimes the judicial panel is listed immediately after the parties
+under the heading ``Attorneys and Law Firms,''
+with a word such as ``before'' separating the attorneys, law firms and judges. 
+This is not sufficient to identify the judicial panel, 
+since many English sentences begin with those words. 
+The line might also contain words such as ``judge'' or ``circuit,''
+which are used to strengthen the signal. 
+After accounting for these possibilities, the algorithm finds
+3,779 verifiable instances of the line containing the judicial panel, 
+accounting for 98.8 percent of the 3,825 cases in the sample. 
 
-	\item Create a table of the number of cases per year. 
+Once the string of judges' names is correctly identified, the next
+stage is to separate the line onto a list of the names of three judges. 
+Occasionally, this is a straightforward exercise, 
+such as with the line obtained from the court record above.
 
-	\item Create tables of frequencies of outcomes for each field. 
+\noindent \texttt{Before: MERRITT, ROGERS, and WHITE, Circuit Judges.}
 
-	\item Start with the outcomes of cases, or verdicts, 
-		to classify these outcomes or make decisions about cases to exclude, if any. 
+\noindent In this case, the names are capitalized, with only the last names listed
+and are separated by commas and the word ``and.''
+A line-preparation step involves removing the uninformative words
+such as ``before'' or ``present.''
+In this step, the judges' names can more easily be separated if 
+the descriptive terms, such as ``Circuit Judges'' are removed. 
+Although, in this case, that omission does not appear problematic, 
+the information content may be material when a judge's name is 
+augmented by the name of a court, 
+such as the Western District of the State of Kentucky. 
+In this example, a trade-off arises between the value of the additional information
+for improving the reliability of the match to a database
+against the possibility of confounding judges' names and descriptions of their courts. 
 
-	\item Parse the judges' names from the \texttt{judicial\_panel} variable. 
+In the first draft of the algorithm, we elected to follow the simpler path to the judges' names; 
+thus, we removed the additional words. 
+This loss of information can be overcome by using the characteristics
+of each case and the time that it occurred. 
+Conversely, the removal of words that are positively identified 
+to not be part of names simplifies the collection of the names, 
+since names can not be easily identified positively. 
+The approach we have followed is essentially removal of words that are not names. 
 
-	\item Compile a master list of judges' names as keys 
-		to \texttt{LEFT JOIN} with information from a database of judges. 
- 
-	\item Compile a list of case numbers (docket numbers?), 
-		of the form \texttt{YY-1234}
-		to \texttt{LEFT JOIN} with information from the databases 
-		on the Website of the Department of Justice. 
-		Use this joined table to validate against other variables that are 
-		common to both tables. 
+In the end, the algorithm produces a list of separate strings for each judge
+and the counts of the number of judges identified on each case is shown
+in Table \ref{tab:num_judges}.
+That the most frequently recorded number of judges is three
+supports the accuracy of the algorithm;
+whether or not the three words found truly represent judges' names
+will be considered below, when matching the names to 
+a directory of judges. 
+The other numbers of judges appear rarely enough that it 
+is feasible to inspect those visually.
+For instance, the next most frequent result is an empty list, 
+which is the result of in incorrectly classified line of text:
+one that does not, in fact, contain the names of a panel of judges. 
+These represent less than 2 percent of the cases but this may improve 
+with future versions of the algorithms. 
+Another noteworthy outcome is a panel of two judges. 
+Again, visual inspection confirmed that these cases legitimately had two judges. 
+This may occur if, for example, one judge died while the case was in progress. 
+Although this only happened 11 times, this seems to be a common occurrence that must be accounted for, since most judges retire in the same year of their death. 
+Perhaps these cases are adequately serviced with two judges when the decision is 
+unanimous; there would be no tie to break by the opinion of the third judge. 
+We should consider dropping these from the sample, however, 
+because the decision of the third is censored and we cannot distinguish 
+between what would have been a unanimous vote or one with a dissenting opinion. 
 
-	\item Read some files related to the cases in the sample 
-		in the \texttt{dta} datasets to compare against the fields
-		read by the functions in the \texttt{legal.beagle} module.
+Occasionally, cases are heard with a larger panel of judges, 
+from four to as much as eighteen. 
+Again, in each of these cases, the algorithm was correct: 
+the number of judges accurately represented the number of distinct names
+found upon visual inspection.
+In these cases, we often observe the term ``en banc,''
+which indicates that several judges presided over a case.
+Typically, these cases involve matters more involved than a straightforward
+review of the trial judge's application of existing law;
+many of these focus on changing the law.  
+Consequently, these cases are not congruent with the features of our econometric model.
+As these cases amount to only 34 cases, which is less than one percent of the sample, 
+it presents no loss of statistical power to exclude them.  
 
-\end{itemize}
+% 
+\begin{table}[ht]
+\centering
+\begin{tabular}{r r}
+  \hline
+	Number 		& Frequency \\  
+  \hline
+		3     & 3,734 \\
+		0      &  46 \\
+		11     &  18 \\
+		2      &  11 \\
+		10   &     3 \\
+		16   &     2 \\
+		15   &     2 \\
+		12   &     2 \\
+		18   &     1 \\
+		14   &     1 \\
+		13   &     1 \\
+		9     &    1 \\
+		7     &    1 \\
+		5     &    1 \\
+		4     &    1 \\
+  \hline
+\end{tabular}
+\caption{Number of Judges on Cases in U.S.~Courts of Appeals (sample from WestLaw)} 
+\label{tab:num_judges}
+\end{table}
+
+
+
+%Name: num_judges, dtype: int64
+
+
+
+The next step is to join each judge's name into a unique 
+row of a database containing information about the judges. 
+This step serves two purposes:
+first, to match the cases to the judges' characteristics
+and, second, to verify the accuracy of the reading of the judges' names. 
+We use the  
+{\it Biographical Directory of Article III Federal Judges} 
+on the Website of the Federal Judicial Center
+to conduct this comparison. 
+From the results of the preliminary matching algorithm, 
+this database appears to be complete and accurate
+and the algorithm for obtaining the judges' names 
+from the court documents is reasonably reliable, 
+albeit with some opportunities for improvement. 
+
+The directory of judges contains information on 3,863 judges. 
+Each judge is listed with a unique identifier for joining to other datasets, 
+along with the first, last and middle names and a suffix, if any. 
+The directory also lists dates of birth and death, 
+which are useful for identifying an upper bound 
+on the span of years of service to the courts. 
+Moreover, the next fields are even more informative in this regard
+because a series of fields are listed for up to six separate appointments. 
+
+In each appointment, type of court, name of court, and a sequence of dates.
+
+
+
+Only 811 of the 3,863 judges have at any time served on a court of appeals. 
+Of these, only 3XX matched the 6XX judges in the dataset. 
+Still, limiting the search to this population of judges was sufficient to match 
+about 85 percent of the 4XXX name-year-circuit combinations. 
+Although representing a large number of lines in the dataset, 
+this represented only half of the judges: some 3XX of the 6XX
+unique names in the dataset. 
 
 
 \subsubsection{Sample of Corresponding Trials 
